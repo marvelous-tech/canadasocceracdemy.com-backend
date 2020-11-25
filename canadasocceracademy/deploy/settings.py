@@ -1,0 +1,1 @@
+from canadasocceracademy.settings import *

@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}
+    Home
+{% endblock %}
+{% block content %}
+
+
+    <!-- Start of slider section
+		============================================= -->
+    <section id="slide" class="slider-section">
+        {% include "site_data/home/banner.html" %}
+    </section>
+    <!-- End of slider section
+		============================================= -->
+
+
+
+    <!-- Start of sponsor section
+		============================================= -->
+    {% include "site_data/home/sponsers.html" %}
+    <!-- End of sponsor section
+		============================================= -->
+
+
+    <!-- Start popular course
+		============================================= -->
+    <section id="popular-course" class="popular-course-section">
+        {% include "site_data/home/courses.html" %}
+    </section>
+    <!-- End popular course
+		============================================= -->
+
+
+    <!-- Start of about us section
+		============================================= -->
+    <section id="about-us" class="about-us-section home-secound">
+        {% include "site_data/home/about.html" %}
+    </section>
+    <!-- End of about us section
+		============================================= -->
+
+
+    <!-- Start of Search Courses
+		============================================= -->
+    <section id="search-course" class="search-course-section home-secound-course-search backgroud-style">
+        {% include "site_data/home/search-courses-mobile-app.html" %}
+    </section>
+    <!-- End of Search Courses
+		============================================= -->
+
+
+    <!-- Start latest section
+		============================================= -->
+    <section id="latest-area" class="latest-area-section">
+        {% include "site_data/home/latest-events.html" %}
+    </section>
+    <!-- End latest section
+		============================================= -->
+
+
+    <!-- Start of best product section
+		============================================= -->
+    <section id="best-product" class="best-product-section home_2">
+        {% include "site_data/home/best-products.html" %}
+    </section>
+    <!-- End  of best product section
+		============================================= -->
+
+
+    <!-- Start of best course
+		============================================= -->
+    <section id="best-course" class="best-course-section">
+        {% include "site_data/home/best-courses.html" %}
+    </section>
+    <!-- End of best course
+		============================================= -->
+
+
+    <!-- Start FAQ section
+		============================================= -->
+    <section id="faq" class="faq-section faq-secound-home-version backgroud-style">
+        {% include "site_data/home/faq.html" %}
+    </section>
+    <!-- End FAQ section
+		============================================= -->
+
+
+    <!-- Start Course category
+		============================================= -->
+    <section id="course-category" class="course-category-section home-secound-version">
+        {% include "site_data/home/course-category.html" %}
+    </section>
+    <!-- End Course category
+		============================================= -->
+
+
+    <!-- Start secound testimonial section
+		============================================= -->
+    <section id="testimonial-secound" class="secound-testimoinial-section">
+        {% include "site_data/home/second-testimonial.html" %}
+    </section>
+    <!-- End secound testimonial section
+		============================================= -->
+
+
+    <!-- Start secound teacher section
+		============================================= -->
+    <section id="teacher-2" class="secound-teacher-section">
+        {% include "site_data/home/second-teacher-section.html" %}
+    </section>
+    <!-- End teacher section
+		============================================= -->
+
+
+
+    <!-- Start Of scound contact section
+		============================================= -->
+    <section id="contact_secound" class="contact_secound_section backgroud-style">
+        {% include "site_data/home/second-contact.html" %}
+    </section>
+{% endblock %}
