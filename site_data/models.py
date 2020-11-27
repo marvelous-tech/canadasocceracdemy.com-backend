@@ -5,7 +5,23 @@ from uuid import uuid4
 from django.db.models.signals import pre_save
 
 from accounts.models import Member
-from mt_utils import get_logo_path, get_news_image_path, unique_slug_generator, get_gallery_image_path
+from mt_utils import get_logo_path, get_news_image_path, unique_slug_generator, get_gallery_image_path, get_image_path, \
+    get_agreement_image_path, get_camp_image_path
+
+
+class SiteLogo(models.Model):
+    uuid = models.UUIDField(default=uuid4)
+
+    name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to=get_logo_path)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
 
 
 class SiteData(models.Model):
@@ -25,6 +41,21 @@ class SiteData(models.Model):
 
     def __str__(self):
         return f"{self.page_name} / {self.ticket}"
+
+
+class BannerImage(models.Model):
+    uuid = models.UUIDField(default=uuid4)
+
+    name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to=get_image_path)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
 
 
 class Partner(models.Model):
@@ -219,16 +250,162 @@ class Coupon(models.Model):
         return self.name
 
 
-def pre_save_receiver(sender, instance, *args, **kwargs):
+class Testimonial(models.Model):
+    uuid = models.UUIDField(default=uuid4)
+
+    name = models.CharField(max_length=255)
+    text = models.TextField()
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
+
+
+class Address(models.Model):
+    uuid = models.UUIDField(default=uuid4)
+
+    name = models.CharField(max_length=255)
+    address = models.TextField()
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
+
+
+class ContactNumber(models.Model):
+    uuid = models.UUIDField(default=uuid4)
+
+    name = models.CharField(max_length=255)
+    number = models.CharField(max_length=30)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
+
+
+class Email(models.Model):
+    uuid = models.UUIDField(default=uuid4)
+
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
+
+
+class Agreement(models.Model):
+    uuid = models.UUIDField(default=uuid4)
+
+    name = models.TextField()
+    image = models.ImageField(upload_to=get_agreement_image_path)
+    agreement_image = models.ImageField(upload_to=get_agreement_image_path)
+    slug = models.SlugField(max_length=255, null=True, blank=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
+
+
+class TermAndCondition(models.Model):
+    uuid = models.UUIDField(default=uuid4)
+
+    name = models.TextField()
+    text = models.TextField()
+    slug = models.SlugField(max_length=255, null=True, blank=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
+
+
+class PrivacyPolicy(models.Model):
+    uuid = models.UUIDField(default=uuid4)
+
+    name = models.TextField()
+    text = models.TextField()
+    slug = models.SlugField(max_length=255, null=True, blank=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
+
+
+class CampImage(models.Model):
+    uuid = models.UUIDField(default=uuid4)
+
+    image = models.ImageField(upload_to=get_camp_image_path)
+    name = models.TextField()
+    text = models.TextField()
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
+
+
+class Camp(models.Model):
+    uuid = models.UUIDField(default=uuid4)
+
+    name = models.TextField()
+    text = models.TextField()
+    images = models.ManyToManyField(CampImage, related_name='camps')
+    slug = models.SlugField(max_length=255, null=True, blank=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
+
+
+def pre_save_receiver_slug(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
 
 
-pre_save.connect(pre_save_receiver, sender=Post)
-pre_save.connect(pre_save_receiver, sender=Gallery)
-pre_save.connect(pre_save_receiver, sender=Question)
-pre_save.connect(pre_save_receiver, sender=FAQ)
-pre_save.connect(pre_save_receiver, sender=Upcoming)
-pre_save.connect(pre_save_receiver, sender=Partner)
-pre_save.connect(pre_save_receiver, sender=Reference)
-pre_save.connect(pre_save_receiver, sender=Coupon)
+pre_save.connect(pre_save_receiver_slug, sender=Post)
+pre_save.connect(pre_save_receiver_slug, sender=Gallery)
+pre_save.connect(pre_save_receiver_slug, sender=Question)
+pre_save.connect(pre_save_receiver_slug, sender=FAQ)
+pre_save.connect(pre_save_receiver_slug, sender=Upcoming)
+pre_save.connect(pre_save_receiver_slug, sender=Partner)
+pre_save.connect(pre_save_receiver_slug, sender=Reference)
+pre_save.connect(pre_save_receiver_slug, sender=Coupon)
+pre_save.connect(pre_save_receiver_slug, sender=Agreement)
+pre_save.connect(pre_save_receiver_slug, sender=TermAndCondition)
+pre_save.connect(pre_save_receiver_slug, sender=PrivacyPolicy)
+pre_save.connect(pre_save_receiver_slug, sender=Camp)

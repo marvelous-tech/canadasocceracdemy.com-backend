@@ -43,6 +43,18 @@ def get_profile_image_path(instance, filename):
     return os.path.join('uploads/profiles/images', filename)
 
 
+def get_agreement_image_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = "%s.%s" % (uuid.uuid4(), ext)
+    return os.path.join('uploads/agreements/images', filename)
+
+
+def get_camp_image_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = "%s.%s" % (uuid.uuid4(), ext)
+    return os.path.join('uploads/camps/images', filename)
+
+
 def get_gallery_image_path(instance, filename):
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (uuid.uuid4(), ext)

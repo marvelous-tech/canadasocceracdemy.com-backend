@@ -12,10 +12,21 @@ from site_data.models import (
     Question,
     Gallery,
     Reference,
-    Coupon
+    Coupon, SiteLogo, BannerImage, Testimonial, Camp, CampImage, PrivacyPolicy, TermAndCondition, Agreement, Email,
+    ContactNumber, Address
 )
 
 # Register your models here.
+
+
+@admin.register(SiteLogo)
+class SiteLogoModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'uuid',
+        'name',
+        'created',
+        'updated'
+    ]
 
 
 @admin.register(SiteData)
@@ -25,6 +36,16 @@ class SiteDataModelAdmin(admin.ModelAdmin):
         'page_name',
         'name',
         'ticket',
+        'created',
+        'updated'
+    ]
+
+
+@admin.register(BannerImage)
+class BannerImageAdmin(admin.ModelAdmin):
+    list_display = [
+        'uuid',
+        'name',
         'created',
         'updated'
     ]
@@ -148,6 +169,95 @@ class CouponModelAdmin(admin.ModelAdmin):
     list_display = [
         'name',
         'ticket',
+        'created',
+        'updated'
+    ]
+
+
+@admin.register(Testimonial)
+class TestimonialModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'text',
+        'created',
+        'updated'
+    ]
+
+
+@admin.register(Address)
+class AddressModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'address',
+        'created',
+        'updated'
+    ]
+
+
+@admin.register(ContactNumber)
+class ContactNumberModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'number',
+        'created',
+        'updated'
+    ]
+
+
+@admin.register(Email)
+class EmailModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'email',
+        'created',
+        'updated'
+    ]
+
+
+@admin.register(Agreement)
+class AgreementModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'created',
+        'updated'
+    ]
+
+
+@admin.register(TermAndCondition)
+class TermAndConditionModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'text',
+        'created',
+        'updated'
+    ]
+
+
+@admin.register(PrivacyPolicy)
+class PrivacyPolicyModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'text',
+        'created',
+        'updated'
+    ]
+
+
+@admin.register(CampImage)
+class CampImageModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'text',
+        'created',
+        'updated'
+    ]
+
+
+@admin.register(Camp)
+class CampModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'text',
         'created',
         'updated'
     ]
