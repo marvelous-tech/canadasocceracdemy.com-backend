@@ -3,8 +3,6 @@ from site_data.models import (
     SiteData,
     Partner,
     ContactedVisitor,
-    ThreadReply,
-    Thread,
     PostCategory,
     Post,
     Upcoming,
@@ -13,7 +11,7 @@ from site_data.models import (
     Gallery,
     Reference,
     Coupon, SiteLogo, BannerImage, Testimonial, Camp, CampImage, PrivacyPolicy, TermAndCondition, Agreement, Email,
-    ContactNumber, Address
+    ContactNumber, Address, SocialLink
 )
 
 # Register your models here.
@@ -24,6 +22,7 @@ class SiteLogoModelAdmin(admin.ModelAdmin):
     list_display = [
         'uuid',
         'name',
+        'for_content',
         'created',
         'updated'
     ]
@@ -68,24 +67,6 @@ class ContactedVisitorModelAdmin(admin.ModelAdmin):
         'email',
         'phone',
         'subject',
-        'created',
-        'updated'
-    ]
-
-
-@admin.register(ThreadReply)
-class ThreadReplyModelAdmin(admin.ModelAdmin):
-    list_display = [
-        'by',
-        'created',
-        'updated'
-    ]
-
-
-@admin.register(Thread)
-class ThreadModelAdmin(admin.ModelAdmin):
-    list_display = [
-        'by',
         'created',
         'updated'
     ]
@@ -258,6 +239,16 @@ class CampModelAdmin(admin.ModelAdmin):
     list_display = [
         'name',
         'text',
+        'created',
+        'updated'
+    ]
+
+
+@admin.register(SocialLink)
+class SocialLinkModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'link',
         'created',
         'updated'
     ]

@@ -137,6 +137,7 @@ STATICFILES_DIRS = [
 INSTALLED_APPS += [
     'rest_framework',
     'corsheaders',
+    'tinymce',
 ]
 
 if DEBUG:
@@ -161,4 +162,6 @@ except ImportError as e:
 INSTALLED_APPS += [
     'site_data',
     'accounts',
+    'comment',
+    'e_learning'
 ]

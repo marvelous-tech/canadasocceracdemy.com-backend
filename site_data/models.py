@@ -3,8 +3,10 @@ from django.db import models
 from uuid import uuid4
 # Create your models here.
 from django.db.models.signals import pre_save
+from tinymce.models import HTMLField
 
 from accounts.models import Member
+from comment.models import Thread
 from mt_utils import get_logo_path, get_news_image_path, unique_slug_generator, get_gallery_image_path, get_image_path, \
     get_agreement_image_path, get_camp_image_path
 
@@ -14,6 +16,7 @@ class SiteLogo(models.Model):
 
     name = models.CharField(max_length=255)
     image = models.ImageField(upload_to=get_logo_path)
+    for_content = models.CharField(max_length=50)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -29,7 +32,7 @@ class SiteData(models.Model):
     ticket = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     page_name = models.CharField(max_length=255)
-    data = models.TextField()
+    data = HTMLField()
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -37,7 +40,7 @@ class SiteData(models.Model):
     objects = models.Manager()
 
     class Meta:
-        verbose_name_plural = 'Records'
+        verbose_name_plural = 'Site Content Data'
 
     def __str__(self):
         return f"{self.page_name} / {self.ticket}"
@@ -90,35 +93,6 @@ class ContactedVisitor(models.Model):
         return self.name
 
 
-class ThreadReply(models.Model):
-    uuid = models.UUIDField(default=uuid4)
-    by = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='replies')
-    body = models.TextField()
-
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    objects = models.Manager()
-
-    def __str__(self):
-        return self.by
-
-
-class Thread(models.Model):
-    uuid = models.UUIDField(default=uuid4)
-    by = models.CharField(max_length=255)
-    body = models.TextField()
-    replies = models.ManyToManyField(ThreadReply, related_name='comments')
-
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    objects = models.Manager()
-
-    def __str__(self):
-        return self.by
-
-
 class PostCategory(models.Model):
     uuid = models.UUIDField(default=uuid4)
     name = models.CharField(max_length=255)
@@ -137,12 +111,14 @@ class Post(models.Model):
     category = models.ForeignKey(PostCategory, on_delete=models.CASCADE, related_name='newses')
     image = models.ImageField(upload_to=get_news_image_path)
     by = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='newses')
-    name = models.TextField(verbose_name='Title')
-    sub_title = models.TextField()
-    body = models.TextField()
-    footer = models.TextField()
+    name = models.TextField(verbose_name="Title", null=True, blank=True)
+    sub_title = models.TextField(null=True, blank=True)
+    body = HTMLField(null=True, blank=True)
+    footer = HTMLField(null=True, blank=True)
     published_at = models.DateTimeField()
-    comments = models.ManyToManyField(Thread, related_name='post_comments')
+    comments = models.ManyToManyField(Thread, related_name='post_comments', blank=True)
+    is_active = models.BooleanField(default=True)
+    tags = models.TextField(blank=True, null=True)
     slug = models.SlugField(max_length=255, null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
@@ -162,6 +138,7 @@ class Upcoming(models.Model):
     name = models.TextField(verbose_name='Title')
     category = models.ForeignKey(PostCategory, on_delete=models.CASCADE, related_name='upcoming_events')
     schedule = models.DateField()
+    is_active = models.BooleanField(default=True)
     slug = models.SlugField(max_length=255, null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
@@ -176,7 +153,7 @@ class Upcoming(models.Model):
 class FAQ(models.Model):
     uuid = models.UUIDField(default=uuid4)
     name = models.TextField(verbose_name='Question')
-    answer = models.TextField()
+    answer = HTMLField()
     slug = models.SlugField(max_length=255, null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
@@ -209,6 +186,7 @@ class Gallery(models.Model):
     uuid = models.UUIDField(default=uuid4)
     name = models.CharField(max_length=255)
     image = models.ImageField(upload_to=get_gallery_image_path)
+    is_feature = models.BooleanField(default=False)
     slug = models.SlugField(max_length=255, null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
@@ -254,7 +232,7 @@ class Testimonial(models.Model):
     uuid = models.UUIDField(default=uuid4)
 
     name = models.CharField(max_length=255)
-    text = models.TextField()
+    text = HTMLField()
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -331,7 +309,7 @@ class TermAndCondition(models.Model):
     uuid = models.UUIDField(default=uuid4)
 
     name = models.TextField()
-    text = models.TextField()
+    text = HTMLField()
     slug = models.SlugField(max_length=255, null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
@@ -347,7 +325,7 @@ class PrivacyPolicy(models.Model):
     uuid = models.UUIDField(default=uuid4)
 
     name = models.TextField()
-    text = models.TextField()
+    text = HTMLField()
     slug = models.SlugField(max_length=255, null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
@@ -364,7 +342,7 @@ class CampImage(models.Model):
 
     image = models.ImageField(upload_to=get_camp_image_path)
     name = models.TextField()
-    text = models.TextField()
+    text = HTMLField()
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -379,9 +357,25 @@ class Camp(models.Model):
     uuid = models.UUIDField(default=uuid4)
 
     name = models.TextField()
-    text = models.TextField()
+    text = HTMLField()
     images = models.ManyToManyField(CampImage, related_name='camps')
     slug = models.SlugField(max_length=255, null=True, blank=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
+
+
+class SocialLink(models.Model):
+    uuid = models.UUIDField(default=uuid4)
+
+    name = models.TextField()
+    link = models.URLField()
+    logo = models.ImageField(upload_to=get_logo_path)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

@@ -1,0 +1,33 @@
+<div class="blog-details-content">
+    <div class="post-content-details">
+        {% include 'site_data/blog/details/blog-image.html' %}
+        {% include 'site_data/blog/details/blog-title.html' %}
+        {% include 'site_data/blog/details/blog-text.html' %}
+    </div>
+    <div class="blog-share-tag">
+        {% include 'site_data/blog/details/blog-share.html' %}
+    </div>
+    <div class="blog-category ul-li">
+        {% include 'site_data/blog/details/blog-tags.html' %}
+    </div>
+    <div class="author-comment">
+        {% include 'site_data/blog/details/blog-writter.html' %}
+    </div>
+    <div class="next-prev-post">
+        {% include 'site_data/blog/details/blog-navigation.html' %}
+    </div>
+</div>
+
+<div class="blog-recent-post about-teacher-2">
+    <div class="section-title-2  headline text-left">
+        <h2><span>Related</span> News</h2>
+    </div>
+    <div class="recent-post-item">
+        <div class="row">
+
+
+            {% include 'site_data/blog/details/related-blogs.html' %}
+
+        </div>
+    </div>
+</div>

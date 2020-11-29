@@ -4,3 +4,8 @@ MEMBER_TYPE_CHOICES = (
     ('POSTER', 'POSTER'),
     ('MEMBER', 'MEMBER')
 )
+
+USER_PROFILE_TYPE_CHOICES = (
+    ('STUDENT', 'STUDENT'),
+    ('COACH', 'COACH'),
+)

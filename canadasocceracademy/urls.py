@@ -16,14 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from site_data.views import Home as SiteHome
+from site_data.views import Home as SiteHome, About as SiteAbout, Contact as SiteContact, \
+    TeacherList as SiteTeacherList, BlogList as SiteBlogList
 
 urlpatterns = [
+    path('tinymce/', include('tinymce.urls')),
     path('admin/', admin.site.urls),
     path('api/', include([
         path('v1/', include([
             path('site-data/', include('site_data.api.urls_v1', namespace='SITE DATA'))
         ]))
     ])),
-    path('', SiteHome.as_view())
+    path('', SiteHome.as_view(), name="home"),
+    path('about/', SiteAbout.as_view(), name="about"),
+    path('contact/', SiteContact.as_view(), name="contact"),
+    path('teachers/', SiteTeacherList.as_view(), name="teachers"),
+    path('blog/', SiteBlogList.as_view(), name="blog"),
 ]

@@ -4,41 +4,34 @@
         <div class="main-menu">
             <div class="container">
                 <div class="navbar-default">
-                    <div class="navbar-header float-left">
-                        <a class="navbar-brand text-uppercase" href="index-1.html#"><img src="{{ nav_logo.image.url }}"
-                                                                                         alt="logo"></a>
+                    <div class="navbar-header float-left" style="height: 70px">
+                        <a class="navbar-brand text-uppercase font-weight-bold" style="line-height: 60px; color: white" href="index-1.html#">
+                            <img src="http://www.canadasocceracademy.com/wp-content/uploads/2017/02/logo-web.png" style="height: 70px; filter: brightness(200%); margin: 0" alt="Logo">
+                        </a>
                     </div><!-- /.navbar-header -->
 
-                    <div class="select-lang">
-                        <select>
-                            <option value="9" selected="">ENG</option>
-                            <option value="10">BAN</option>
-                            <option value="11">ARB</option>
-                            <option value="12">FRN</option>
-                        </select>
-                    </div>
-                    <div class="cart-search float-right ul-li">
-                        <ul>
-                            <li><a href="index-1.html#"><i class="fas fa-shopping-bag"></i></a></li>
-                            <li>
-                                <button type="button" class="toggle-overlay search-btn">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                                <div class="search-body">
-                                    <div class="search-form">
-                                        <form action="index-1.html#">
-                                            <input class="search-input" type="search" placeholder="Search Here">
-                                            <div class="outer-close toggle-overlay">
-                                                <button type="button" class="search-close">
-                                                    <i class="fas fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+{#                    <div class="cart-search float-right ul-li">#}
+{#                        <ul>#}
+{#                            <li><a href="index-1.html#"><i class="fas fa-shopping-bag"></i></a></li>#}
+{#                            <li>#}
+{#                                <button type="button" class="toggle-overlay search-btn">#}
+{#                                    <i class="fas fa-search"></i>#}
+{#                                </button>#}
+{#                                <div class="search-body">#}
+{#                                    <div class="search-form">#}
+{#                                        <form action="index-1.html#">#}
+{#                                            <input class="search-input" type="search" placeholder="Search Here">#}
+{#                                            <div class="outer-close toggle-overlay">#}
+{#                                                <button type="button" class="search-close">#}
+{#                                                    <i class="fas fa-times"></i>#}
+{#                                                </button>#}
+{#                                            </div>#}
+{#                                        </form>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </li>#}
+{#                        </ul>#}
+{#                    </div>#}
                     <div class="log-in float-right">
                         <a data-toggle="modal" data-target="#myModal" href="index-1.html#">log in</a>
                         <!-- The Modal -->
@@ -95,34 +88,17 @@
                         </div>
                     </div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
-                    <nav class="navbar-menu float-right">
+                    <nav class="navbar-menu float-right vertical-center">
                         <div class="nav-menu ul-li">
                             <ul>
-                                <li class="menu-item-has-children ul-li-block">
-                                    <a href="index-1.html#">Home</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="index-1.html">Home 1</a></li>
-                                        <li><a href="index-2.html">Home 2</a></li>
-                                        <li><a href="index-3.html">Home 3</a></li>
-                                        <li><a href="index-4.html">Home 4</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="shop.html">shop</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
-                                <li class="menu-item-has-children ul-li-block">
-                                    <a href="index-1.html#!">Pages</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="teacher.html">Teacher</a></li>
-                                        <li><a href="teacher-details.html">Teacher Details</a></li>
-                                        <li><a href="blog.html">Blog</a></li>
-                                        <li><a href="blog-single.html">Blog Single</a></li>
-                                        <li><a href="course.html">Course</a></li>
-                                        <li><a href="course-details.html">Course Details</a></li>
-                                        <li><a href="faq.html">FAQ</a></li>
-                                        <li><a href="check-out.html">Check Out</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="{% url 'home' %}">Home</a></li>
+                                <li><a href="{% url 'about' %}">About Us</a></li>
+                                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                                <li><a href="{% url 'teachers' %}">Our team</a></li>
+                                <li><a href="#">Camps</a></li>
+                                <li><a href="#">Courses</a></li>
+                                <li><a href="{% url 'blog' %}">Blog</a></li>
+                                <li><a href="#">Gallery</a></li>
                             </ul>
                         </div>
                     </nav>

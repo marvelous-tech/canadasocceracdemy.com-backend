@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}
     Home
 {% endblock %}
@@ -58,22 +59,22 @@
 		============================================= -->
 
 
-    <!-- Start of best product section
-		============================================= -->
-    <section id="best-product" class="best-product-section home_2">
-        {% include "site_data/home/best-products.html" %}
-    </section>
-    <!-- End  of best product section
-		============================================= -->
-
-
-    <!-- Start of best course
-		============================================= -->
-    <section id="best-course" class="best-course-section">
-        {% include "site_data/home/best-courses.html" %}
-    </section>
-    <!-- End of best course
-		============================================= -->
+{#    <!-- Start of best product section#}
+{#		============================================= -->#}
+{#    <section id="best-product" class="best-product-section home_2">#}
+{#        {% include "site_data/home/best-products.html" %}#}
+{#    </section>#}
+{#    <!-- End  of best product section#}
+{#		============================================= -->#}
+{##}
+{##}
+{#    <!-- Start of best course#}
+{#		============================================= -->#}
+{#    <section id="best-course" class="best-course-section">#}
+{#        {% include "site_data/home/best-courses.html" %}#}
+{#    </section>#}
+{#    <!-- End of best course#}
+{#		============================================= -->#}
 
 
     <!-- Start FAQ section
@@ -83,15 +84,15 @@
     </section>
     <!-- End FAQ section
 		============================================= -->
+<div class="m5" style="min-height: 100px"></div>
 
-
-    <!-- Start Course category
-		============================================= -->
-    <section id="course-category" class="course-category-section home-secound-version">
-        {% include "site_data/home/course-category.html" %}
-    </section>
-    <!-- End Course category
-		============================================= -->
+{#    <!-- Start Course category#}
+{#		============================================= -->#}
+{#    <section id="course-category" class="course-category-section home-secound-version">#}
+{#        {% include "site_data/home/course-category.html" %}#}
+{#    </section>#}
+{#    <!-- End Course category#}
+{#		============================================= -->#}
 
 
     <!-- Start secound testimonial section
@@ -118,4 +119,15 @@
     <section id="contact_secound" class="contact_secound_section backgroud-style">
         {% include "site_data/home/second-contact.html" %}
     </section>
+{% endblock %}
+
+{% block styles %}
+    <style>
+    .banner {
+      height: 100vh;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+    </style>
 {% endblock %}

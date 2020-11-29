@@ -1,0 +1,17 @@
+{% for blog in related_blogs %}
+    <div class="col-md-6">
+        <div class="blog-post-img-content">
+            <div class="blog-img-date relative-position">
+                <div class="blog-thumnile">
+                    <img src="{{ blog.image.url }}" alt="">
+                </div>
+                <div class="course-price text-center gradient-bg">
+                    <span>{{ blog.published_at | date }}</span>
+                </div>
+            </div>
+            <div class="blog-title-content headline">
+                <h3><a href="blog-single.html#">{{ blog.name | title }}</a></h3>
+            </div>
+        </div>
+    </div>
+{% endfor %}
