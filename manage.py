@@ -19,6 +19,4 @@ def main():
 
 
 if __name__ == '__main__':
-    import dotenv
-    dotenv.read_dotenv()
     main()
