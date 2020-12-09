@@ -17,6 +17,7 @@ import debug_toolbar
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import path, include, re_path, reverse
 
@@ -32,13 +33,13 @@ from site_data.views import Home as SiteHome, About as SiteAbout, Contact as Sit
 @login_required
 def to_e_learning_platform(request):
     if settings.ON_UPLOADED is True:
-        return reverse('Home E-Learning')
+        return HttpResponseRedirect(reverse('Home E-Learning'))
     return redirect(settings.E_LEARNING_PLATFORM)
 
 
 def to_registration_platform(request):
     if settings.ON_UPLOADED is True:
-        return reverse('Home Registration')
+        return HttpResponseRedirect(reverse('Home Registration'))
     if request.user.is_authenticated:
         logout(request)
     return redirect(settings.REGISTRATION_PLATFORM)
