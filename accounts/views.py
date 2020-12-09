@@ -24,6 +24,7 @@ from payments.models import PaymentMethodToken
 
 
 def home_registration(request, *args, **kwargs):
+    logout(request)
     return render(request, 'accounts/home.html')
 
 
