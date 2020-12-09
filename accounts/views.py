@@ -247,7 +247,7 @@ def enroll(request, token):
         message='Already subscribed',
         level=messages.INFO
     )
-    return HttpResponseRedirect(reverse('secure_accounts:Subscriptions'))
+    return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
 
 
 @login_required
