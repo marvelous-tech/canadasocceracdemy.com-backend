@@ -12,9 +12,13 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import datetime
 
-import dotenv
-dotenv.read_dotenv()
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives.asymmetric import ec
+from cryptography.hazmat.primitives import serialization
+import braintree
+import storages.backends.s3boto3
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -159,14 +163,14 @@ else:
         r"^https://\w+\.canadasocceracademy\.com$",
     ]
 
-
-# Import REST Framework Settings
-
-try:
-    from canadasocceracademy.rest_settings import *
-    from canadasocceracademy.project_settings import *
-except ImportError as e:
-    print(e)
+#
+# # Import REST Framework Settings
+#
+# try:
+#     from canadasocceracademy.rest_settings import *
+#     from canadasocceracademy.project_settings import *
+# except ImportError as e:
+#     print(e)
 
 
 # APPS
@@ -179,3 +183,130 @@ INSTALLED_APPS += [
     'payments',
     'email_client'
 ]
+
+def utf8(s: bytes):
+    return str(s, 'utf-8')
+
+
+private_key = ec.generate_private_key(
+    ec.SECP521R1(),
+    backend=default_backend()
+)
+public_key = private_key.public_key()
+
+
+private_pem = private_key.private_bytes(
+    encoding=serialization.Encoding.PEM,
+    format=serialization.PrivateFormat.PKCS8,
+    encryption_algorithm=serialization.NoEncryption()
+)
+
+public_pem = public_key.public_bytes(
+    encoding=serialization.Encoding.PEM,
+    format=serialization.PublicFormat.SubjectPublicKeyInfo
+)
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+SITE_ID = 1
+REST_USE_JWT = True
+
+print(DEBUG)
+
+JWT_AUTH = {
+    'JWT_ENCODE_HANDLER':
+    'rest_framework_jwt.utils.jwt_encode_handler',
+
+    'JWT_DECODE_HANDLER':
+    'rest_framework_jwt.utils.jwt_decode_handler',
+
+    'JWT_PAYLOAD_HANDLER':
+    'rest_framework_jwt.utils.jwt_payload_handler',
+
+    'JWT_PAYLOAD_GET_USER_ID_HANDLER':
+    'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
+
+    'JWT_RESPONSE_PAYLOAD_HANDLER':
+    'rest_framework_jwt.utils.jwt_response_payload_handler',
+
+    'JWT_SECRET_KEY': SECRET_KEY,
+    'JWT_GET_USER_SECRET_KEY': None,
+    'JWT_PUBLIC_KEY': None if DEBUG else  public_pem,
+    'JWT_PRIVATE_KEY': None if DEBUG else  private_pem,
+    'JWT_ALGORITHM': 'HS256' if DEBUG else 'ES512',
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_LEEWAY': 0,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=365),
+    'JWT_AUDIENCE': None,
+    'JWT_ISSUER': None,
+
+    'JWT_ALLOW_REFRESH': False,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+    'JWT_AUTH_COOKIE': None,
+
+}
+
+ROOT_HOSTCONF = 'canadasocceracademy.hosts'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_HOST = "www"
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = 'marvelous-tech'
+AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
+AWS_S3_CUSTOM_DOMAIN = 'marvelous-tech.nyc3.cdn.digitaloceanspaces.com'
+
+AWS_DEFAULT_ACL = 'public-read'
+
+# MEDIA_URL = '{}/{}/'.format('https://marvelous-tech.nyc3.cdn.digitaloceanspaces.com', 'media')
+
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': ["lists", "advlist", "link", "image", "charmap", "print", "preview", "anchor", "searchreplace",
+                "visualblocks", "code", "fullscreen", "insertdatetime", "mdeia", "table", "paste", "help", "wordcount",
+                ],
+    'toolbar': "formatselect | fontselect | bold italic strikethrough forecolor backcolor formatpainter | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | link insertfile image | removeformat | code | addcomment | checklist | casechange",
+    'height': 360
+}
+
+# AWS_S3_SIGNATURE_VERSION = 's3v4'
+#
+# AWS_QUERYSTRING_EXPIRE = '100'
+
+BRAINTREE_MERCHANT_ID = os.environ.get('MID')
+BRAINTREE_PRIVATE_KEY = os.environ.get('PRK')
+BRAINTREE_PUBLIC_KEY = os.environ.get('PBK')
+BRAINTREE_ENVIRONMENT = braintree.Environment.Sandbox \
+    if os.environ.get('BEV') == 's' else \
+    braintree.Environment.Production
+
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
+TOKEN_EXPIRATION_TIMEDELTA = datetime.timedelta(days=1)
+
+E_LEARNING_PLATFORM = 'http://localhost:7000/e-learning/'
+REGISTRATION_PLATFORM = 'http://localhost:4200/registration/'
+
+DEC_LOADER = "disposable_email_checker.emails.email_domain_loader"
+
+SERVER = 'http://127.0.0.1:8000'
+
+if ON_UPLOADED:
+    E_LEARNING_PLATFORM = 'https://website.canadasocceracademy.com/e-learning/'
+    REGISTRATION_PLATFORM = 'https://website.canadasocceracademy.com/registration/'
+    SERVER = 'https://website.canadasocceracademy.com'
+
+
