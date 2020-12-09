@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canadasocceracademy.com :: {% block title %}
+
+    {% endblock %}</title>
+
+    {% include "anon/styles.html" %}
+    {% block styles %}
+
+    {% endblock %}
+</head>
+<body class="hold-transition {% block page %}
+
+{% endblock %}">
+<!-- Automatic element centering -->
+<div class="mt-5 notification position-sticky text-center d-block" style="top: 0;">
+
+{% include "dashboard/notifications.html" %}
+</div>
+{% block content %}
+
+{% endblock %}
+{% include "anon/scripts.html" %}
+{% block scripts %}
+
+{% endblock %}
+</body>
+</html>

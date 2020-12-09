@@ -29,6 +29,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY') or 'HEY MAN!!!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if os.environ.get('DEBUG') == 'false' else True
 
+ON_UPLOADED = False if os.environ.get('ON_UPLOADED') == 'false' else True
+
 HOSTS = os.environ.get('ALLOWED_HOSTS')
 
 ALLOWED_HOSTS = HOSTS.split(',') if HOSTS else []
@@ -54,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'canadasocceracademy.urls'
@@ -135,10 +138,19 @@ STATICFILES_DIRS = [
 
 
 INSTALLED_APPS += [
+    'debug_toolbar',
+    'django.contrib.sites',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'tinymce',
+    'rest_auth',
+    'django_hosts',
+    'private_storage',
+    'phonenumber_field',
 ]
+
+INTERNAL_IPS = ("127.0.0.1", "172.17.0.1")
 
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
@@ -163,5 +175,7 @@ INSTALLED_APPS += [
     'site_data',
     'accounts',
     'comment',
-    'e_learning'
+    'e_learning',
+    'payments',
+    'email_client'
 ]

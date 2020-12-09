@@ -1,13 +1,20 @@
 <component name="ProjectDictionaryState">
   <dictionary name="fahim">
     <words>
+      <w>allauth</w>
+      <w>authtoken</w>
+      <w>braintree</w>
       <w>canadasocceracademy</w>
       <w>corsheaders</w>
+      <w>endblock</w>
       <w>ffmpeg</w>
       <w>ffprobe</w>
       <w>regexes</w>
+      <w>socceracademy</w>
       <w>tinymce</w>
+      <w>uidb</w>
       <w>videofield</w>
+      <w>webhook</w>
     </words>
   </dictionary>
 </component>

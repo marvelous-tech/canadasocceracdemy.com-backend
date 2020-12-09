@@ -1,0 +1,23 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+        <div class="col-md-4">
+          <div class="card text-center shadow">
+            <div class="card-header">
+              <h4 class="text-muted">CODE: {{package.name}}</h4>
+              <h5>{{package.amount}} {{package.cycle}}</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 border p-3">
+          <p>{{package.description_box}}</p>
+            <form method="post">
+                {% csrf_token %}
+                <input href="#" class="btn btn-primary float-right" type="submit" value="Subscribe">
+            </form>
+        </div>
+      </div>
+    </div>
+{% endblock %}

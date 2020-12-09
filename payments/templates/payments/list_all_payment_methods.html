@@ -1,0 +1,46 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+    <div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="{% url 'payments:Add Payment Method' %}" class="btn btn-primary" style="margin-bottom: 50px; margin-top: 20px">Add a method</a>
+            <div class="table-responsive">
+                {% if total %}
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Payment Method Name</th>
+                            <th>Details</th>
+                            <th>Holder Name</th>
+                            <th>Expiration month/year</th>
+                            <th>Verified</th>
+                            <th>Default</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for method in methods %}
+                            <tr>
+                                <td>{{ method.name }}</td>
+                                <td><img style="filter: grayscale(100%); width: 45px" src="{{ method.image_url }}" alt=""> {{ method.bin }}*******{{ method.card_last_digits }}</td>
+                                <td>{{ method.cardholder_name }}</td>
+                                <td>{{ method.expiration_month }}/{{ method.expiration_year }}</td>
+                                <td>{{ method.is_verified }}</td>
+                                <td>{{ method.is_default }}</td>
+                                <td>
+                                    <form action="{% url 'payments:Delete Payment Method' %}" method="post">
+                                        <input type="hidden" value="{{ method.uuid }}" name="id">
+                                        {% csrf_token %}
+                                        <input type="submit" class="btn btn-danger" value="Delete">
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

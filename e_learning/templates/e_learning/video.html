@@ -1,0 +1,75 @@
+{% extends 'dashboard/base.html' %}
+
+{% block styles %}
+<link href="https://vjs.zencdn.net/7.10.2/video-js.css" rel="stylesheet" />
+{% endblock %}
+
+{% block title %}
+{{ category_name }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9">
+             <video
+                id="my-video"
+                class="video-js"
+                controls
+                preload="auto"
+                width="auto"
+                height="auto"
+                fluid="true"
+                poster="{{ video_obj.thumbnail }}"
+                data-setup="{}"
+              >
+                <source src="{{ video_obj.video }}" type="video/mp4" />
+                <p class="vjs-no-js">
+                  To view this video please enable JavaScript, and consider upgrading to a
+                  web browser that
+                  <a href="https://videojs.com/html5-video-support/" target="_blank"
+                    >supports HTML5 video</a
+                  >
+                </p>
+              </video>
+        </div>
+        <div class="col-lg-3">
+            {% for video in videos %}
+                <div class="video mb-3 px-3">
+                    <img
+                            class="img-fluid"
+                            src="{% if video.thumbnail %}{{ video.thumbnail }}{% else %}https://cdn.dribbble.com/users/17914/screenshots/4902225/video-placeholder.png{% endif %}" alt="" >
+                <a class="font-weight-bolder text-decoration-none" href="{% url 'e_learning_view:Course video' slug=category_slug selected_video_slug=video.slug %}">{{ video.name }}</a>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://vjs.zencdn.net/7.10.2/video.js"></script>
+    <script>
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+    document.onkeydown = function(e) {
+  if(event.keyCode == 123) {
+     return false;
+  }
+  if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+     return false;
+  }
+  if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+     return false;
+  }
+  if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+     return false;
+  }
+  if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+     return false;
+  }
+}
+    </script>
+{% endblock %}

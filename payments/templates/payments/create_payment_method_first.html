@@ -1,0 +1,85 @@
+{% extends 'dashboard/base.html' %}
+
+{% block styles %}
+    <script src="https://js.braintreegateway.com/web/dropin/1.25.0/js/dropin.min.js"></script>
+
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-8 col-sm-12">
+            <form id="payment-form" action="" method="post">
+                <div id="dropin-container"></div>
+                {% csrf_token %}
+                <input type="submit" class="btn btn-primary btn-lg">
+                <input type="hidden" id="nonce" name="payment_method_nonce"/>
+            </form>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+
+
+        const form = document.getElementById('payment-form');
+
+        braintree.dropin.create({
+            authorization: '{{ client_token }}',
+            paypal: {
+                flow: 'checkout',
+                buttonStyle: {
+                    color: 'blue',
+                    shape: 'rect',
+                    size: 'medium'
+                }
+            },
+            container: '#dropin-container',
+            card: {
+                cardholderName: {
+                    required: true
+                    // to make cardholder name required
+                    // required: true
+                },
+                overrides: {
+                    styles: {
+                        input: {
+                            color: 'blue',
+                            'font-size': '18px'
+                        },
+                        '.number': {
+                            'font-family': 'monospace'
+                            // Custom web fonts are not supported. Only use system installed fonts.
+                        },
+                        '.invalid': {
+                            color: 'red'
+                        }
+                    }
+                },
+                cvv: {
+                    required: true
+                }
+            }
+        }, (error, dropinInstance) => {
+            if (error) console.error(error);
+
+            form.addEventListener('submit', event => {
+                event.preventDefault();
+
+                dropinInstance.requestPaymentMethod((error, payload) => {
+                    if (error) console.error(error);
+
+                    // Step four: when the user is ready to complete their
+                    //   transaction, use the dropinInstance to get a payment
+                    //   method nonce for the user's selected payment method, then add
+                    //   it a the hidden field before submitting the complete form to
+                    //   a server-side integration
+                    document.getElementById('nonce').value = payload.nonce;
+                    form.submit();
+                });
+            });
+        });
+    </script>
+{% endblock %}

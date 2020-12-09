@@ -6,7 +6,7 @@ from e_learning.models import \
     CoursePackage, \
     CoursePlaylist, \
     CourseVideoMark, \
-    CourseVideo
+    CourseVideo, CourseVideoHistory
 
 
 @admin.register(CourseCategory)
@@ -48,6 +48,11 @@ class CourseVideoMarkModelAdmin(admin.ModelAdmin):
         'created',
         'updated'
     ]
+
+
+@admin.register(CourseVideoHistory)
+class CourseVideoHistoryModelAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(CourseVideo)

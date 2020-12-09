@@ -1,5 +1,6 @@
 from django.contrib import admin
-from accounts.models import Member
+from accounts.models import Member, UserProfile, MockPackages
+
 
 # Register your models here.
 
@@ -10,4 +11,24 @@ class MemberModelAdmin(admin.ModelAdmin):
         'user',
         'phone',
         'type'
+    ]
+
+
+@admin.register(UserProfile)
+class UserProfileModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'user',
+        'phone',
+        'package',
+        'type'
+    ]
+
+
+@admin.register(MockPackages)
+class MockPackagesModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'amount_text',
+        'created',
+        'updated'
     ]

@@ -10,6 +10,7 @@ class ThreadReply(models.Model):
     uuid = models.UUIDField(default=uuid4)
     by = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='replies')
     body = models.TextField()
+    is_deleted = models.BooleanField(default=False)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -18,6 +19,11 @@ class ThreadReply(models.Model):
 
     def __str__(self):
         return self.by
+
+    def delete(self, using=None, keep_parents=False):
+        if self.is_deleted is False:
+            self.is_deleted = True
+            self.save()
 
 
 class Thread(models.Model):
@@ -25,6 +31,7 @@ class Thread(models.Model):
     by = models.CharField(max_length=255)
     body = models.TextField()
     replies = models.ManyToManyField(ThreadReply, related_name='comments')
+    is_deleted = models.BooleanField(default=False)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -33,3 +40,8 @@ class Thread(models.Model):
 
     def __str__(self):
         return self.by
+
+    def delete(self, using=None, keep_parents=False):
+        if self.is_deleted is False:
+            self.is_deleted = True
+            self.save()

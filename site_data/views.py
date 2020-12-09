@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
+from accounts.models import MockPackages
 from site_data.models import Post, SiteLogo, Email, ContactNumber, Address, BannerImage, Upcoming, SocialLink, SiteData, \
     Gallery
 
@@ -83,6 +84,7 @@ class Home(TemplateView):
         context = {
             'banner_logos': banner_logos,
             'banner_images': BannerImage.objects.all(),
+            'mock_courses': MockPackages.objects.filter(is_deleted=False),
             **get_default_contexts(),
             **get_recent_posts(),
             **get_recent_upcoming()
