@@ -223,7 +223,7 @@ def enroll(request, token):
                     message='Successfully enrolled to ' + package.name,
                     level=messages.SUCCESS
                 )
-                return HttpResponseRedirect(reverse('secure_accounts:Subscriptions'))
+                return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
             messages.add_message(
                 request=request,
                 message='Error occurred while creating the subscription!!!',
@@ -241,7 +241,7 @@ def enroll(request, token):
             message='Already subscribed to this package',
             level=messages.INFO
         )
-        return HttpResponseRedirect(reverse('secure_accounts:Subscriptions'))
+        return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
     messages.add_message(
         request=request,
         message='Already subscribed',
@@ -281,7 +281,7 @@ def migrate(request, token):
                 message='Already subscribed to this package',
                 level=messages.INFO
             )
-            return HttpResponseRedirect(reverse('secure_accounts:Subscriptions'))
+            return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
 
         try:
             customer_uuid = request.user.user_profile.uuid
@@ -325,7 +325,7 @@ def migrate(request, token):
                     message='No previous subscription found',
                     level=messages.WARNING
                 )
-                return HttpResponseRedirect(reverse('secure_accounts:Subscriptions'))
+                return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
             result = gateway.update_subscription(
                 subscription_id=subscription_id,
                 plan_id=package.name
@@ -338,7 +338,7 @@ def migrate(request, token):
                     message='Successfully migrated to ' + package.name,
                     level=messages.SUCCESS
                 )
-                return HttpResponseRedirect(reverse('secure_accounts:Subscriptions'))
+                return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
             messages.add_message(
                 request=request,
                 message='Error occurred while migrating the subscription!!!',
@@ -353,7 +353,7 @@ def migrate(request, token):
         message='Must be subscribed to a course',
         level=messages.ERROR
     )
-    return HttpResponseRedirect(reverse('secure_accounts:Subscriptions'))
+    return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
 
 
 @login_required
@@ -387,7 +387,7 @@ def cancel_subscriptions(request):
                 message='The subscription has been canceled!!!',
                 level=messages.WARNING
             )
-            return HttpResponseRedirect(reverse('secure_accounts:Subscriptions'))
+            return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
         else:
             messages.add_message(
                 request=request,
