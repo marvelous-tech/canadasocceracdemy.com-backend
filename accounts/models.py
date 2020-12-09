@@ -10,6 +10,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.core import signing
 from phonenumber_field.modelfields import PhoneNumberField
+from tinymce.models import HTMLField
 
 from accounts.api.tokens import account_activation_token
 from choices import MEMBER_TYPE_CHOICES, USER_PROFILE_TYPE_CHOICES, CYCLE_TYPE_CHOICES
@@ -42,7 +43,7 @@ class CoursePackage(models.Model):
     uuid = models.UUIDField(default=uuid4)
     name = models.CharField(max_length=255)
     amount = models.FloatField(default=0.0)
-    description_box = models.TextField(blank=True, null=True)
+    description_box = HTMLField(blank=True, null=True)
     slug = models.SlugField(blank=True, null=True)
     cycle = models.CharField(max_length=50, choices=CYCLE_TYPE_CHOICES, default="MONTHLY")
     image = models.ImageField(upload_to=get_package_feature_image_path, blank=True, null=True)
@@ -64,7 +65,7 @@ class MockPackages(models.Model):
     uuid = models.UUIDField(default=uuid4)
     name = models.CharField(max_length=255)
     amount_text = models.CharField(max_length=255)
-    description_box = models.TextField(blank=True, null=True)
+    description_box = HTMLField(blank=True, null=True)
     image = models.ImageField(upload_to=get_package_feature_image_path, null=True)
     packages = models.ManyToManyField(CoursePackage, related_name='mocks', blank=True)
     is_deleted = models.BooleanField(default=False)
