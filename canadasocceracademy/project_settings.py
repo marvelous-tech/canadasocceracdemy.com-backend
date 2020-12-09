@@ -5,6 +5,9 @@ import braintree
 import storages.backends.s3boto3
 from django.conf import settings
 
+import dotenv
+dotenv.read_dotenv()
+
 ROOT_HOSTCONF = 'canadasocceracademy.hosts'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

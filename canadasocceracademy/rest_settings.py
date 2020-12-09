@@ -6,6 +6,9 @@ from cryptography.hazmat.primitives.asymmetric import ec
 from cryptography.hazmat.primitives import serialization
 from django.conf import settings
 
+import dotenv
+dotenv.read_dotenv()
+
 
 def utf8(s: bytes):
     return str(s, 'utf-8')
