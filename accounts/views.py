@@ -373,7 +373,7 @@ def cancel_subscriptions(request):
                 message='No previous subscription found',
                 level=messages.WARNING
             )
-            return HttpResponseRedirect(reverse('secure_accounts:Subscriptions'))
+            return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
         result = gateway.cancel_subscription(subscription_id=subscription_id)
         if result.is_success:
             user_profile = request.user.user_profile
