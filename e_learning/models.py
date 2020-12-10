@@ -93,7 +93,6 @@ class CourseVideo(models.Model):
     name = models.CharField(max_length=255, verbose_name='Title')
     sub_title = models.CharField(max_length=255, blank=True, null=True)
     description_box = models.TextField(blank=True, null=True)
-    upload_id = models.CharField(max_length=255, blank=True, null=True)
     video = VideoField(upload_to=get_course_video_path, blank=True, null=True)
     thumbnail = models.ImageField(upload_to=get_course_video_thumbnail_path, blank=True, null=True)
     cc = models.FileField(upload_to=get_course_video_cc_path, blank=True, null=True)
