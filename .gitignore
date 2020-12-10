@@ -142,3 +142,5 @@ cython_debug/
 
 nginx/
 
+chunked_uploads/
+

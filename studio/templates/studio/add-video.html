@@ -12,8 +12,8 @@
         <div class="col-lg-12">
 
             {% csrf_token %}
-            <div class="progress mb-2" style="height: 10px">
-                <div id="progress" class="progress-bar" role="progressbar"
+            <div class="progress mb-2">
+                <div id="progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
                      aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                 </div>
             </div>
@@ -85,11 +85,11 @@
                     );
                 }
                 var progress = parseInt(data.loaded / data.total * 100.0, 10);
-                $("#progress").width(progress + '%');
+                $("#progress").width(progress + '%').text(progress + "%");
             },
             done: function (e, data) {
                 $("#id_upload_id").val(data.result.upload_id); // Called when the file has completely uploaded
-                $("#progress").addClass("bg-success");
+                $("#progress").removeClass("progress-bar-striped").removeClass("progress-bar-animated").addClass("bg-success").text("Uploaded initial video. Submit the form.");
                 $.ajax({
                     type: "POST",
                     url: "{% url 'api_chunked_upload_complete' %}",
