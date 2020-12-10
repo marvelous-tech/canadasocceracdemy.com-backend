@@ -1,0 +1,33 @@
+{% extends "studio/base.html" %}
+{% block title %}
+Videos
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>ALL VIDEOS</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Package</th>
+                            <th>Uploaded at</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for video in videos %}
+                          <tr class="small">
+                            <td>{{ video.name }}</td>
+                            <td>{{ video.category.name }}</td>
+                            <td>{{ video.package.name }}</td>
+                            <td>{{ video.created }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -28,6 +28,7 @@ from django.contrib.auth import logout
 
 from site_data.views import Home as SiteHome, About as SiteAbout, Contact as SiteContact, \
     TeacherList as SiteTeacherList, BlogList as SiteBlogList
+from upload_chunk_video.views import ChunkedUploadDemo, MyChunkedUploadCompleteView, MyChunkedUploadView
 
 
 @login_required
@@ -46,6 +47,8 @@ def to_registration_platform(request):
 
 
 urlpatterns = [
+    path('studio/', include('studio.urls', namespace='studio')),
+    re_path(r'^progressbarupload/', include('progressbarupload.urls')),
     path('to-registration-platform/', to_registration_platform, name="to_registration_platform"),
     path('to-elearning-platform/', to_e_learning_platform, name="to_e_learning_platform"),
     path('e-learning/', home_e_learning, name="Home E-Learning"),
@@ -78,4 +81,7 @@ urlpatterns = [
     path('teachers/', SiteTeacherList.as_view(), name="teachers"),
     path('blog/', SiteBlogList.as_view(), name="blog"),
     re_path('^private-media/', include('private_storage.urls')),
+    path('', ChunkedUploadDemo.as_view(), name='chunked_upload'),
+    path('api/chunked_upload_complete/', MyChunkedUploadCompleteView.as_view(), name='api_chunked_upload_complete'),
+    path('api/chunked_upload/', MyChunkedUploadView.as_view(), name='api_chunked_upload'),
 ]

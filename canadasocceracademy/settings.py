@@ -154,7 +154,16 @@ INSTALLED_APPS += [
     'django_hosts',
     'private_storage',
     'phonenumber_field',
+    'django_q',
+    'crispy_forms',
+    'chunked_upload',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+CHUNKED_UPLOAD_PATH = 'chunked_uploads'
+
+CHUNKED_UPLOAD_STORAGE_CLASS = 'django.core.files.storage.FileSystemStorage'
 
 INTERNAL_IPS = ("127.0.0.1", "172.17.0.1")
 
@@ -183,8 +192,10 @@ INSTALLED_APPS += [
     'comment',
     'e_learning',
     'payments',
-    'email_client'
+    'email_client',
+    'studio',
 ]
+
 
 def utf8(s: bytes):
     return str(s, 'utf-8')
