@@ -37,7 +37,7 @@ def save_from_disk_to_storage_server(upload_id, video_id):
 def add_course_video(request):
     if request.user.is_staff or request.user.is_superuser:
         if request.method == "POST":
-            form = CourseVideoModelForm(data=request.POST)
+            form = CourseVideoModelForm(data=request.POST, files=request.FILES)
             if form.is_valid():
                 instance = form.save()
                 print(form.data.get('upload_id'))
