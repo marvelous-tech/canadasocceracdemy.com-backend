@@ -1,4 +1,5 @@
 {% extends 'studio/base.html' %}
+{% load static %}
 {% block title %}
     Upload Video
 {% endblock %}
@@ -25,14 +26,14 @@
     </div>
 {% endblock %}
 {% block scripts %}
-    <script src="/static/studio/js/jquery.js"></script>
-    <script src="/static/studio/js/jquery.ui.widget.js"></script>
+    <script src="{% static 'studio/js/jquery.js' %}"></script>
+    <script src="{% static 'studio/js/jquery.ui.widget.js' %}"></script>
     <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
-    <script src="/static/studio/js/jquery.iframe-transport.js"></script>
+    <script src="{% static 'studio/js/jquery.iframe-transport.js' %}"></script>
     <!-- The basic File Upload plugin -->
-    <script src="/static/studio/js/jquery.fileupload.js"></script>
+    <script src="{% static 'studio/js/jquery.fileupload.js' %}"></script>
     <!-- Calculate md5 -->
-    <script src="/static/studio/js/spark-md5.js"></script>
+    <script src="{% static 'studio/js/spark-md5.js' %}"></script>
     <script type="text/javascript">
         var md5 = "",
             csrf = $("input[name='csrfmiddlewaretoken']")[0].value,
