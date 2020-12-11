@@ -77,6 +77,7 @@
                 form_data.splice(1);
                 calculate_md5(data.files[0], 100000);  // Again, chunks of 100 kB
                 data.submit();
+                $("#progress").addClass("progress-bar-striped").addClass("progress-bar-animated").removeClass("bg-success").text("");
             },
             chunkdone: function (e, data) { // Called after uploading each chunk
                 if (form_data.length < 2) {

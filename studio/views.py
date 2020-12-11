@@ -60,7 +60,7 @@ def add_course_video(request):
 def all_videos(request):
     if request.method == "GET":
         if request.user.is_staff:
-            videos = CourseVideo.objects.select_related('category', 'package')
+            videos = CourseVideo.objects.select_related('category', 'package').order_by('-id')
             context = {
                 'videos': videos
             }
