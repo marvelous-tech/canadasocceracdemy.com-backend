@@ -61,7 +61,7 @@ class CourseVideoQueryset(models.QuerySet):
 
     @staticmethod
     def get_course_videos_by_package_points(queryset, package_points) -> models.QuerySet:
-        return queryset.filter(package__ponits__lte=package_points)
+        return queryset.filter(package__points__lte=package_points)
 
     @staticmethod
     def get_course_videos_by_package_points_by_category_id(queryset, package_points, category_id) -> models.QuerySet:
@@ -107,12 +107,12 @@ class CoursePlaylistQuerySet(models.QuerySet):
             'videos__comments', 'videos__marks', 'videos__instructors', 'videos__category', 'videos__package')
 
     @staticmethod
-    def get_playlists_by_package_points(queryset, package_id):
-        return queryset.filter(videos__package_id__lte=package_id)
+    def get_playlists_by_package_points(queryset, package_points):
+        return queryset.filter(videos__package__points__lte=package_points)
 
     @staticmethod
-    def get_playlist_by_package_points_by_slug(queryset, package_id, playlist_slug):
-        return get_object_or_404(CoursePlaylistQuerySet.get_playlists_by_package_points(queryset, package_id), slug=playlist_slug)
+    def get_playlist_by_package_points_by_slug(queryset, package_points, playlist_slug):
+        return get_object_or_404(CoursePlaylistQuerySet.get_playlists_by_package_points(queryset, package_points), slug=playlist_slug)
 
 
 class CoursePlaylist(models.Model):
