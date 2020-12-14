@@ -20,11 +20,6 @@ class ThreadReply(models.Model):
     def __str__(self):
         return self.by
 
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
-
 
 class Thread(models.Model):
     uuid = models.UUIDField(default=uuid4)
@@ -40,8 +35,3 @@ class Thread(models.Model):
 
     def __str__(self):
         return self.by
-
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()

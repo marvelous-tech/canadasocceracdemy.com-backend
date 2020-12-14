@@ -33,11 +33,6 @@ class Member(models.Model):
     def __str__(self):
         return self.user.username
 
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
-
 
 class CoursePackage(models.Model):
     uuid = models.UUIDField(default=uuid4)
@@ -56,11 +51,6 @@ class CoursePackage(models.Model):
     def __str__(self):
         return self.name
 
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
-
 
 class MockPackages(models.Model):
     uuid = models.UUIDField(default=uuid4)
@@ -76,11 +66,6 @@ class MockPackages(models.Model):
 
     def __str__(self):
         return self.name
-
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
 
 
 class UserProfile(models.Model):
@@ -100,11 +85,6 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
 
     def expire_the_user(self):
         if self.is_expired is False:

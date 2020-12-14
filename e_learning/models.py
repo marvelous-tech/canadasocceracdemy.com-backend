@@ -27,11 +27,6 @@ class Comment(models.Model):
     def __str__(self):
         return self.uuid
 
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
-
 
 class CourseCategory(models.Model):
     uuid = models.UUIDField(default=uuid4)
@@ -46,11 +41,6 @@ class CourseCategory(models.Model):
     def __str__(self):
         return self.name
 
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
-
 
 class CourseVideoMark(models.Model):
     uuid = models.UUIDField(default=uuid4)
@@ -63,11 +53,6 @@ class CourseVideoMark(models.Model):
 
     def __str__(self):
         return str(self.uuid)
-
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
 
 
 class CourseVideoQueryset(models.QuerySet):
@@ -115,11 +100,6 @@ class CourseVideo(models.Model):
     def __str__(self):
         return self.name
 
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
-
 
 class CoursePlaylistQuerySet(models.QuerySet):
     def queryset(self) -> models.QuerySet:
@@ -151,11 +131,6 @@ class CoursePlaylist(models.Model):
     def __str__(self):
         return self.name
 
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
-
 
 class WatchLetterPlaylist(models.Model):
     uuid = models.UUIDField(default=uuid4)
@@ -170,11 +145,6 @@ class WatchLetterPlaylist(models.Model):
 
     def __str__(self):
         return self.uuid
-
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
 
 
 class CourseVideoHistory(models.Model):
@@ -192,11 +162,6 @@ class CourseVideoHistory(models.Model):
     def __str__(self):
         return str(self.uuid)
 
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
-
 
 class ThumbUpUserVideo(models.Model):
     uuid = models.UUIDField(default=uuid4)
@@ -209,11 +174,6 @@ class ThumbUpUserVideo(models.Model):
 
     def __str__(self):
         return self.user.uuid
-
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
 
 
 def pre_save_receiver_slug(sender, instance, *args, **kwargs):
