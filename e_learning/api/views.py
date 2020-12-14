@@ -15,16 +15,14 @@ from e_learning.models import CourseVideo, CoursePlaylist, CourseCategory, Watch
 
 @api_view(['GET'])
 def get_video(request, slug):
-    package_id = request.user.user_profile.package_id
+    package_points = request.user.user_profile.package.points
     user_id = request.user.id
     queryset = CourseVideo.objects.queryset().prefetch_related('views')
-    queryset = CourseVideo.objects.get_course_videos_by_package_id(queryset, package_id)
+    queryset = CourseVideo.objects.get_course_videos_by_package_points(queryset, package_points)
     instance = get_object_or_404(queryset, slug=slug)
     serializer = CourseVideoSingleSerializer(instance=instance, context={'user_id': user_id})
     return Response(serializer.data)
 
-
-# TODO: add views [post_comment, save_to_watch_letter, thumb_up_video, add_user_video_watch_history]
 
 @api_view(['POST'])
 def post_comment(request):
@@ -37,20 +35,20 @@ def post_comment(request):
 
 @api_view(['GET'])
 def get_videos_by_playlist_slug(request, playlist_slug):
-    package_id = request.user.user_profile.package_id
+    package_points = request.user.user_profile.package.points
     queryset = CoursePlaylist.objects.prefetch_related('videos__instructors__user', 'videos__views')
-    instance = CoursePlaylist.objects.get_playlist_by_package_id_by_slug(queryset, package_id, playlist_slug)
+    instance = CoursePlaylist.objects.get_playlist_by_package_points_by_slug(queryset, package_points, playlist_slug)
     serializer = CourseVideoListingSerializer(instance=instance.videos.all(), many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
 def get_videos_by_category_slug(request, category_slug):
-    package_id = request.user.user_profile.package_id
+    package_points = request.user.user_profile.package.points
     queryset = CourseVideo.objects.prefetch_related('instructors__user', 'views')
     category: CourseCategory = get_object_or_404(CourseCategory.objects.all(), slug=category_slug)
-    queryset = CourseVideo.objects.get_course_videos_by_package_id_by_category_id(queryset, package_id,
-                                                                                  category.id)
+    queryset = CourseVideo.objects.get_course_videos_by_package_points_by_category_id(queryset, package_points,
+                                                                                      category.id)
     serializer = CourseVideoListingSerializer(instance=queryset, many=True)
     return Response(serializer.data)
 
@@ -76,7 +74,7 @@ def add_to_watch_letter_api_view(request):
 @api_view(['GET'])
 def get_all_playlist_api_view(request):
     queryset = CoursePlaylist.objects.prefetch_related('videos__package')\
-        .filter(videos__package_id__lte=request.user.user_profile.package_id)
+        .filter(videos__package__points__lte=request.user.user_profile.package.points)
     serializer = PlaylistSerializer(instance=queryset, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 

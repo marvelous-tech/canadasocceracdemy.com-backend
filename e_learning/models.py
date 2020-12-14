@@ -60,17 +60,17 @@ class CourseVideoQueryset(models.QuerySet):
         return self.select_related('category', 'package').prefetch_related('comments', 'marks', 'instructors__user')
 
     @staticmethod
-    def get_course_videos_by_package_id(queryset, package_id) -> models.QuerySet:
-        return queryset.filter(package_id__lte=package_id)
+    def get_course_videos_by_package_points(queryset, package_points) -> models.QuerySet:
+        return queryset.filter(package__ponits__lte=package_points)
 
     @staticmethod
-    def get_course_videos_by_package_id_by_category_id(queryset, package_id, category_id) -> models.QuerySet:
-        return CourseVideoQueryset.get_course_videos_by_package_id(queryset, package_id).filter(category_id=category_id)
+    def get_course_videos_by_package_points_by_category_id(queryset, package_points, category_id) -> models.QuerySet:
+        return CourseVideoQueryset.get_course_videos_by_package_points(queryset, package_points).filter(category_id=category_id)
 
     @staticmethod
-    def get_course_video_by_package_id_by_category_id_by_slug(queryset, package_id, category_id, course_video_slug):
+    def get_course_video_by_package_points_by_category_id_by_slug(queryset, package_points, category_id, course_video_slug):
         return get_object_or_404(
-            CourseVideoQueryset.get_course_videos_by_package_id_by_category_id(queryset, package_id, category_id), slug=course_video_slug)
+            CourseVideoQueryset.get_course_videos_by_package_points_by_category_id(queryset, package_points, category_id), slug=course_video_slug)
 
 
 class CourseVideo(models.Model):
@@ -107,12 +107,12 @@ class CoursePlaylistQuerySet(models.QuerySet):
             'videos__comments', 'videos__marks', 'videos__instructors', 'videos__category', 'videos__package')
 
     @staticmethod
-    def get_playlists_by_package_id(queryset, package_id):
+    def get_playlists_by_package_points(queryset, package_id):
         return queryset.filter(videos__package_id__lte=package_id)
 
     @staticmethod
-    def get_playlist_by_package_id_by_slug(queryset, package_id, playlist_slug):
-        return get_object_or_404(CoursePlaylistQuerySet.get_playlists_by_package_id(queryset, package_id), slug=playlist_slug)
+    def get_playlist_by_package_points_by_slug(queryset, package_id, playlist_slug):
+        return get_object_or_404(CoursePlaylistQuerySet.get_playlists_by_package_points(queryset, package_id), slug=playlist_slug)
 
 
 class CoursePlaylist(models.Model):

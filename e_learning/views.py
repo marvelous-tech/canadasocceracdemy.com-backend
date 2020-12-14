@@ -26,7 +26,7 @@ def category_videos(request, slug, selected_video_slug=None):
     package_id = request.user.user_profile.package_id
     queryset = CourseVideo.objects.prefetch_related('instructors__user', 'views').filter(is_deleted=False)
     category: CourseCategory = get_object_or_404(CourseCategory.objects.all(), slug=slug)
-    queryset = CourseVideo.objects.get_course_videos_by_package_id_by_category_id(queryset, package_id, category.id)
+    queryset = CourseVideo.objects.get_course_videos_by_package_points_by_category_id(queryset, package_id, category.id)
     serializer = CourseVideoListingSerializer(instance=queryset, many=True)
 
     if selected_video_slug is None:
