@@ -47,7 +47,7 @@ class CoursePackage(models.Model):
     slug = models.SlugField(blank=True, null=True)
     cycle = models.CharField(max_length=50, choices=CYCLE_TYPE_CHOICES, default="MONTHLY")
     image = models.ImageField(upload_to=get_package_feature_image_path, blank=True, null=True)
-    points = models.PositiveSmallIntegerField(default=0)
+    # points = models.PositiveSmallIntegerField(default=0)
     is_deleted = models.BooleanField(default=False)
 
     created = models.DateTimeField(auto_now_add=True)
