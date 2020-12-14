@@ -288,9 +288,9 @@ AWS_DEFAULT_ACL = 'public-read'
 
 TINYMCE_DEFAULT_CONFIG = {
     'plugins': ["lists", "advlist", "link", "image", "charmap", "print", "preview", "anchor", "searchreplace",
-                "visualblocks", "code", "fullscreen", "insertdatetime", "mdeia", "table", "paste", "help", "wordcount",
+                "visualblocks", "code", "fullscreen", "insertdatetime", "media", "table", "paste", "help", "wordcount",
                 ],
-    'toolbar': "formatselect | fontselect | bold italic strikethrough forecolor backcolor formatpainter | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | link insertfile image | removeformat | code | addcomment | checklist | casechange",
+    'toolbar': "formatselect | fontselect | bold italic strikethrough forecolor backcolor formatpainter | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | link insertfile image media | removeformat | code | addcomment | checklist | casechange",
     'height': 360
 }
 
