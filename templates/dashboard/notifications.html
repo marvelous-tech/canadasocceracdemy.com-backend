@@ -6,7 +6,7 @@
 
                 {% for message in messages %}
 
-                    <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %} alert-dismissable">
+                    <div class="rounded-0 alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %} alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <strong>Heads up!</strong> {{ message }}
                     </div>
