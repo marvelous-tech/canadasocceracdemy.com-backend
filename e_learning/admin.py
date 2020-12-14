@@ -29,7 +29,7 @@ class CoursePackageModelAdmin(admin.ModelAdmin):
         'created',
         'updated'
     ]
-    ordering = 'points'
+    ordering = ('-points', )
 
 
 
