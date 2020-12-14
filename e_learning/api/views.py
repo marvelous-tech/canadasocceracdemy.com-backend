@@ -82,7 +82,7 @@ def get_all_playlist_api_view(request):
 @api_view(['GET'])
 @permission_classes([AllowAny, ])
 def get_all_packages_api_view(request):
-    serializer = MockPackagesSerializer(instance=MockPackages.objects.all(), many=True)
+    serializer = MockPackagesSerializer(instance=MockPackages.objects.filter(is_deleted=False), many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
