@@ -167,7 +167,7 @@ class UserProfile(models.Model):
         email(serializer, self.user_id)
 
     def email_user_account_activated(self):
-        link = f'{settings.SERVER}/secure/'
+        link = f'{settings.SERVER}/to-elearning-platform/'
         serializer = EmailSerializer(data={
             'from_email': 'customers@marvelous-tech.com',
             'from_name': 'Account Activated Canadasocceracademy.com',
