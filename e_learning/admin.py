@@ -24,10 +24,13 @@ class CoursePackageModelAdmin(admin.ModelAdmin):
     list_display = [
         'name',
         'amount',
+        'points',
         'slug',
         'created',
         'updated'
     ]
+    ordering = 'points'
+
 
 
 @admin.register(CoursePlaylist)
