@@ -34,11 +34,6 @@ class PaymentMethodToken(models.Model):
     def __str__(self):
         return str(self.uuid)
 
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
-
 
 class Customer(models.Model):
     uuid = models.UUIDField(default=uuid4, verbose_name='Customer ID')
@@ -53,11 +48,6 @@ class Customer(models.Model):
 
     def __str__(self):
         return str(self.uuid)
-
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
 
 
 class Subscription(models.Model):
@@ -98,11 +88,6 @@ class Subscription(models.Model):
     def __str__(self):
         return str(self.uuid)
 
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
-
 
 class SubscriptionStatus(models.Model):
     uuid = models.UUIDField(default=uuid4, verbose_name='Subscription Status ID')
@@ -117,11 +102,6 @@ class SubscriptionStatus(models.Model):
 
     def __str__(self):
         return str(self.uuid)
-
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
 
     def do_unsuccessful_workflow(self):
         self.subscription.customer.user.inactivate_the_user()
@@ -178,11 +158,6 @@ class Transaction(models.Model):
 
     def __str__(self):
         return str(self.uuid)
-
-    def delete(self, using=None, keep_parents=False):
-        if self.is_deleted is False:
-            self.is_deleted = True
-            self.save()
 
 
 @receiver(post_save, sender=UserProfile)
