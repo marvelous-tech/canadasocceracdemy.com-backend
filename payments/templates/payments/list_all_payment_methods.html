@@ -9,11 +9,10 @@
                     <table class="table">
                         <tbody>
                         {% for method in methods %}
-                            <tr>
+                            <tr class="{% if method.is_default == True %}bg-success text-white{% endif %}">
                                 <td><img style="width: 45px" src="{{ method.image_url }}" alt=""> {{ method.type }}</td>
                                 <td>{{ method.data }}</td>
-                                <td>{{ method.is_verified }}</td>
-                                <td>{{ method.is_default }}</td>
+                                <td>{% if method.is_verified == True %}<i class="fas fa-check-circle text-success"></i>{% else %}<i class="fas fa-times-circle text-danger"></i>{% endif %}</td>
                                 <td>
                                     <form action="{% url 'payments:Delete Payment Method' %}" method="post">
                                         <input type="hidden" value="{{ method.uuid }}" name="id">

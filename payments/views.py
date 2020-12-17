@@ -1,35 +1,46 @@
 # Create your views here.
 from braintree.exceptions import NotFoundError
-from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core import signing
 from django.db.models import QuerySet
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from django.contrib import messages
-import braintree
 
-from accounts.forms import SignUpForm
 from accounts.models import CoursePackage
 from core.views import get_default_contexts
-from payments.api.serializers import PaymentMethodTokenSerializer
 from payments.gateway import *
 from payments.models import Subscription, Transaction, Customer, PaymentMethodToken
 
 
 def create_method(result):
+    type_ = result.payment_method.__class__.__name__
+    data = getattr(result.payment_method, 'email', None)
+    if data is None:
+        data = getattr(result.payment_method, 'last_4', None)
+        if data is None:
+            data = f'UIN#{result.payment_method.customer_id}'
+        else:
+            data = f'Card {result.payment_method.bin}******{data}'
+
+    if type_ == 'CreditCard':
+        type_ = 'Card'
+    elif type_ == 'PayPalAccount':
+        type_ = 'PayPal'
+
     return PaymentMethodToken.objects.create(
         payment_method_token=result.payment_method.token,
         is_default=True,
         is_verified=True,
         image_url=result.payment_method.image_url,
-        data=getattr(result.payment_method, 'email', getattr(result.payment_method, 'last_4', result.payment_method.customer_id)),
-        type=result.payment_method.__class__.__name__
+        data=data,
+        type=type_
     )
 
 
@@ -165,7 +176,8 @@ def add_default_payment_method(request):
                 payment_method_token=result.payment_method.token
             )
             if methods.count() > 0:
-                messages.add_message(request, messages.WARNING, "That payment method already exists.")
+                methods.update(is_default=True)
+                messages.add_message(request, messages.INFO, "That payment method is now default.")
                 return HttpResponseRedirect(reverse('payments:All Payment Methods'))
             method = create_method(result)
             queryset: QuerySet = PaymentMethodToken.objects.filter(pk__lt=method.pk, customers__uuid=customer.uuid,

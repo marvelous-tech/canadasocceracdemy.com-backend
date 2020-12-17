@@ -16,9 +16,9 @@ class PaymentMethodToken(models.Model):
     uuid = models.UUIDField(default=uuid4, verbose_name='Token ID')
     payment_method_token = models.CharField(max_length=100)
     type = models.CharField(max_length=20, choices=(
-        ('CreditCard', 'CreditCard'),
-        ('PayPalAccount', 'PayPalAccount')
-    ), default='CreditCard', blank=True, null=True)
+        ('Card', 'Card'),
+        ('PayPal', 'PayPal')
+    ), default='Card', blank=True, null=True)
     image_url = models.URLField(blank=True, null=True)
     data = models.CharField(max_length=255, blank=True, null=True)
     is_verified = models.BooleanField(default=False)
