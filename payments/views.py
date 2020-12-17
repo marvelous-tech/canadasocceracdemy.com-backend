@@ -23,30 +23,12 @@ from payments.models import Subscription, Transaction, Customer, PaymentMethodTo
 
 
 def create_method(result):
-    if result.__class__.__name__ == "PayPalAccount":
-        return PaymentMethodToken.objects.create(
-            payment_method_token=result.payment_method.token,
-            is_default=True,
-            is_verified=True,
-            image_url=result.payment_method.image_url,
-            data=result.payment_method.email,
-            type=result.__class__.__name__
-        )
-    elif result.__class__.__name__ == "CreditCard":
-        return PaymentMethodToken.objects.create(
-            payment_method_token=result.payment_method.token,
-            is_default=True,
-            is_verified=True,
-            image_url=result.payment_method.image_url,
-            data=result.payment_method.last_4,
-            type=result.__class__.__name__
-        )
     return PaymentMethodToken.objects.create(
         payment_method_token=result.payment_method.token,
         is_default=True,
         is_verified=True,
         image_url=result.payment_method.image_url,
-        data="Unknown",
+        data=getattr(result.payment_method, 'email', getattr(result.payment_method, 'last_4', result.payment_method.customer_id)),
         type=result.__class__.__name__
     )
 
