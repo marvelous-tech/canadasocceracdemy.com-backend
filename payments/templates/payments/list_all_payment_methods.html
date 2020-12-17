@@ -7,24 +7,11 @@
             <div class="table-responsive">
                 {% if total %}
                     <table class="table">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>Payment Method Name</th>
-                            <th>Details</th>
-                            <th>Holder Name</th>
-                            <th>Expiration month/year</th>
-                            <th>Verified</th>
-                            <th>Default</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
                         <tbody>
                         {% for method in methods %}
                             <tr>
-                                <td>{{ method.name }}</td>
-                                <td><img style="filter: grayscale(100%); width: 45px" src="{{ method.image_url }}" alt=""> {{ method.bin }}*******{{ method.card_last_digits }}</td>
-                                <td>{{ method.cardholder_name }}</td>
-                                <td>{{ method.expiration_month }}/{{ method.expiration_year }}</td>
+                                <td><img style="width: 45px" src="{{ method.image_url }}" alt=""> {{ method.bin }}*******{{ method.card_last_digits }}</td>
+                                <td>{{ method.data }}</td>
                                 <td>{{ method.is_verified }}</td>
                                 <td>{{ method.is_default }}</td>
                                 <td>
