@@ -9,13 +9,9 @@ class PaymentMethodTokenSerializer(serializers.ModelSerializer):
         model = PaymentMethodToken
         fields = [
             'uuid',
-            'name',
+            'type',
+            'data',
             'image_url',
-            'bin',
-            'card_last_digits',
-            'cardholder_name',
-            'expiration_month',
-            'expiration_year',
             'is_verified',
             'is_default'
         ]

@@ -10,7 +10,7 @@
                         <tbody>
                         {% for method in methods %}
                             <tr>
-                                <td><img style="width: 45px" src="{{ method.image_url }}" alt=""> {{ method.bin }}*******{{ method.card_last_digits }}</td>
+                                <td><img style="width: 45px" src="{{ method.image_url }}" alt=""> {{ method.type }}</td>
                                 <td>{{ method.data }}</td>
                                 <td>{{ method.is_verified }}</td>
                                 <td>{{ method.is_default }}</td>

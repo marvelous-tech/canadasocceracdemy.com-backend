@@ -13,6 +13,8 @@ class PaymentMethodTokenModelAdmin(admin.ModelAdmin):
     list_display = [
         'uuid',
         'payment_method_token',
+        'type',
+        'data',
         'is_verified',
         'is_default',
         'is_deleted',
