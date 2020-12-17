@@ -39,6 +39,13 @@ def create_method(result):
             image_url=result.payment_method.image_url,
             data=result.payment_method.last_4,
         )
+    return PaymentMethodToken.objects.create(
+        payment_method_token=result.payment_method.token,
+        is_default=True,
+        is_verified=True,
+        image_url=result.payment_method.image_url,
+        data="Unknown",
+    )
 
 
 @api_view(['POST'])
