@@ -22,6 +22,25 @@ from payments.gateway import *
 from payments.models import Subscription, Transaction, Customer, PaymentMethodToken
 
 
+def create_method(result):
+    if result.__class__.__name__ == "PayPalAccount":
+        return PaymentMethodToken.objects.create(
+            payment_method_token=result.payment_method.token,
+            is_default=True,
+            is_verified=True,
+            image_url=result.payment_method.image_url,
+            data=result.payment_method.email,
+        )
+    elif result.__class__.__name__ == "CreditCard":
+        return PaymentMethodToken.objects.create(
+            payment_method_token=result.payment_method.token,
+            is_default=True,
+            is_verified=True,
+            image_url=result.payment_method.image_url,
+            data=result.payment_method.last_4,
+        )
+
+
 @api_view(['POST'])
 @permission_classes([AllowAny, ])
 def grab_webhook(request):
@@ -156,18 +175,7 @@ def add_default_payment_method(request):
             if methods.count() > 0:
                 messages.add_message(request, messages.WARNING, "That payment method already exists.")
                 return HttpResponseRedirect(reverse('payments:All Payment Methods'))
-            method = PaymentMethodToken.objects.create(
-                payment_method_token=result.payment_method.token,
-                is_default=True,
-                is_verified=True,
-                name=result.payment_method.card_type,
-                bin=result.payment_method.bin,
-                card_last_digits=result.payment_method.last_4,
-                image_url=result.payment_method.image_url,
-                cardholder_name=result.payment_method.cardholder_name,
-                expiration_month=result.payment_method.expiration_month,
-                expiration_year=result.payment_method.expiration_year,
-            )
+            method = create_method(result)
             queryset: QuerySet = PaymentMethodToken.objects.filter(pk__lt=method.pk, customers__uuid=customer.uuid,
                                                                    is_deleted=False)
             queryset.update(is_default=False)
@@ -233,18 +241,7 @@ def add_first_payment_method_with_registration_token(request, registration_token
                 messages.add_message(request, messages.WARNING, "That payment method already exists.")
                 return HttpResponseRedirect(reverse('payments:All Payment Methods'))
 
-            method = PaymentMethodToken.objects.create(
-                payment_method_token=result.payment_method.token,
-                is_default=True,
-                is_verified=True,
-                name=result.payment_method.card_type,
-                bin=result.payment_method.bin,
-                card_last_digits=result.payment_method.last_4,
-                image_url=result.payment_method.image_url,
-                cardholder_name=result.payment_method.cardholder_name,
-                expiration_month=result.payment_method.expiration_month,
-                expiration_year=result.payment_method.expiration_year,
-            )
+            method = create_method(result)
             queryset: QuerySet = PaymentMethodToken.objects.filter(pk__lt=method.pk, customers__uuid=customer.uuid,
                                                                    is_deleted=False)
             queryset.update(is_default=False)
