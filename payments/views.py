@@ -30,6 +30,7 @@ def create_method(result):
             is_verified=True,
             image_url=result.payment_method.image_url,
             data=result.payment_method.email,
+            type=result.__class__.__name__
         )
     elif result.__class__.__name__ == "CreditCard":
         return PaymentMethodToken.objects.create(
@@ -38,6 +39,7 @@ def create_method(result):
             is_verified=True,
             image_url=result.payment_method.image_url,
             data=result.payment_method.last_4,
+            type=result.__class__.__name__
         )
     return PaymentMethodToken.objects.create(
         payment_method_token=result.payment_method.token,
@@ -45,6 +47,7 @@ def create_method(result):
         is_verified=True,
         image_url=result.payment_method.image_url,
         data="Unknown",
+        type=result.__class__.__name__
     )
 
 
