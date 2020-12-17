@@ -29,7 +29,7 @@ def create_method(result):
         is_verified=True,
         image_url=result.payment_method.image_url,
         data=getattr(result.payment_method, 'email', getattr(result.payment_method, 'last_4', result.payment_method.customer_id)),
-        type=result.__class__.__name__
+        type=result.payment_method.__class__.__name__
     )
 
 
