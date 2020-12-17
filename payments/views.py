@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core import signing
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -177,11 +177,12 @@ def add_default_payment_method(request):
             )
             if methods.count() > 0:
                 methods.update(is_default=True)
+                queryset: QuerySet = PaymentMethodToken.objects.filter(~Q(pk=methods.first().pk) & Q(customers__uuid=customer.uuid) & Q(is_deleted=False))
+                queryset.update(is_default=False)
                 messages.add_message(request, messages.INFO, "That payment method is now default.")
                 return HttpResponseRedirect(reverse('payments:All Payment Methods'))
             method = create_method(result)
-            queryset: QuerySet = PaymentMethodToken.objects.filter(pk__lt=method.pk, customers__uuid=customer.uuid,
-                                                                   is_deleted=False)
+            queryset: QuerySet = PaymentMethodToken.objects.filter(~Q(pk=method.pk) & Q(customers__uuid=customer.uuid) & Q(is_deleted=False))
             queryset.update(is_default=False)
             customer.payment_method_token.add(method)
             subscription_id = customer.customer_subscription_id
