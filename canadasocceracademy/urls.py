@@ -34,7 +34,7 @@ from upload_chunk_video.views import ChunkedUploadDemo, MyChunkedUploadCompleteV
 @login_required
 def to_e_learning_platform(request):
     if settings.ON_UPLOADED is True:
-        return HttpResponseRedirect(reverse('Home E-Learning'))
+        return HttpResponseRedirect(reverse('Courses E-Learning'))
     return redirect(settings.E_LEARNING_PLATFORM)
 
 
