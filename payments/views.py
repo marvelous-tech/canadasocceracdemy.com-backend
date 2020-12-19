@@ -27,7 +27,7 @@ def create_method(result):
         if data is None:
             data = f'UIN#{result.payment_method.customer_id}'
         else:
-            data = f'Card {result.payment_method.bin}******{data}'
+            data = f'Number {result.payment_method.bin}******{data}'
 
     if type_ == 'CreditCard':
         type_ = 'Card'
@@ -37,11 +37,19 @@ def create_method(result):
     return PaymentMethodToken.objects.create(
         payment_method_token=result.payment_method.token,
         is_default=True,
-        is_verified=True,
+        is_verified=False,
         image_url=result.payment_method.image_url,
         data=data,
         type=type_
     )
+
+
+def card_verification(result):
+    verification = result.payment_method.verification
+    if verification.cvv_response_code in 'M S A B' \
+            and status == 'verified':
+        return True
+    return False
 
 
 @api_view(['POST'])
@@ -177,12 +185,14 @@ def add_default_payment_method(request):
             )
             if methods.count() > 0:
                 methods.update(is_default=True)
-                queryset: QuerySet = PaymentMethodToken.objects.filter(~Q(pk=methods.first().pk) & Q(customers__uuid=customer.uuid) & Q(is_deleted=False))
+                queryset: QuerySet = PaymentMethodToken.objects.filter(
+                    ~Q(pk=methods.first().pk) & Q(customers__uuid=customer.uuid) & Q(is_deleted=False))
                 queryset.update(is_default=False)
                 messages.add_message(request, messages.INFO, "That payment method is now default.")
                 return HttpResponseRedirect(reverse('payments:All Payment Methods'))
             method = create_method(result)
-            queryset: QuerySet = PaymentMethodToken.objects.filter(~Q(pk=method.pk) & Q(customers__uuid=customer.uuid) & Q(is_deleted=False))
+            queryset: QuerySet = PaymentMethodToken.objects.filter(
+                ~Q(pk=method.pk) & Q(customers__uuid=customer.uuid) & Q(is_deleted=False))
             queryset.update(is_default=False)
             customer.payment_method_token.add(method)
             subscription_id = customer.customer_subscription_id
@@ -315,7 +325,16 @@ def delete_a_payment_method(request):
                                                                                                       is_verified=True)
     if request.method == "POST":
         if queryset.count() > 1:
-            method = get_object_or_404(queryset, uuid=request.POST.get('id'))
+            try:
+                method = queryset.get(uuid=request.POST.get('id'))
+            except (PaymentMethodToken.DoesNotExist, PaymentMethodToken.MultipleObjectsReturned) as e:
+                messages.add_message(request, messages.ERROR,
+                                     message="That payment method does not exist")
+                return HttpResponseRedirect(reverse('payments:All Payment Methods'))
+            if method.is_default:
+                messages.add_message(request, messages.ERROR,
+                                     message="You can't delete your default payment method")
+                return HttpResponseRedirect(reverse('payments:All Payment Methods'))
             sub_id = request.user.user_profile.customer.customer_subscription_id
             if sub_id is not None and sub_id != "":
                 try:
