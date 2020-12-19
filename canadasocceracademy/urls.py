@@ -57,6 +57,7 @@ urlpatterns = [
         path('billing/', home_e_learning, name="Billing E-Learning"),
         path('packages/', home_e_learning, name="Packages E-Learning"),
         path('package/<uuid:mock_package_uuid>/<uuid:package_uuid>/', home_e_learning, name="Package E-Learning"),
+        path('category/<str:category_name>/<slug:category_slug>/<slug:video_number>/', home_e_learning, name="Video E-Learning"),
     ])),
     path('registration/', home_registration, name="Home Registration"),
     path('registration/see-packages/', home_registration, name="Home Registration"),
