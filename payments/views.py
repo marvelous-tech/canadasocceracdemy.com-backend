@@ -321,8 +321,7 @@ def add_first_payment_method_with_registration_token(request, registration_token
 
 @login_required
 def delete_a_payment_method(request):
-    queryset = Customer.objects.get(user_id=request.user.user_profile.id).payment_method_token.filter(is_deleted=False,
-                                                                                                      is_verified=True)
+    queryset = Customer.objects.get(user_id=request.user.user_profile.id).payment_method_token.filter(is_deleted=False)
     if request.method == "POST":
         if queryset.count() > 1:
             try:
