@@ -4,170 +4,22 @@
         <h2>Our <span>Teachers.</span></h2>
     </div>
     <div class="teacher-secound-slide">
-        <div class="teacher-img-text relative-position text-center">
+        {% for teacher in teachers %}
+            <div class="teacher-img-text relative-position text-center">
             <div class="teacher-img-social relative-position">
-                <img src="static/assets/img/teacher/tb-1.png" alt="">
-                <div class="blakish-overlay"></div>
-                <div class="teacher-social-list ul-li">
-                    <ul>
-                        <li><a href="index-2.html#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-google-plus-g"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="teacher-name-designation mt15">
-                <span class="teacher-name">Daniel Alvares</span>
-                <span class="teacher-designation">Mobile Apps</span>
-            </div>
-        </div>
+                <a href="{% url 'team details' uuid=teacher.uuid %}"><img src="{{ teacher.profile_image.url }}" style="height: 200px" alt="">
+                <div class="blakish-overlay"></div></a>
 
-        <div class="teacher-img-text relative-position text-center">
-            <div class="teacher-img-social relative-position">
-                <img src="static/assets/img/teacher/tb-2.png" alt="">
-                <div class="blakish-overlay"></div>
-                <div class="teacher-social-list ul-li">
-                    <ul>
-                        <li><a href="index-2.html#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-google-plus-g"></i></a></li>
-                    </ul>
-                </div>
             </div>
             <div class="teacher-name-designation mt15">
-                <span class="teacher-name">Daniel Alvares</span>
-                <span class="teacher-designation">Mobile Apps</span>
+                <span class="teacher-name">{{ teacher.user.first_name }} {{ teacher.user.last_name }}</span>
             </div>
         </div>
+        {% endfor %}
 
-        <div class="teacher-img-text relative-position text-center">
-            <div class="teacher-img-social relative-position">
-                <img src="static/assets/img/teacher/tb-3.png" alt="">
-                <div class="blakish-overlay"></div>
-                <div class="teacher-social-list ul-li">
-                    <ul>
-                        <li><a href="index-2.html#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-google-plus-g"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="teacher-name-designation mt15">
-                <span class="teacher-name">Juliana Hernandes</span>
-                <span class="teacher-designation">Web Design</span>
-            </div>
-        </div>
-
-        <div class="teacher-img-text relative-position text-center">
-            <div class="teacher-img-social relative-position">
-                <img src="static/assets/img/teacher/tb-4.png" alt="">
-                <div class="blakish-overlay"></div>
-                <div class="teacher-social-list ul-li">
-                    <ul>
-                        <li><a href="index-2.html#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-google-plus-g"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="teacher-name-designation mt15">
-                <span class="teacher-name">Daniel Alvares</span>
-                <span class="teacher-designation">Mobile Apps</span>
-            </div>
-        </div>
-
-        <div class="teacher-img-text relative-position text-center">
-            <div class="teacher-img-social relative-position">
-                <img src="static/assets/img/teacher/tb-1.png" alt="">
-                <div class="blakish-overlay"></div>
-                <div class="teacher-social-list ul-li">
-                    <ul>
-                        <li><a href="index-2.html#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-google-plus-g"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="teacher-name-designation mt15">
-                <span class="teacher-name">Berliana Luis</span>
-                <span class="teacher-designation">IOS App</span>
-            </div>
-        </div>
-
-        <div class="teacher-img-text relative-position text-center">
-            <div class="teacher-img-social relative-position">
-                <img src="static/assets/img/teacher/tb-3.png" alt="">
-                <div class="blakish-overlay"></div>
-                <div class="teacher-social-list ul-li">
-                    <ul>
-                        <li><a href="index-2.html#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-google-plus-g"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="teacher-name-designation mt15">
-                <span class="teacher-name">Johansen Doe</span>
-                <span class="teacher-designation">Mobile Apps</span>
-            </div>
-        </div>
-
-        <div class="teacher-img-text relative-position text-center">
-            <div class="teacher-img-social relative-position">
-                <img src="static/assets/img/teacher/tb-1.png" alt="">
-                <div class="blakish-overlay"></div>
-                <div class="teacher-social-list ul-li">
-                    <ul>
-                        <li><a href="index-2.html#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-google-plus-g"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="teacher-name-designation mt15">
-                <span class="teacher-name">Johanas Doe</span>
-                <span class="teacher-designation">Graphic</span>
-            </div>
-        </div>
-
-        <div class="teacher-img-text relative-position text-center">
-            <div class="teacher-img-social relative-position">
-                <img src="static/assets/img/teacher/tb-4.png" alt="">
-                <div class="blakish-overlay"></div>
-                <div class="teacher-social-list ul-li">
-                    <ul>
-                        <li><a href="index-2.html#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-google-plus-g"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="teacher-name-designation mt15">
-                <span class="teacher-name">Daniel Alvares</span>
-                <span class="teacher-designation">Mobile Apps</span>
-            </div>
-        </div>
-
-        <div class="teacher-img-text relative-position text-center">
-            <div class="teacher-img-social relative-position">
-                <img src="static/assets/img/teacher/tb-1.png" alt="">
-                <div class="blakish-overlay"></div>
-                <div class="teacher-social-list ul-li">
-                    <ul>
-                        <li><a href="index-2.html#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="index-2.html#"><i class="fab fa-google-plus-g"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="teacher-name-designation mt15">
-                <span class="teacher-name">Daniel Alvares</span>
-                <span class="teacher-designation">Mobile Apps</span>
-            </div>
-        </div>
     </div>
 
     <div class="genius-btn gradient-bg text-center text-uppercase ul-li-block bold-font">
-        <a href="index-2.html#">All teacher <i class="fas fa-caret-right"></i></a>
+        <a href="{% url 'team' %}">All teacher <i class="fas fa-caret-right"></i></a>
     </div>
 </div>

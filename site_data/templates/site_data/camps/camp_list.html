@@ -3,22 +3,22 @@
         <div id="tab1" class="tab-content-1 pt35">
             <div class="row">
 
-                {% for blog in page_obj %}
+                {% for camp in page_obj %}
                     <div class="col-md-6">
                         <div class="blog-post-img-content">
                             <div class="blog-img-date relative-position">
                                 <div class="blog-thumnile">
-                                    <img src="{{ blog.image.url }}" alt="">
+                                    <img src="{{ camp.flyer_image.url }}" alt="">
                                 </div>
                                 <div class="course-price text-center gradient-bg">
-                                    <span>{{ blog.published_at | date }}</span>
+                                    <span>{{ camp.timestamp }}</span>
                                 </div>
                             </div>
                             <div class="blog-title-content headline">
-                                <h3><a href="{% url 'Blog Details' slug=blog.slug %}">{{ blog.name | safe | escape }}</a></h3>
+                                <h3><a href="{% url 'Camp Details' slug=camp.slug %}">{{ camp.name | safe | escape }}</a></h3>
 
                                 <div class="view-all-btn bold-font">
-                                    <a href="{% url 'Blog Details' slug=blog.slug %}">Read More <i class="fas fa-chevron-circle-right"></i></a>
+                                    <a href="{% url 'Camp Details' slug=camp.slug %}">Read More <i class="fas fa-chevron-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -34,27 +34,27 @@
         <div id="tab2" class="tab-content-1 pt35">
             <div class="blog-list-view">
 
-                {% for blog in page_obj %}
+                {% for camp in page_obj %}
                     <div class="list-blog-item">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="blog-post-img-content">
                                     <div class="blog-img-date relative-position">
                                         <div class="blog-thumnile">
-                                            <img src="{{ blog.image.url }}" alt="">
+                                            <img style="height: 480px !important;" class="img-responsive img-fluid" src="{{ camp.flyer_image.url }}" alt="">
                                         </div>
                                         <div class="course-price text-center gradient-bg">
-                                            <span>{{ blog.published_at | date }}</span>
+                                            <span>{{ camp.timestamp }}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="blog-title-content headline">
-                                    <h3><a href="{% url 'Blog Details' slug=blog.slug %}">{{ blog.name | safe | escape }}</a></h3>
+                                    <h3><a href="{% url 'Camp Details' slug=camp.slug %}">{{ camp.name | safe | escape }}</a></h3>
 
                                     <div class="view-all-btn bold-font">
-                                        <a href="{% url 'Blog Details' slug=blog.slug %}">Read More <i class="fas fa-chevron-circle-right"></i></a>
+                                        <a href="{% url 'Camp Details' slug=camp.slug %}">Read More <i class="fas fa-chevron-circle-right"></i></a>
                                     </div>
                                 </div>
                             </div>

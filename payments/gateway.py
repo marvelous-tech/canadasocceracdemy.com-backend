@@ -2,6 +2,10 @@ import braintree
 from django.conf import settings
 import os
 
+
+GATEWAY = getattr(settings, 'GATEWAY', None)
+
+
 BRAINTREE_MERCHANT_ID = getattr(settings, 'BRAINTREE_MERCHANT_ID', os.environ.get('MID'))
 BRAINTREE_PRIVATE_KEY = getattr(settings, 'BRAINTREE_PRIVATE_KEY', os.environ.get('PRK'))
 BRAINTREE_PUBLIC_KEY = getattr(settings, 'BRAINTREE_PUBLIC_KEY', os.environ.get('PBK'))

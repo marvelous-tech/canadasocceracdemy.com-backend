@@ -9,9 +9,8 @@
                         <div class="section-title  mb45 headline text-left">
                             <span class="subtitle ml42  text-uppercase">CONTACT US</span>
                             <h2><span>Get in Touch</span></h2>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-                                tincidunt ut laoreet ipsum dolor sit amet, consectetuer adipiscing elit.
+                            <p id="SiteData_contact_us_text">
+                                {{ contact_us_text.data | safe | escape }}
                             </p>
                         </div>
 
@@ -22,8 +21,11 @@
                                 </div>
                                 <div class="address-details ul-li-block">
                                     <ul>
-                                        <li><span>Primary: </span>Last Vegas, 120 Graphic Street, US</li>
-                                        <li><span>Second: </span>Califorinia, 88 Design Street, US</li>
+                                        {% for address in addresses %}
+                                            <li><span>{{ address.name | title }}: </span>{{ address.address | title }}
+                                            </li>
+                                        {% endfor %}
+
                                     </ul>
                                 </div>
                             </div>
@@ -34,8 +36,9 @@
                                 </div>
                                 <div class="address-details ul-li-block">
                                     <ul>
-                                        <li><span>Primary: </span>(100) 3434 55666</li>
-                                        <li><span>Second: </span>(20) 3434 9999</li>
+                                        {% for number in numbers %}
+                                            <li><span>{{ number.name | title }}: </span>{{ number.number }}</li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>
@@ -46,15 +49,16 @@
                                 </div>
                                 <div class="address-details ul-li-block">
                                     <ul>
-                                        <li><span>Primary: </span>info@geniuscourse.com</li>
-                                        <li><span>Second: </span>mail@genius.info</li>
+                                        {% for email in emails %}
+                                            <li><span>{{ email.name | title }}: </span>{{ email.email }}</li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="genius-btn mt60 gradient-bg text-center text-uppercase ul-li-block bold-font">
-                        <a href="contact.html#">Contact Us <i class="fas fa-caret-right"></i></a>
+                        <a href="{% url 'contact' %}">Contact Us <i class="fas fa-caret-right"></i></a>
                     </div>
                 </div>
 

@@ -27,7 +27,9 @@ from accounts.views import login_user, home_registration
 from django.contrib.auth import logout
 
 from site_data.views import Home as SiteHome, About as SiteAbout, Contact as SiteContact, \
-    TeacherList as SiteTeacherList, BlogList as SiteBlogList
+    TeacherList as SiteTeacherList, BlogList as SiteBlogList, Camps as SiteCampsList, \
+    post_detail as site_blog_details, camp_details as site_camp_details, \
+    teacher_details as site_teacher_details
 from upload_chunk_video.views import ChunkedUploadDemo, MyChunkedUploadCompleteView, MyChunkedUploadView
 
 
@@ -85,8 +87,12 @@ urlpatterns = [
     path('', SiteHome.as_view(), name="home"),
     path('about/', SiteAbout.as_view(), name="about"),
     path('contact/', SiteContact.as_view(), name="contact"),
-    path('teachers/', SiteTeacherList.as_view(), name="teachers"),
+    path('team/', SiteTeacherList.as_view(), name="team"),
+    path('team/<uuid:uuid>/', site_teacher_details, name="team details"),
     path('blog/', SiteBlogList.as_view(), name="blog"),
+    path('blog/<slug:slug>/', site_blog_details, name="Blog Details"),
+    path('camps/', SiteCampsList.as_view(), name="camps"),
+    path('camps/<slug:slug>/', site_camp_details, name="Camp Details"),
     re_path('^private-media/', include('private_storage.urls')),
     path('', ChunkedUploadDemo.as_view(), name='chunked_upload'),
     path('api/chunked_upload_complete/', MyChunkedUploadCompleteView.as_view(), name='api_chunked_upload_complete'),

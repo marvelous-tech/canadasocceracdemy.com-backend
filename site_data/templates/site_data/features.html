@@ -1,14 +1,14 @@
 <div class="col-md-3">
     <div class="side-bar-widget first-widget">
         <h2 class="widget-title text-capitalize"><span>Find A Course </span>&amp; Sign up Today.</h2>
-        <div class="course-img">
+        <div class="course-img" id="SiteLogo_app_feature_image">
             <img src="{{ app_feature_image.image.url }}" alt="">
         </div>
-        <div class="course-desc">
-            <p>Lorem ipsum dolor sit consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+        <div class="course-desc" id="SiteData_app_feature_image_text">
+            <p>{{ app_feature_image_text.data | safe | escape }}</p>
         </div>
         <div class="genius-btn gradient-bg text-center text-uppercase ul-li-block bold-font">
-            <a href="about.html#">VIEW ONLINE COURSES <i class="fas fa-caret-right"></i></a>
+            <a href="{% url 'to_registration_platform' %}">VIEW ONLINE COURSES <i class="fas fa-caret-right"></i></a>
         </div>
     </div>
 

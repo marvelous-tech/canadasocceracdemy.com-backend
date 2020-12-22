@@ -1,0 +1,35 @@
+{% extends "site_data/base-with-side-features-regular-footer.html" %}
+{% block content %}
+    <div class="blog-post-content">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{{ camp.flyer_image.url }}" class="img-responsive img-fluid img-thumbnail" alt="">
+            </div>
+            <div class="col-md-8">
+                <div class="position-absolute bg-light" style="bottom: 0">
+                    <h2>{{ camp.name | title }}</h2>
+                    <div class="date-meta text-uppercase">
+                        <span><i class="fas fa-calendar-alt"></i> {{ camp.timestamp }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 my-3">
+                {{ camp.text | safe | escape }}
+            </div>
+        </div>
+        <div class="row">
+            {% for image in camp.images.all %}
+                <div class="col-md-4">
+                    <img src="{{ image.image.url }}" alt="" class="img-responsive img-fluid img-thumbnail">
+                    <h6 class="mt-1">{{ image.name | title }}</h6>
+                    <hr>
+                    <div class="content small">
+                        {{ image.text | safe | escape }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

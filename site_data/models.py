@@ -17,6 +17,7 @@ class SiteLogo(models.Model):
     name = models.CharField(max_length=255)
     image = models.ImageField(upload_to=get_logo_path)
     for_content = models.CharField(max_length=50)
+    style = models.TextField()
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -69,6 +70,8 @@ class Partner(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    is_deleted = models.BooleanField(default=False)
 
     objects = models.Manager()
 
@@ -158,6 +161,8 @@ class FAQ(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    is_deleted = models.BooleanField(default=False)
 
     objects = models.Manager()
 
@@ -358,11 +363,15 @@ class Camp(models.Model):
 
     name = models.TextField()
     text = HTMLField()
-    images = models.ManyToManyField(CampImage, related_name='camps')
+    flyer_image = models.ImageField(upload_to=get_camp_image_path, null=True)
+    images = models.ManyToManyField(CampImage, related_name='camps', blank=True)
+    timestamp = models.DateTimeField(null=True)
     slug = models.SlugField(max_length=255, null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    is_deleted = models.BooleanField(default=False)
 
     objects = models.Manager()
 

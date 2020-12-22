@@ -1,0 +1,14 @@
+{% extends "site_data/base-with-side-features-regular-footer.html" %}
+{% block content %}
+    <div class="blog-post-content">
+        <div class="short-filter-tab">
+            <div class="tab-button blog-button ul-li text-center float-right">
+                <ul class="product-tab">
+                    <li class="active" rel="tab1"><i class="fas fa-th"></i></li>
+                    <li rel="tab2"><i class="fas fa-list"></i></li>
+                </ul>
+            </div>
+        </div>
+        {% include 'site_data/camps/camp_list.html' %}
+    </div>
+{% endblock %}

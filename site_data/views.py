@@ -3,9 +3,9 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from accounts.models import MockPackages
+from accounts.models import MockPackages, Member
 from site_data.models import Post, SiteLogo, Email, ContactNumber, Address, BannerImage, Upcoming, SocialLink, SiteData, \
-    Gallery
+    Gallery, Partner, FAQ, Testimonial, Camp
 
 
 # Create your views here.
@@ -45,7 +45,8 @@ def get_sidebar_pages_default_context():
         **get_recent_posts(),
         **get_feature_course_logo(),
         **get_footer_text(),
-        **get_feature_gallery_images()
+        **get_feature_gallery_images(),
+        **get_default_contexts()
     }
 
 
@@ -57,8 +58,18 @@ def get_features():
     }
 
 
+def get_testimonials():
+    return {
+        'testimonials': Testimonial.objects.filter(is_deleted=False)[:5]
+    }
+
+
+def get_teachers():
+    return {'teachers': Member.objects.all()}
+
+
 def get_default_contexts():
-    logos = SiteLogo.objects.filter(for_content='nav_logo')
+    logos = SiteLogo.objects.filter(for_content='navbar_logo')
     app_feature_image = SiteLogo.objects.filter(for_content='app_feature_image')
     emails = Email.objects.all()
     numbers = ContactNumber.objects.all()
@@ -67,13 +78,17 @@ def get_default_contexts():
 
     return {
         'app_feature_image': app_feature_image.first(),
-        'nav_logo': logos.first(),
+        'navbar_logo': logos.first(),
         'emails': emails,
         'numbers': numbers,
         'addresses': addresses,
         'socials': socials,
         **get_footer_text()
     }
+
+
+def get_faqs():
+    return {'faqs': FAQ.objects.filter(is_deleted=False)}
 
 
 class Home(TemplateView):
@@ -85,9 +100,15 @@ class Home(TemplateView):
             'banner_logos': banner_logos,
             'banner_images': BannerImage.objects.all(),
             'mock_courses': MockPackages.objects.filter(is_deleted=False),
+            'partners': Partner.objects.filter(is_deleted=False),
+            'home_about_us_header': SiteData.objects.filter(name='home_about_us_header').first(),
+            'home_about_us_sub_header': SiteData.objects.filter(name='home_about_us_sub_header').first(),
+            'home_about_us_content_body': SiteData.objects.filter(name='home_about_us_content_body').first(),
             **get_default_contexts(),
             **get_recent_posts(),
-            **get_recent_upcoming()
+            **get_recent_upcoming(),
+            **get_faqs(),
+            **get_teachers()
         }
         return context
 
@@ -129,9 +150,24 @@ class TeacherList(TemplateView):
         context = {
             'banner_logos': banner_logos,
             'banner_images': BannerImage.objects.all(),
-            **get_sidebar_pages_default_context()
+            **get_sidebar_pages_default_context(),
+            **get_teachers()
         }
         return context
+
+
+def teacher_details(request, uuid):
+    q = Member.objects.filter(uuid=uuid)
+
+    if q.exists():
+        q = q.first()
+    else:
+        return HttpResponse('<h1>Member Not Found</h1>')
+    context = {
+        'teacher': q,
+        **get_sidebar_pages_default_context(),
+    }
+    return render(request, 'site_data/teacher/teacher_details.html', context)
 
 
 class BlogList(TemplateView):
@@ -151,7 +187,6 @@ class BlogList(TemplateView):
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context = {
-            **get_default_contexts(),
             **get_sidebar_pages_default_context(),
             'page_obj': page_obj
         }
@@ -182,6 +217,35 @@ class BlogDetail(TemplateView):
         return context
 
 
+class Camps(TemplateView):
+    template_name = 'site_data/camps/camps.html'
+
+    def get_context_data(self, **kwargs):
+        camps = Camp.objects.filter(is_deleted=False)
+        paginator = Paginator(camps, 6)
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context = {
+            **get_sidebar_pages_default_context(),
+            'page_obj': page_obj
+        }
+        return context
+
+
+def camp_details(request, slug):
+    q = Camp.objects.filter(slug__iexact=slug)
+
+    if q.exists():
+        q = q.first()
+    else:
+        return HttpResponse('<h1>Camp Not Found</h1>')
+    context = {
+        'camp': q,
+        **get_sidebar_pages_default_context(),
+    }
+    return render(request, 'site_data/camps/camp_details.html', context)
+
+
 def post_detail(request, slug):
     q = Post.objects.filter(slug__iexact=slug)
 
@@ -191,7 +255,8 @@ def post_detail(request, slug):
     else:
         return HttpResponse('<h1>Post Not Found</h1>')
     context = {
-
-        'post': q
+        'blog': q,
+        'member': q.by,
+        **get_sidebar_pages_default_context(),
     }
-    return render(request, 'posts/details.html', context)
+    return render(request, 'site_data/blog/details/details.html', context)

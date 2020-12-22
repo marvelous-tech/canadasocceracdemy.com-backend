@@ -1,0 +1,56 @@
+{% extends "site_data/base-with-side-features-regular-footer.html" %}
+{% block content %}
+    <div class="teacher-details-area">
+        <div class="teacher-details-content mb45">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="teacher-details-img">
+                        <img src="{{ teacher.profile_image.url }}" alt="{{ teacher.type }}"
+                             class="img-responsive img-fluid rounded">
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="teacher-details-text">
+                        <div class="section-title-2  headline text-left">
+                            <h2>{{ teacher.user.first_name }} <span>{{ teacher.user.last_name }}.</span></h2>
+                            <div class="teacher-deg">
+                                <span>{{ teacher.type }}</span>
+                            </div>
+                        </div>
+
+
+                        <div class="teacher-address">
+                            <div class="address-details ul-li-block">
+                                <ul>
+                                    <li>
+                                        <div class="addrs-icon">
+                                            <i class="fas fa-phone"></i>
+                                        </div>
+                                        <div class="add-info">
+                                            <span class="small"><b>Tel: </b>{{ teacher.phone.as_international }}</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="addrs-icon">
+                                            <i class="fas fa-envelope"></i>
+                                        </div>
+                                        <div class="add-info">
+                                            <span class="small"><b>E-mail: </b>{{ teacher.user.email }}</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="about-teacher mb45">
+							<div class="section-title-2  headline text-left">
+								<h2>About <span>Teacher.</span></h2>
+							</div>
+							{{ teacher.details | safe | escape }}
+						</div>
+    </div>
+{% endblock %}

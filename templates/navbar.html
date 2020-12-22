@@ -4,36 +4,13 @@
         <div class="main-menu">
             <div class="container">
                 <div class="navbar-default">
-                    <div class="navbar-header float-left" style="height: 70px">
-                        <a class="navbar-brand text-uppercase font-weight-bold" style="line-height: 60px; color: white"
+                    <div class="navbar-header float-left">
+                        <a class="navbar-brand text-uppercase font-weight-bold"
                            href="index-1.html#">
-                            <img src="http://www.canadasocceracademy.com/wp-content/uploads/2017/02/logo-web.png"
-                                 style="height: 70px; filter: brightness(200%); margin: 0" alt="Logo">
+                            <img id="SiteLogo_navbar_logo" src="{{ navbar_logo.image.url }}"
+                                alt="Logo">
                         </a>
-                    </div><!-- /.navbar-header -->
-
-                    {#                    <div class="cart-search float-right ul-li">#}
-                    {#                        <ul>#}
-                    {#                            <li><a href="index-1.html#"><i class="fas fa-shopping-bag"></i></a></li>#}
-                    {#                            <li>#}
-                    {#                                <button type="button" class="toggle-overlay search-btn">#}
-                    {#                                    <i class="fas fa-search"></i>#}
-                    {#                                </button>#}
-                    {#                                <div class="search-body">#}
-                    {#                                    <div class="search-form">#}
-                    {#                                        <form action="index-1.html#">#}
-                    {#                                            <input class="search-input" type="search" placeholder="Search Here">#}
-                    {#                                            <div class="outer-close toggle-overlay">#}
-                    {#                                                <button type="button" class="search-close">#}
-                    {#                                                    <i class="fas fa-times"></i>#}
-                    {#                                                </button>#}
-                    {#                                            </div>#}
-                    {#                                        </form>#}
-                    {#                                    </div>#}
-                    {#                                </div>#}
-                    {#                            </li>#}
-                    {#                        </ul>#}
-                    {#                    </div>#}
+                    </div>
                     {% if request.user.is_authenticated == False %}
                         <div class="log-in float-right">
                             <a data-toggle="modal" data-target="#myModal" href="index-1.html#">log in</a>
@@ -67,7 +44,7 @@
                                                            placeholder="Your@email.com*">
                                                 </div>
                                                 <div class="contact-info">
-                                                    <input class="pass" name="name" type="password"
+                                                    <input class="pass" name="password" type="password"
                                                            placeholder="Your password*">
                                                 </div>
                                                 <div class="nws-button text-center white text-capitalize">
@@ -91,8 +68,8 @@
                                 <li><a href="{% url 'home' %}">Home</a></li>
                                 <li><a href="{% url 'about' %}">About Us</a></li>
                                 <li><a href="{% url 'contact' %}">Contact Us</a></li>
-                                <li><a href="{% url 'teachers' %}">Our team</a></li>
-                                <li><a href="#">Camps</a></li>
+                                <li><a href="{% url 'team' %}">Our team</a></li>
+                                <li><a href="{% url 'camps' %}">Camps</a></li>
                                 <li><a href="#">Courses</a></li>
                                 <li><a href="{% url 'blog' %}">Blog</a></li>
                                 <li><a href="#">Gallery</a></li>
@@ -103,32 +80,20 @@
                     </nav>
 
                     <div class="mobile-menu">
-                        <div class="logo"><a href="index-1.html"><img src="static/assets/img/logo/logo.png" alt="Logo"></a>
+                        <div class="logo"><a href="{% url 'home' %}"><img id="SiteLogo_navbar_logo" src="{{ navbar_logo.image.url }}" style="height: 21px" alt="Logo"></a>
                         </div>
                         <nav>
                             <ul>
-                                <li><a href="index-1.html">Home</a>
-                                </li>
-                                <li><a href="about.html">About</a></li>
-                                <li><a href="blog.html">Blog</a>
-                                    <ul>
-                                        <li><a href="blog.html">Blog</a></li>
-                                        <li><a href="blog-single.html">Blog sinlge</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="shop.html">Shop</a>
-                                </li>
-                                <li><a href="contact.html">Contact</a></li>
-                                <li><a href="index-1.html#">Pages</a>
-                                    <ul>
-                                        <li><a href="course.html">Course</a></li>
-                                        <li><a href="course-details.html">course sinlge</a></li>
-                                        <li><a href="teacher.html">teacher</a></li>
-                                        <li><a href="teacher-details.html">teacher details</a></li>
-                                        <li><a href="faq.html">FAQ</a></li>
-                                        <li><a href="check-out.html">Check Out</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="{% url 'home' %}">Home</a></li>
+                                <li><a href="{% url 'about' %}">About Us</a></li>
+                                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                                <li><a href="{% url 'team' %}">Our team</a></li>
+                                <li><a href="{% url 'camps' %}">Camps</a></li>
+                                <li><a href="#">Courses</a></li>
+                                <li><a href="{% url 'blog' %}">Blog</a></li>
+                                <li><a href="#">Gallery</a></li>
+                                <li><a href="{% url 'to_registration_platform' %}">Sign up</a></li>
+                                {% if request.user.is_authenticated %}<li><a href="{% url 'secure_accounts:Logging out' %}">Log out</a></li>{% endif %}
                             </ul>
                         </nav>
 

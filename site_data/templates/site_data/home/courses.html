@@ -5,7 +5,7 @@
     </div>
     <div id="course-slide-item" class="course-slide">
         {% for course in mock_courses %}
-            <div class="course-item-pic-text">
+            <div id="MockCoursePackage" class="course-item-pic-text">
                 <div class="course-pic relative-position mb25">
                     <img src="{{ course.image.url }}" alt="">
                     <div class="course-price text-center gradient-bg">
@@ -16,31 +16,11 @@
                     </div>
                 </div>
                 <div class="course-item-text">
-{#                    <div class="course-meta">#}
-{#                        <span class="course-category bold-font"><a href="index-2.html#">Web Design</a></span>#}
-{#                        <span class="course-author bold-font"><a href="index-2.html#">John Luis Fernandes</a></span>#}
-{#                        <div class="course-rate ul-li">#}
-{#                            <ul>#}
-{#                                <li><i class="fas fa-star"></i></li>#}
-{#                                <li><i class="fas fa-star"></i></li>#}
-{#                                <li><i class="fas fa-star"></i></li>#}
-{#                                <li><i class="fas fa-star"></i></li>#}
-{#                                <li><i class="fas fa-star"></i></li>#}
-{#                            </ul>#}
-{#                        </div>#}
-{#                    </div>#}
                     <div class="course-title mt10 headline pb45 relative-position">
                         <h3><a href="index-2.html#">{{ course.name }}</a> <span
                                 class="trend-badge text-uppercase bold-font"><i
                                 class="fas fa-bolt"></i></span></h3>
                     </div>
-{#                    <div class="course-viewer ul-li">#}
-{#                        <ul>#}
-{#                            <li><a href="index-2.html"><i class="fas fa-user"></i> 1.220</a></li>#}
-{#                            <li><a href="index-2.html"><i class="fas fa-comment-dots"></i> 1.015</a></li>#}
-{#                            <li><a href="index-2.html">125k Unrolled</a></li>#}
-{#                        </ul>#}
-{#                    </div>#}
                 </div>
             </div>
             <!-- /item -->

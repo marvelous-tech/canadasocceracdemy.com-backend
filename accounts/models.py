@@ -30,6 +30,14 @@ class Member(models.Model):
     profile_image = models.ImageField(upload_to=get_profile_image_path, blank=True, null=True)
     is_deleted = models.BooleanField(default=False)
 
+    details = HTMLField(null=True)
+    small_details = models.TextField(null=True)
+
+    objects = models.Manager()
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.user.username
 

@@ -6,45 +6,15 @@
         </div>
 
         <div class="testimonial-secound-slide-area">
-            <div class="student-qoute text-center">
-                <p>“This was our first time lorem ipsum and we <b> were very pleased with the whole
-                    experience</b>. Your price was lower than other companies. Our experience so we’ll be back
-                    in the future lorem ipsum diamet.”</p>
+            {% for testimonial in testimonials %}
+                <div class="student-qoute text-center">
+                <p>“{{ testimonial.text | safe | escape }}”</p>
                 <div class="student-name-designation">
-                    <span class="st-name bold-font">Robertho Garcia </span>
-                    <span class="st-designation">Graphic Designer</span>
+                    <span class="st-name bold-font">{{ testimonial.name }} </span>
                 </div>
             </div>
+            {% endfor %}
 
-            <div class="student-qoute text-center">
-                <p>“This was our first time lorem ipsum and we <b> were very pleased with the whole
-                    experience</b>. Your price was lower than other companies. Our experience so we’ll be back
-                    in the future lorem ipsum diamet.”</p>
-                <div class="student-name-designation">
-                    <span class="st-name bold-font">Robertho Garcia </span>
-                    <span class="st-designation">Graphic Designer</span>
-                </div>
-            </div>
-
-            <div class="student-qoute text-center">
-                <p>“This was our first time lorem ipsum and we <b> were very pleased with the whole
-                    experience</b>. Your price was lower than other companies. Our experience so we’ll be back
-                    in the future lorem ipsum diamet.”</p>
-                <div class="student-name-designation">
-                    <span class="st-name bold-font">Robertho Garcia </span>
-                    <span class="st-designation">Graphic Designer</span>
-                </div>
-            </div>
-
-            <div class="student-qoute text-center">
-                <p>“This was our first time lorem ipsum and we <b> were very pleased with the whole
-                    experience</b>. Your price was lower than other companies. Our experience so we’ll be back
-                    in the future lorem ipsum diamet.”</p>
-                <div class="student-name-designation">
-                    <span class="st-name bold-font">Robertho Garcia </span>
-                    <span class="st-designation">Graphic Designer</span>
-                </div>
-            </div>
         </div>
     </div>
 </div>

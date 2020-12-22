@@ -1,16 +1,13 @@
 <div id="slider-item" class="slider-item-details">
     {% for banner_image in banner_images %}
-        <div class="slider-area relative-position banner" style="background: url('{{ banner_image.image.url }}');">
+        <div id="BannerImage" class="slider-area relative-position banner" style="background: url('{{ banner_image.image.url }}');">
             <div class="slider-text">
                 <div class="section-title mb20 headline text-center m-auto">
                     <div class="container">
                         <div class="row">
                             {% for logo in banner_logos %}
                                 <div class="col-md-6">
-                                    <img src="{{ logo.image.url }}" style="
-                                    margin: auto;
-                                    height: 600px;
-                                    " alt="Logo">
+                                    <img id="SiteLogo_banner_image" src="{{ logo.image.url }}" style="{{ logo.style }}" alt="Logo">
                                 </div>
                             {% endfor %}
                         </div>
