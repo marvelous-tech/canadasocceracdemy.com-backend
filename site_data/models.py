@@ -83,8 +83,8 @@ class ContactedVisitor(models.Model):
     uuid = models.UUIDField(default=uuid4)
     name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
-    phone = models.CharField(max_length=50)
-    subject = models.TextField()
+    phone = models.CharField(max_length=50, blank=True, null=True)
+    subject = models.TextField(null=True, blank=True)
     body = models.TextField()
 
     created = models.DateTimeField(auto_now_add=True)
@@ -237,10 +237,13 @@ class Testimonial(models.Model):
     uuid = models.UUIDField(default=uuid4)
 
     name = models.CharField(max_length=255)
+    type = models.CharField(max_length=50, default="")
     text = HTMLField()
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    is_deleted = models.BooleanField(default=False)
 
     objects = models.Manager()
 

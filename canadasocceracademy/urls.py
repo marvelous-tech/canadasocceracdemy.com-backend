@@ -29,7 +29,7 @@ from django.contrib.auth import logout
 from site_data.views import Home as SiteHome, About as SiteAbout, Contact as SiteContact, \
     TeacherList as SiteTeacherList, BlogList as SiteBlogList, Camps as SiteCampsList, \
     post_detail as site_blog_details, camp_details as site_camp_details, \
-    teacher_details as site_teacher_details
+    teacher_details as site_teacher_details, contact as site_submit_contact_data
 from upload_chunk_video.views import ChunkedUploadDemo, MyChunkedUploadCompleteView, MyChunkedUploadView
 
 
@@ -87,6 +87,7 @@ urlpatterns = [
     path('', SiteHome.as_view(), name="home"),
     path('about/', SiteAbout.as_view(), name="about"),
     path('contact/', SiteContact.as_view(), name="contact"),
+    path('contact-now/', site_submit_contact_data, name="contact now"),
     path('team/', SiteTeacherList.as_view(), name="team"),
     path('team/<uuid:uuid>/', site_teacher_details, name="team details"),
     path('blog/', SiteBlogList.as_view(), name="blog"),

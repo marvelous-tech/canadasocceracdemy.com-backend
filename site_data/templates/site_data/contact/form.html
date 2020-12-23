@@ -8,7 +8,8 @@
         </div>
 
         <div class="contact_third_form">
-            <form class="contact_form" action="contact.html#" method="POST" enctype="multipart/form-data">
+            <form class="contact_form" action="{% url 'contact now' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="row">
                     <div class="col-md-4">
                         <div class="contact-info">
@@ -22,11 +23,11 @@
                     </div>
                     <div class="col-md-4">
                         <div class="contact-info">
-                            <input class="number" name="number" type="number" placeholder="Phone Number">
+                            <input class="number" name="phone" type="text" placeholder="Phone Number">
                         </div>
                     </div>
                 </div>
-                <textarea placeholder="Message."></textarea>
+                <textarea placeholder="Message." name="msg"></textarea>
                 <div class="nws-button text-center  gradient-bg text-uppercase">
                     <button type="submit" value="Submit">SEND EMAIL <i class="fas fa-caret-right"></i></button>
                 </div>

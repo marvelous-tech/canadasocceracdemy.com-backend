@@ -1,11 +1,12 @@
 from django.core.paginator import Paginator
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.generic import TemplateView
 
 from accounts.models import MockPackages, Member
 from site_data.models import Post, SiteLogo, Email, ContactNumber, Address, BannerImage, Upcoming, SocialLink, SiteData, \
-    Gallery, Partner, FAQ, Testimonial, Camp
+    Gallery, Partner, FAQ, Testimonial, Camp, ContactedVisitor
 
 
 # Create your views here.
@@ -108,7 +109,8 @@ class Home(TemplateView):
             **get_recent_posts(),
             **get_recent_upcoming(),
             **get_faqs(),
-            **get_teachers()
+            **get_teachers(),
+            **get_testimonials()
         }
         return context
 
@@ -260,3 +262,17 @@ def post_detail(request, slug):
         **get_sidebar_pages_default_context(),
     }
     return render(request, 'site_data/blog/details/details.html', context)
+
+
+def contact(request):
+    if request.method == 'POST':
+        name = request.POST.get('name', None)
+        email = request.POST.get('email', None)
+        phone = request.POST.get('phone', None)
+        msg = request.POST.get('msg', None)
+
+        ContactedVisitor.objects.create(
+            name=name, email=email, phone=phone, body=msg
+        )
+        return HttpResponseRedirect(reverse('home'))
+    return HttpResponseRedirect(reverse('contact'))

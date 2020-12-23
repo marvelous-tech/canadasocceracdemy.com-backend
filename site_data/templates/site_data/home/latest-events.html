@@ -38,6 +38,7 @@
                     <h2>Upcoming <span>Events.</span></h2>
                 </div>
                 {% for obj in recent_upcoming %}
+                <div class="latest-events">
                 <div class="latest-event-item">
                         <div class="events-date  relative-position text-center">
                             <div class="gradient-bdr"></div>
@@ -48,6 +49,7 @@
                             <h3 class="latest-title bold-font">{{ obj.name }}</h3>
                         </div>
                     </div>
+                </div>
                 {% endfor %}
 
             </div>

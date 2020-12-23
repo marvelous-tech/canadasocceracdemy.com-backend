@@ -8,9 +8,9 @@
         <div class="testimonial-secound-slide-area">
             {% for testimonial in testimonials %}
                 <div class="student-qoute text-center">
-                <p>“{{ testimonial.text | safe | escape }}”</p>
+                {{ testimonial.text | safe | escape }}
                 <div class="student-name-designation">
-                    <span class="st-name bold-font">{{ testimonial.name }} </span>
+                    <span class="st-name bold-font text-center">{{ testimonial.name }} </span><span class="st-designation">{{ testimonial.type }}</span>
                 </div>
             </div>
             {% endfor %}
