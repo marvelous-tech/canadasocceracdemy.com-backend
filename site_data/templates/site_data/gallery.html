@@ -1,0 +1,74 @@
+{% extends "site_data/base-with-side-features-regular-footer.html" %}
+{% block styles %}
+    <style>
+        #container {
+            max-width: 1400px;
+        }
+
+        .item {
+            width: 200px;
+            float: left;
+        }
+
+        .item img {
+            display: block;
+            width: 100%;
+        }
+
+        button {
+            font-size: 18px;
+        }
+
+        .container {
+            width: 100%;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+<div id="container"></div>
+<div id="images">
+    {% for image in images %}
+    <div class="item">
+        <img src="{{ image.url }}">
+    </div>
+    {% endfor %}
+
+
+</div>
+{% endblock %}
+{% block scripts %}
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script>
+        $(function () {
+
+            var $container = $('#container').masonry({
+                itemSelector: '.item',
+                columnWidth: 200
+            });
+
+            // reveal initial images
+            $container.masonryImagesReveal($('#images').find('.item'));
+        });
+
+        $.fn.masonryImagesReveal = function ($items) {
+            var msnry = this.data('masonry');
+            var itemSelector = msnry.options.itemSelector;
+            // hide by default
+            $items.hide();
+            // append to container
+            this.append($items);
+            $items.imagesLoaded().progress(function (imgLoad, image) {
+                // get item
+                // image is imagesLoaded class, not <img>, <img> is image.img
+                var $item = $(image.img).parents(itemSelector);
+                // un-hide item
+                $item.show();
+                // masonry does its thing
+                msnry.appended($item);
+            });
+
+            return this;
+        };
+    </script>
+{% endblock %}

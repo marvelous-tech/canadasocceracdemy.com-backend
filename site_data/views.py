@@ -234,6 +234,18 @@ class Camps(TemplateView):
         return context
 
 
+class GalleryView(TemplateView):
+    template_name = 'site_data/gallery.html'
+
+    def get_context_data(self, **kwargs):
+        images = Gallery.objects.filter(is_deleted=False)
+
+        return {
+            'images': images,
+            **get_sidebar_pages_default_context()
+        }
+
+
 def camp_details(request, slug):
     q = Camp.objects.filter(slug__iexact=slug)
 

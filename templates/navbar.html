@@ -70,9 +70,9 @@
                                 <li><a href="{% url 'contact' %}">Contact Us</a></li>
                                 <li><a href="{% url 'team' %}">Our team</a></li>
                                 <li><a href="{% url 'camps' %}">Camps</a></li>
-                                <li><a href="#">Courses</a></li>
+                                <li><a href="{% url 'to_registration_platform' %}">Courses</a></li>
                                 <li><a href="{% url 'blog' %}">Blog</a></li>
-                                <li><a href="#">Gallery</a></li>
+                                <li><a href="{% url 'gallery' %}">Gallery</a></li>
                                 <li><a href="{% url 'to_registration_platform' %}">Sign up</a></li>
                                 {% if request.user.is_authenticated %}<li><a href="{% url 'secure_accounts:Logging out' %}">Log out</a></li>{% endif %}
                             </ul>
@@ -89,11 +89,12 @@
                                 <li><a href="{% url 'contact' %}">Contact Us</a></li>
                                 <li><a href="{% url 'team' %}">Our team</a></li>
                                 <li><a href="{% url 'camps' %}">Camps</a></li>
-                                <li><a href="#">Courses</a></li>
+                                <li><a href="{% url 'to_registration_platform' %}">Courses</a></li>
                                 <li><a href="{% url 'blog' %}">Blog</a></li>
-                                <li><a href="#">Gallery</a></li>
+                                <li><a href="{% url 'gallery' %}">Gallery</a></li>
                                 <li><a href="{% url 'to_registration_platform' %}">Sign up</a></li>
                                 {% if request.user.is_authenticated %}<li><a href="{% url 'secure_accounts:Logging out' %}">Log out</a></li>{% endif %}
+                                {% if request.user.is_authenticated and request.user.is_superuser %}<li><a href="/admin">Admin</a></li>{% endif %}
                             </ul>
                         </nav>
 
