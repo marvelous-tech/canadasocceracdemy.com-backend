@@ -75,6 +75,7 @@
                                 <li><a href="{% url 'gallery' %}">Gallery</a></li>
                                 <li><a href="{% url 'to_registration_platform' %}">Sign up</a></li>
                                 {% if request.user.is_authenticated %}<li><a href="{% url 'secure_accounts:Logging out' %}">Log out</a></li>{% endif %}
+                                {% if request.user.is_authenticated and request.user.is_superuser %}<li><a href="/admin">Admin</a></li>{% endif %}
                             </ul>
                         </div>
                     </nav>
