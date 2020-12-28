@@ -55,7 +55,7 @@ def get_videos_by_category_slug(request, category_slug):
 
 @api_view(['GET'])
 def get_all_categories_api_view(request):
-    serializer = CategoriesSerializer(instance=CourseCategory.objects.filter(is_deleted=False), many=True)
+    serializer = CategoriesSerializer(instance=CourseCategory.objects.filter(is_deleted=False), many=True).order_by('id')
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -74,7 +74,7 @@ def add_to_watch_letter_api_view(request):
 @api_view(['GET'])
 def get_all_playlist_api_view(request):
     queryset = CoursePlaylist.objects.prefetch_related('videos__package')\
-        .filter(videos__package__points__lte=request.user.user_profile.package.points)
+        .filter(videos__package__points__lte=request.user.user_profile.package.points).order_by('-id')
     serializer = PlaylistSerializer(instance=queryset, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -82,7 +82,7 @@ def get_all_playlist_api_view(request):
 @api_view(['GET'])
 @permission_classes([AllowAny, ])
 def get_all_packages_api_view(request):
-    serializer = MockPackagesSerializer(instance=MockPackages.objects.filter(is_deleted=False), many=True)
+    serializer = MockPackagesSerializer(instance=MockPackages.objects.filter(is_deleted=False), many=True).order_by('id')
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 

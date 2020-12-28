@@ -61,11 +61,11 @@ class CourseVideoQueryset(models.QuerySet):
 
     @staticmethod
     def get_course_videos_by_package_points(queryset, package_points) -> models.QuerySet:
-        return queryset.filter(package__points__lte=package_points)
+        return queryset.filter(package__points__lte=package_points).order_by('-id')
 
     @staticmethod
     def get_course_videos_by_package_points_by_category_id(queryset, package_points, category_id) -> models.QuerySet:
-        return CourseVideoQueryset.get_course_videos_by_package_points(queryset, package_points).filter(category_id=category_id)
+        return CourseVideoQueryset.get_course_videos_by_package_points(queryset, package_points).filter(category_id=category_id).order_by('-id')
 
     @staticmethod
     def get_course_video_by_package_points_by_category_id_by_slug(queryset, package_points, category_id, course_video_slug):
@@ -108,7 +108,7 @@ class CoursePlaylistQuerySet(models.QuerySet):
 
     @staticmethod
     def get_playlists_by_package_points(queryset, package_points):
-        return queryset.filter(videos__package__points__lte=package_points)
+        return queryset.filter(videos__package__points__lte=package_points).order_by('-id')
 
     @staticmethod
     def get_playlist_by_package_points_by_slug(queryset, package_points, playlist_slug):
