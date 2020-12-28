@@ -21,7 +21,7 @@ class PaymentMethodToken(models.Model):
     ), default='Card', blank=True, null=True)
     image_url = models.URLField(blank=True, null=True)
     data = models.CharField(max_length=255, blank=True, null=True)
-    is_verified = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=True)
     is_default = models.BooleanField(default=False)
     is_deleted = models.BooleanField(default=False)
 
