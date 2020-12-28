@@ -19,7 +19,8 @@
 <script type="text/javascript">
 if(detectMob() === false) {
 	document.getElementById("SiteLogo_navbar_logo").style.height = "90px";
-	document.getElementById("SiteLogo_banner_image").style.height = "150px";
+} else {
+	document.getElementsByClassName("SiteLogo_banner_image").style.height = "150px";
 }
 		
 window.onscroll = function() {
