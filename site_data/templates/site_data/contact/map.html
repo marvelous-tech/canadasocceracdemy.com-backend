@@ -22,7 +22,7 @@
                                 <div class="address-details ul-li-block">
                                     <ul>
                                         {% for address in addresses %}
-                                            <li><span>{{ address.name | title }}: </span>{{ address.address | title }}
+                                            <li>{{ address.address | title }}
                                             </li>
                                         {% endfor %}
 
@@ -37,7 +37,7 @@
                                 <div class="address-details ul-li-block">
                                     <ul>
                                         {% for number in numbers %}
-                                            <li><span>{{ number.name | title }}: </span>{{ number.number }}</li>
+                                            <li>{{ number.number }}</li>
                                         {% endfor %}
                                     </ul>
                                 </div>
@@ -50,7 +50,7 @@
                                 <div class="address-details ul-li-block">
                                     <ul>
                                         {% for email in emails %}
-                                            <li><span>{{ email.name | title }}: </span>{{ email.email }}</li>
+                                            <li>{{ email.email }}</li>
                                         {% endfor %}
                                     </ul>
                                 </div>
