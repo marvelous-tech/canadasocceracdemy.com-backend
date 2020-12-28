@@ -15,4 +15,4 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # STATIC_URL = '{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, 'static')
 
-# TINYMCE_JS_URL = 'https://marvelous-tech.nyc3.cdn.digitaloceanspaces.com/tinymce/tinymce.min.js'
+TINYMCE_JS_URL = 'https://marvelous-tech.nyc3.cdn.digitaloceanspaces.com/tinymce/tinymce.min.js'
