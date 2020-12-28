@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 
 from accounts.models import MockPackages, Member
 from site_data.models import Post, SiteLogo, Email, ContactNumber, Address, BannerImage, Upcoming, SocialLink, SiteData, \
-    Gallery, Partner, FAQ, Testimonial, Camp, ContactedVisitor
+    Gallery, Partner, FAQ, Testimonial, Camp, ContactedVisitor, PrivacyPolicy, TermAndCondition, Agreement
 
 
 # Create your views here.
@@ -234,6 +234,21 @@ class Camps(TemplateView):
         return context
 
 
+class AgreementView(TemplateView):
+    template_name = 'site_data/camps/camps.html'
+
+    def get_context_data(self, **kwargs):
+        camps = Agreement.objects.filter(is_deleted=False)
+        paginator = Paginator(camps, 6)
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context = {
+            **get_sidebar_pages_default_context(),
+            'page_obj': page_obj
+        }
+        return context
+
+
 class GalleryView(TemplateView):
     template_name = 'site_data/gallery.html'
 
@@ -244,6 +259,45 @@ class GalleryView(TemplateView):
             'images': images,
             **get_sidebar_pages_default_context()
         }
+
+
+class BlankPage(TemplateView):
+    template_name = 'site_data/blank.html'
+
+    def get_context_data(self, **kwargs):
+        page = self.kwargs.get('page')
+        data = None
+        name = None
+        title = None
+        if page == 'policy':
+            try:
+                data = PrivacyPolicy.objects.get(is_active=True)
+                data = data.text
+            except (PrivacyPolicy.DoesNotExist, PrivacyPolicy.MultipleObjectsReturned) as e:
+                data = '<p>Policy not found</p>'
+            name = '<div class="section-title headline mb20">' \
+                   '<h2>Privacy <span>Policy</span></h2>' \
+                   '</div>'
+            title = 'Privacy Policy'
+
+        elif page == 'terms':
+            try:
+                data = TermAndCondition.objects.get(is_active=True)
+                data = data.text
+            except (TermAndCondition.DoesNotExist, TermAndCondition.MultipleObjectsReturned) as e:
+                data = '<p>Terms not found</p>'
+            name = '<div class="section-title headline mb20">' \
+                   '<h2>Terms & <span>Condition</span></h2>' \
+                   '</div>'
+            title = 'Terms & Condition'
+
+        return {
+            'data': data,
+            'name': name,
+            'title': title,
+            **get_sidebar_pages_default_context()
+        }
+
 
 
 def camp_details(request, slug):

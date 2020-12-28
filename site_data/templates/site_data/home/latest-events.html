@@ -6,19 +6,19 @@
                     <h2>Latest <span>News.</span></h2>
                 </div>
                 <div class="latest-news-posts">
-                    {% for lates_post in recent_posts %}
+                    {% for latest_post in recent_posts %}
                         <div id="Blog" class="latest-news-area">
                             <div class="latest-news-thumbnile relative-position">
-                                <img src="{{ lates_post.image.url }}" alt="">
+                                <img src="{{ latest_post.image.url }}" alt="">
                                 <div class="hover-search">
                                     <i class="fas fa-search"></i>
                                 </div>
                                 <div class="blakish-overlay"></div>
                             </div>
                             <div class="date-meta">
-                                <i class="fas fa-calendar-alt"></i> {{ lates_post.published_at | date }}
+                                <i class="fas fa-calendar-alt"></i> {{ latest_post.published_at | date }}
                             </div>
-                            <h3 class="latest-title bold-font"><a href="index-2.html#">{{ lates_post.name }}</a></h3>
+                            <h3 class="latest-title bold-font"><a href="{% url 'Blog Details' slug=latest_post.slug %}">{{ latest_post.name }}</a></h3>
                         </div>
                     {% endfor %}
 

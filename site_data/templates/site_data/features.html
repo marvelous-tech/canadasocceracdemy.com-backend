@@ -28,7 +28,7 @@
                     <div class="date-meta">
                         <i class="fas fa-calendar-alt"></i> {{ recent_post.published_at | date }}
                     </div>
-                    <h3 class="latest-title bold-font"><a href="about.html#">{{ recent_post.name | safe | escape }}</a>
+                    <h3 class="latest-title bold-font"><a href="{% url 'Blog Details' slug=recent_post.slug %}">{{ recent_post.name | safe | escape }}</a>
                     </h3>
                 </div>
             {% endfor %}

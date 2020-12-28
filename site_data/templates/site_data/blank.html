@@ -1,0 +1,8 @@
+{% extends "site_data/base-with-side-features-regular-footer.html" %}
+{% block title %}
+{{ title }}
+{% endblock %}
+{% block content %}
+{{ name | safe | escape }}
+    {{ data | safe | escape }}
+{% endblock %}

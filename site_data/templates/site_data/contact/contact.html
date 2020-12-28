@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 
+{% block styles %}
+<style>
+.social-icon {
+    padding: 50px;
+}
+</style>
+{% endblock %}
+
 {% block content %}
     {% include "site_data/breadcrumb.html" with name='Contact' %}
     {% include 'site_data/contact/social.html' %}

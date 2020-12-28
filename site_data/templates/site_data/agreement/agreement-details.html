@@ -1,0 +1,23 @@
+{% extends "site_data/base-with-side-features-regular-footer.html" %}
+{% block content %}
+    <div class="blog-post-content">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{{ agreement.agreement_image.url }}" class="img-responsive img-fluid img-thumbnail" alt="">
+            </div>
+            <div class="col-md-8">
+                <div class="position-absolute bg-light" style="bottom: 0">
+                    <h2>{{ agreement.name | title }}</h2>
+                    <div class="date-meta text-uppercase">
+                        <span><i class="fas fa-calendar-alt"></i> {{ agreement.created }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 my-3">
+                {{ agreement.text | safe | escape }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

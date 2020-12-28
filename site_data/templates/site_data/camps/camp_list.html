@@ -1,20 +1,20 @@
 <div class="genius-post-item">
     <div class="tab-container">
         <div id="tab1" class="tab-content-1 pt35">
-            <div class="row">
+            <div id="blogs">
 
                 {% for camp in page_obj %}
-                    <div class="col-md-6">
-                        <div class="blog-post-img-content">
+                    <div id="blog">
+                        <div class="mb45">
                             <div class="blog-img-date relative-position">
                                 <div class="blog-thumnile">
-                                    <img src="{{ camp.flyer_image.url }}" alt="">
+                                    <img class="img-responsive img-fluid img-thumbnail" src="{{ camp.flyer_image.url }}" alt="">
                                 </div>
                                 <div class="course-price text-center gradient-bg">
                                     <span>{{ camp.timestamp }}</span>
                                 </div>
                             </div>
-                            <div class="blog-title-content headline">
+                            <div class="blog-title-content headline mt25">
                                 <h3><a href="{% url 'Camp Details' slug=camp.slug %}">{{ camp.name | safe | escape }}</a></h3>
 
                                 <div class="view-all-btn bold-font">
@@ -25,48 +25,8 @@
                     </div>
                 {% endfor %}
 
-
-
-
             </div>
         </div><!-- 1st tab -->
-
-        <div id="tab2" class="tab-content-1 pt35">
-            <div class="blog-list-view">
-
-                {% for camp in page_obj %}
-                    <div class="list-blog-item">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="blog-post-img-content">
-                                    <div class="blog-img-date relative-position">
-                                        <div class="blog-thumnile">
-                                            <img style="height: 480px !important;" class="img-responsive img-fluid" src="{{ camp.flyer_image.url }}" alt="">
-                                        </div>
-                                        <div class="course-price text-center gradient-bg">
-                                            <span>{{ camp.timestamp }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="blog-title-content headline">
-                                    <h3><a href="{% url 'Camp Details' slug=camp.slug %}">{{ camp.name | safe | escape }}</a></h3>
-
-                                    <div class="view-all-btn bold-font">
-                                        <a href="{% url 'Camp Details' slug=camp.slug %}">Read More <i class="fas fa-chevron-circle-right"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                {% endfor %}
-
-
-
-            </div>
-        </div><!-- 2nd tab -->
     </div>
 </div>
 

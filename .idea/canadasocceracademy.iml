@@ -25,6 +25,7 @@
     <orderEntry type="library" name="bootstrap-select" level="application" />
     <orderEntry type="library" name="masonry-layout" level="application" />
     <orderEntry type="library" name="imagesloaded" level="application" />
+    <orderEntry type="library" name="swiper" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />

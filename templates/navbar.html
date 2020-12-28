@@ -2,18 +2,18 @@
 <header>
     <div id="main-menu" class="main-menu-container">
         <div class="main-menu">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="navbar-default">
                     <div class="navbar-header float-left">
                         <a class="navbar-brand text-uppercase font-weight-bold"
-                           href="index-1.html#">
+                           href="{% url 'home' %}">
                             <img id="SiteLogo_navbar_logo" src="{{ navbar_logo.image.url }}"
                                 alt="Logo">
                         </a>
                     </div>
                     {% if request.user.is_authenticated == False %}
                         <div class="log-in float-right">
-                            <a data-toggle="modal" data-target="#myModal" href="index-1.html#">log in</a>
+                            <a data-toggle="modal" data-target="#myModal" href="#">log in</a>
                             <!-- The Modal -->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -40,7 +40,7 @@
                                             >
                                                 {% csrf_token %}
                                                 <div class="contact-info">
-                                                    <input class="name" name="Email"
+                                                    <input class="name" name="email" type="email"
                                                            placeholder="Your@email.com*">
                                                 </div>
                                                 <div class="contact-info">
@@ -65,14 +65,20 @@
                     <nav class="navbar-menu float-right vertical-center">
                         <div class="nav-menu ul-li">
                             <ul>
-                                <li><a href="{% url 'home' %}">Home</a></li>
-                                <li><a href="{% url 'about' %}">About Us</a></li>
-                                <li><a href="{% url 'contact' %}">Contact Us</a></li>
-                                <li><a href="{% url 'team' %}">Our team</a></li>
                                 <li><a href="{% url 'camps' %}">Camps</a></li>
                                 <li><a href="{% url 'to_registration_platform' %}">Courses</a></li>
+                                <li class="menu-item-has-children ul-li-block">
+                                    <a href="#">About Us</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="{% url 'about' %}">Overview</a></li>
+                                        <li><a href="{% url 'team' %}">Our Team Members</a></li>
+                                        <li><a href="{% url 'documents' page='policy' %}">Privacy Policy</a></li>
+                                        <li><a href="{% url 'documents' page='terms' %}">Terms & Condition</a></li>
+                                    </ul>
+                                </li>
                                 <li><a href="{% url 'blog' %}">Blog</a></li>
                                 <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                                <li><a href="{% url 'contact' %}">Contact Us</a></li>
                                 <li><a href="{% url 'to_registration_platform' %}">Sign up</a></li>
                                 {% if request.user.is_authenticated %}<li><a href="{% url 'secure_accounts:Logging out' %}">Log out</a></li>{% endif %}
                                 {% if request.user.is_authenticated and request.user.is_superuser %}<li><a href="/admin">Admin</a></li>{% endif %}
@@ -85,14 +91,19 @@
                         </div>
                         <nav>
                             <ul>
-                                <li><a href="{% url 'home' %}">Home</a></li>
-                                <li><a href="{% url 'about' %}">About Us</a></li>
-                                <li><a href="{% url 'contact' %}">Contact Us</a></li>
-                                <li><a href="{% url 'team' %}">Our team</a></li>
                                 <li><a href="{% url 'camps' %}">Camps</a></li>
                                 <li><a href="{% url 'to_registration_platform' %}">Courses</a></li>
+                                <li><a href="#">About Us</a>
+                                    <ul>
+                                        <li><a href="{% url 'about' %}">Overview</a></li>
+                                        <li><a href="{% url 'team' %}">Our Team Members</a></li>
+                                        <li><a href="{% url 'documents' page='privacy' %}">Privacy Policy</a></li>
+                                        <li><a href="{% url 'documents' page='terms' %}">Terms & Condition</a></li>
+                                    </ul>
+                                </li>
                                 <li><a href="{% url 'blog' %}">Blog</a></li>
                                 <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                                <li><a href="{% url 'contact' %}">Contact Us</a></li>
                                 <li><a href="{% url 'to_registration_platform' %}">Sign up</a></li>
                                 {% if request.user.is_authenticated %}<li><a href="{% url 'secure_accounts:Logging out' %}">Log out</a></li>{% endif %}
                                 {% if request.user.is_authenticated and request.user.is_superuser %}<li><a href="/admin">Admin</a></li>{% endif %}

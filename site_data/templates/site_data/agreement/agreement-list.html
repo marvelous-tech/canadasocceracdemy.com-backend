@@ -1,0 +1,86 @@
+<div class="genius-post-item">
+    <div class="tab-container">
+        <div id="tab1" class="tab-content-1 pt35">
+            <div class="row">
+
+                {% for camp in page_obj %}
+                    <div class="col-md-6">
+                        <div class="blog-post-img-content">
+                            <div class="blog-img-date relative-position">
+                                <div class="blog-thumnile">
+                                    <img src="{{ camp.flyer_image.url }}" alt="">
+                                </div>
+                                <div class="course-price text-center gradient-bg">
+                                    <span>{{ camp.timestamp }}</span>
+                                </div>
+                            </div>
+                            <div class="blog-title-content headline">
+                                <h3><a href="{% url 'Camp Details' slug=camp.slug %}">{{ camp.name | safe | escape }}</a></h3>
+
+                                <div class="view-all-btn bold-font">
+                                    <a href="{% url 'Camp Details' slug=camp.slug %}">Read More <i class="fas fa-chevron-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+
+
+            </div>
+        </div><!-- 1st tab -->
+
+        <div id="tab2" class="tab-content-1 pt35">
+            <div class="blog-list-view">
+
+                {% for agreement in page_obj %}
+                    <div class="list-blog-item">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="blog-post-img-content">
+                                    <div class="blog-img-date relative-position">
+                                        <div class="blog-thumnile">
+                                            <img style="max-height: 480px !important;" class="img-responsive img-fluid" src="{{ agreement.agreement_image.url }}" alt="">
+                                        </div>
+                                        <div class="course-price text-center gradient-bg">
+                                            <span>{{ agreement.created }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="blog-title-content headline">
+                                    <h3><a href="{% url 'Camp Details' slug=agreement.slug %}">{{ agreement.name | safe | escape }}</a></h3>
+
+                                    <div class="view-all-btn bold-font">
+                                        <a href="{% url 'Camp Details' slug=agreement.slug %}">Read More <i class="fas fa-chevron-circle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+
+
+            </div>
+        </div><!-- 2nd tab -->
+    </div>
+</div>
+
+
+<div class="couse-pagination text-center ul-li">
+    <ul>
+        {% if page_obj.has_previous %}
+            <li class="pg-text"><a href="?page=1">FIRST</a></li>
+            <li class="pg-text"><a href="?page={{ page_obj.previous_page_number }}">PREV</a></li>
+        {% endif %}
+        <li class="active"><a href="?page={{ page_obj.number }}">PAGE - {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+        {% if page_obj.has_next %}
+            <li class="pg-text"><a href="?page={{ page_obj.next_page_number }}">NEXT</a></li>
+            <li class="pg-text"><a href="?page={{ page_obj.paginator.num_pages }}">LAST</a></li>
+        {% endif %}
+    </ul>
+</div>

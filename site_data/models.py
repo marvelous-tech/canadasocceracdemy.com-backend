@@ -302,8 +302,8 @@ class Agreement(models.Model):
     uuid = models.UUIDField(default=uuid4)
 
     name = models.TextField()
-    image = models.ImageField(upload_to=get_agreement_image_path)
     agreement_image = models.ImageField(upload_to=get_agreement_image_path)
+    text = HTMLField(blank=True, null=True)
     slug = models.SlugField(max_length=255, null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
@@ -325,6 +325,8 @@ class TermAndCondition(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    is_active = models.BooleanField(default=False)
+
     objects = models.Manager()
 
     def __str__(self):
@@ -340,6 +342,8 @@ class PrivacyPolicy(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    is_active = models.BooleanField(default=False)
 
     objects = models.Manager()
 

@@ -1,15 +1,27 @@
 <div id="slider-item" class="slider-item-details">
     {% for banner_image in banner_images %}
-        <div id="BannerImage" class="slider-area relative-position banner" style="background: url('{{ banner_image.image.url }}');">
+        <div id="BannerImage" class="slider-area relative-position banner"
+             style="background: url('{{ banner_image.image.url }}');">
             <div class="slider-text">
                 <div class="section-title mb20 headline text-center m-auto">
                     <div class="container">
                         <div class="row SiteLogo_banner_image">
                             {% for logo in banner_logos %}
                                 <div class="col-md-6 d-flex justify-content-around">
-                                    <img id="SiteLogo_banner_image" src="{{ logo.image.url }}" style="{{ logo.style }}" alt="Logo">
+                                    <img id="SiteLogo_banner_image" src="{{ logo.image.url }}" style="{{ logo.style }}"
+                                         alt="Logo">
                                 </div>
                             {% endfor %}
+                        </div>
+                        <div class="row">
+                            <div class="my-3 col-md-12 d-flex justify-content-center">
+                                <div class="mr-4 genius-btn btn-lg  gradient-bg text-center text-uppercase ul-li-block bold-font">
+                                    <a href="{% url 'camps' %}">Running Camps <i class="fas fa-caret-right"></i></a>
+                                </div>
+                                <div class="ml-4 genius-btn gradient-bg btn-lg text-center text-uppercase ul-li-block bold-font">
+                                    <a href="{% url 'to_registration_platform' %}">Online Courses <i class="fas fa-caret-right"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
