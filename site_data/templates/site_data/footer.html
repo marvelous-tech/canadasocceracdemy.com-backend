@@ -44,7 +44,7 @@
                                 <ul>
                                     {% for gallery in feature_gallery_images %}
                                         <li>
-                                            <img src="{{ gallery.image.url }}" style="height: 80px" alt="">
+                                            <img src="{{ gallery.image.url }}" style="{{ navbar_logo.style }}" alt="">
                                             <div class="blakish-overlay"></div>
                                             <div class="pop-up-icon">
                                                 <a href="{{ gallery.image.url }}" data-lightbox="roadtrip">
