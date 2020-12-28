@@ -20,7 +20,12 @@
 if(detectMob() === false) {
 	document.getElementById("SiteLogo_navbar_logo").style.height = "90px";
 } else {
-	document.getElementsByClassName("SiteLogo_banner_image").style.height = "150px";
+    const logos = document.getElementsByClassName("SiteLogo_banner_image").style.height;
+
+    for (var i = 0; i < logos.length; i++) {
+        const logo = logos[i];
+	    logo.style.height = "150px";
+    }
 }
 		
 window.onscroll = function() {
