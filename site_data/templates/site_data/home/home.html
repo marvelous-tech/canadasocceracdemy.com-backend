@@ -16,10 +16,14 @@
 
 
 
-    <!-- Start of sponsor section
+
+
+    <!-- Start of about us section
 		============================================= -->
-    {% include "site_data/home/sponsers.html" %}
-    <!-- End of sponsor section
+    <section id="about-us" class="about-us-section home-secound">
+        {% include "site_data/home/about.html" %}
+    </section>
+    <!-- End of about us section
 		============================================= -->
 
 
@@ -32,20 +36,14 @@
 		============================================= -->
 
 
-    <!-- Start of about us section
-		============================================= -->
-    <section id="about-us" class="about-us-section home-secound">
-        {% include "site_data/home/about.html" %}
-    </section>
-    <!-- End of about us section
-		============================================= -->
+
 
 
     <!-- Start of Search Courses
 		============================================= -->
-{#    <section id="search-course" class="search-course-section home-secound-course-search backgroud-style">#}
-{#        {% include "site_data/home/search-courses-mobile-app.html" %}#}
-{#    </section>#}
+    {#    <section id="search-course" class="search-course-section home-secound-course-search backgroud-style">#}
+    {#        {% include "site_data/home/search-courses-mobile-app.html" %}#}
+    {#    </section>#}
     <!-- End of Search Courses
 		============================================= -->
 
@@ -59,22 +57,22 @@
 		============================================= -->
 
 
-{#    <!-- Start of best product section#}
-{#		============================================= -->#}
-{#    <section id="best-product" class="best-product-section home_2">#}
-{#        {% include "site_data/home/best-products.html" %}#}
-{#    </section>#}
-{#    <!-- End  of best product section#}
-{#		============================================= -->#}
-{##}
-{##}
-{#    <!-- Start of best course#}
-{#		============================================= -->#}
-{#    <section id="best-course" class="best-course-section">#}
-{#        {% include "site_data/home/best-courses.html" %}#}
-{#    </section>#}
-{#    <!-- End of best course#}
-{#		============================================= -->#}
+    {#    <!-- Start of best product section#}
+    {#		============================================= -->#}
+    {#    <section id="best-product" class="best-product-section home_2">#}
+    {#        {% include "site_data/home/best-products.html" %}#}
+    {#    </section>#}
+    {#    <!-- End  of best product section#}
+    {#		============================================= -->#}
+    {##}
+    {##}
+    {#    <!-- Start of best course#}
+    {#		============================================= -->#}
+    {#    <section id="best-course" class="best-course-section">#}
+    {#        {% include "site_data/home/best-courses.html" %}#}
+    {#    </section>#}
+    {#    <!-- End of best course#}
+    {#		============================================= -->#}
 
 
     <!-- Start FAQ section
@@ -84,15 +82,15 @@
     </section>
     <!-- End FAQ section
 		============================================= -->
-<div class="m5" style="min-height: 100px"></div>
+    <div class="m5" style="min-height: 100px"></div>
 
-{#    <!-- Start Course category#}
-{#		============================================= -->#}
-{#    <section id="course-category" class="course-category-section home-secound-version">#}
-{#        {% include "site_data/home/course-category.html" %}#}
-{#    </section>#}
-{#    <!-- End Course category#}
-{#		============================================= -->#}
+    {#    <!-- Start Course category#}
+    {#		============================================= -->#}
+    {#    <section id="course-category" class="course-category-section home-secound-version">#}
+    {#        {% include "site_data/home/course-category.html" %}#}
+    {#    </section>#}
+    {#    <!-- End Course category#}
+    {#		============================================= -->#}
 
 
     <!-- Start secound testimonial section
@@ -112,7 +110,11 @@
     <!-- End teacher section
 		============================================= -->
 
-
+    <!-- Start of sponsor section
+				============================================= -->
+    {% include "site_data/home/sponsers.html" %}
+    <!-- End of sponsor section
+		============================================= -->
 
     <!-- Start Of scound contact section
 		============================================= -->
@@ -123,11 +125,11 @@
 
 {% block styles %}
     <style>
-    .banner {
-      height: 100vh;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center center;
-    }
+        .banner {
+            height: 100vh;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
     </style>
 {% endblock %}
