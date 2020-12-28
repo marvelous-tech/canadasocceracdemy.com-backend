@@ -8,7 +8,8 @@
                         <div class="blog-post-img-content">
                             <div class="blog-img-date relative-position">
                                 <div class="blog-thumnile">
-                                    <img src="{{ blog.image.url }}" alt="">
+                                    <a href="{{ blog.image.url }}" data-lightbox="{{ blog.name }}"
+                   data-title="{{ blog.name }}" ><img src="{{ blog.image.url }}" alt=""></a>
                                 </div>
                                 <div class="course-price text-center gradient-bg">
                                     <span>{{ blog.published_at | date }}</span>

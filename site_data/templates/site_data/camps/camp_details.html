@@ -3,7 +3,10 @@
     <div class="blog-post-content">
         <div class="row">
             <div class="col-md-4">
-                <img src="{{ camp.flyer_image.url }}" class="img-responsive img-fluid img-thumbnail" alt="">
+                <a href="{{ camp.flyer_image.url }}" data-lightbox="{{ camp.name }}"
+                   data-title="{{ camp.name }}">
+                    <img src="{{ camp.flyer_image.url }}" class="img-responsive img-fluid img-thumbnail" alt="">
+                </a>
             </div>
             <div class="col-md-8">
                 <div class="position-absolute bg-light" style="bottom: 0">
@@ -22,7 +25,9 @@
         <div class="row">
             {% for image in camp.images.all %}
                 <div class="col-md-4">
-                    <img src="{{ image.image.url }}" alt="" class="img-responsive img-fluid img-thumbnail">
+                    <a href="{{ image.image.url }}" data-lightbox="{{ image.name }}"
+                   data-title="{{ image.name }}"><img src="{{ image.image.url }}" alt="{{ image.name }}"
+                    class="img-thumbnail img-responsive img-fluid"></a>
                     <h6 class="mt-1">{{ image.name | title }}</h6>
                     <hr>
                     <div class="content small">

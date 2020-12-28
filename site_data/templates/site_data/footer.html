@@ -9,7 +9,7 @@
                         <div class="footer-widget">
                             <div class="footer-logo mb35">
                                 <img src="{{ navbar_logo.image.url }}"
-                                style="{{ navbar_logo.style }}" alt="Logo">
+                                     style="{{ navbar_logo.style }}" alt="Logo">
                             </div>
                             <div class="footer-about-text" id="SiteData_footer_text">
                                 {{ footer_text.data|safe|escape }}
@@ -23,14 +23,16 @@
                                 <ul>
                                     <li><a href="{% url 'about' %}"><i class="fas fa-caret-right"></i>About Us</a></li>
                                     <li><a href="{% url 'team' %}"><i class="fas fa-caret-right"></i>Teachers</a></li>
-                                    <li><a href="{% url 'contact' %}"><i class="fas fa-caret-right"></i>Contact Us</a></li>
+                                    <li><a href="{% url 'contact' %}"><i class="fas fa-caret-right"></i>Contact Us</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                         <div class="footer-menu ul-li-block">
                             <h2 class="widget-title">Account Info</h2>
                             <ul>
-                                <li><a href="{% url "secure_accounts:Login to your account" %}"><i class="fas fa-caret-right"></i>Login & Register</a></li>
+                                <li><a href="{% url "secure_accounts:Login to your account" %}"><i
+                                        class="fas fa-caret-right"></i>Login & Register</a></li>
                                 <li><a href="{% url 'contact' %}"><i class="fas fa-caret-right"></i>Contact Us</a></li>
                             </ul>
                         </div>
@@ -74,15 +76,13 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="copy-right-text">
-                            <p>© 2021 - Designed & Developed by <a href="https://dev-fahim.github.io/me"
-                                                               title="Marvelous Technologies">
-                            Marvelous-Tech.com</a>. All rights reserved</p>
+                            <p>© {% now "Y" %} - Canadasocceracademy.com&trade;. All rights reserved</p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="copy-right-menu-item float-right ul-li">
                             <ul>
-                                <li><a href="about.html#">Agreements</a></li>
+                                <li><a href="{% url 'agreements' %}">Agreements</a></li>
                                 <li><a href="{% url 'documents' page='policy' %}">Privacy & Policy</a></li>
                                 <li><a href="{% url 'documents' page='terms' %}">Term Of Service</a></li>
                             </ul>

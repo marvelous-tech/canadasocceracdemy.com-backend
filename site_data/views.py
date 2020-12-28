@@ -235,7 +235,7 @@ class Camps(TemplateView):
 
 
 class AgreementView(TemplateView):
-    template_name = 'site_data/camps/camps.html'
+    template_name = 'site_data/agreement/agreement.html'
 
     def get_context_data(self, **kwargs):
         camps = Agreement.objects.filter(is_deleted=False)
@@ -312,6 +312,20 @@ def camp_details(request, slug):
         **get_sidebar_pages_default_context(),
     }
     return render(request, 'site_data/camps/camp_details.html', context)
+
+
+def agreement_details(request, slug):
+    q = Agreement.objects.filter(slug__iexact=slug)
+
+    if q.exists():
+        q = q.first()
+    else:
+        return HttpResponse('<h1>Agreement Not Found</h1>')
+    context = {
+        'agreement': q,
+        **get_sidebar_pages_default_context(),
+    }
+    return render(request, 'site_data/agreement/agreement-details.html', context)
 
 
 def post_detail(request, slug):

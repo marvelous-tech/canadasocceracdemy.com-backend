@@ -42,6 +42,8 @@ def login_user(request):
                 message="Logged in successfully",
                 level=messages.SUCCESS
             )
+            if request.user.is_superuser:
+                return redirect('/admin')
             next_ = request.GET.get('next', settings.E_LEARNING_PLATFORM)
             return redirect(next_)
         messages.add_message(

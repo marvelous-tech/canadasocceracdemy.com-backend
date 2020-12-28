@@ -3,22 +3,22 @@
         <div id="tab1" class="tab-content-1 pt35">
             <div class="row">
 
-                {% for camp in page_obj %}
+                {% for agreement in page_obj %}
                     <div class="col-md-6">
                         <div class="blog-post-img-content">
                             <div class="blog-img-date relative-position">
                                 <div class="blog-thumnile">
-                                    <img src="{{ camp.flyer_image.url }}" alt="">
+                                    <img src="{{ agreement.agreement_image.url }}" alt="">
                                 </div>
                                 <div class="course-price text-center gradient-bg">
-                                    <span>{{ camp.timestamp }}</span>
+                                    <span>{{ agreement.timestamp }}</span>
                                 </div>
                             </div>
                             <div class="blog-title-content headline">
-                                <h3><a href="{% url 'Camp Details' slug=camp.slug %}">{{ camp.name | safe | escape }}</a></h3>
+                                <h3><a href="{% url 'Agreement Details' slug=agreement.slug %}">{{ agreement.name | safe | escape }}</a></h3>
 
                                 <div class="view-all-btn bold-font">
-                                    <a href="{% url 'Camp Details' slug=camp.slug %}">Read More <i class="fas fa-chevron-circle-right"></i></a>
+                                    <a href="{% url 'Agreement Details' slug=agreement.slug %}">Read More <i class="fas fa-chevron-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>

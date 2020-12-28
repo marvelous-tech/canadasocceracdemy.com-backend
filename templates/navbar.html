@@ -2,12 +2,12 @@
 <header>
     <div id="main-menu" class="main-menu-container">
         <div class="main-menu">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="navbar-default">
                     <div class="navbar-header float-left">
                         <a class="navbar-brand text-uppercase font-weight-bold"
                            href="{% url 'home' %}">
-                            <img id="SiteLogo_navbar_logo" src="{{ navbar_logo.image.url }}"
+                            <img id="SiteLogo_navbar_logo" style="transition: 0.2s;" src="{{ navbar_logo.image.url }}"
                                 alt="Logo">
                         </a>
                     </div>
@@ -71,6 +71,7 @@
                                     <a href="#">About Us</a>
                                     <ul class="sub-menu">
                                         <li><a href="{% url 'about' %}">Overview</a></li>
+                                        <li><a href="{% url 'agreements' %}">Agreements</a></li>
                                         <li><a href="{% url 'team' %}">Our Team Members</a></li>
                                         <li><a href="{% url 'documents' page='policy' %}">Privacy Policy</a></li>
                                         <li><a href="{% url 'documents' page='terms' %}">Terms & Condition</a></li>

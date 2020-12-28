@@ -305,9 +305,12 @@ class Agreement(models.Model):
     agreement_image = models.ImageField(upload_to=get_agreement_image_path)
     text = HTMLField(blank=True, null=True)
     slug = models.SlugField(max_length=255, null=True, blank=True)
+    timestamp = models.DateTimeField(null=True)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    is_deleted = models.BooleanField(default=False)
 
     objects = models.Manager()
 

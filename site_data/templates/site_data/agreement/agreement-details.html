@@ -3,13 +3,16 @@
     <div class="blog-post-content">
         <div class="row">
             <div class="col-md-4">
-                <img src="{{ agreement.agreement_image.url }}" class="img-responsive img-fluid img-thumbnail" alt="">
+                <a href="{{ agreement.agreement_image.url }}" data-lightbox="{{ agreement.name }}"
+                   data-title="{{ agreement.name }}">
+                    <img src="{{ agreement.agreement_image.url }}" class="img-responsive img-fluid img-thumbnail" alt="">
+                </a>
             </div>
             <div class="col-md-8">
                 <div class="position-absolute bg-light" style="bottom: 0">
                     <h2>{{ agreement.name | title }}</h2>
                     <div class="date-meta text-uppercase">
-                        <span><i class="fas fa-calendar-alt"></i> {{ agreement.created }}</span>
+                        <span><i class="fas fa-calendar-alt"></i> {{ agreement.timestamp }}</span>
                     </div>
                 </div>
             </div>
