@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="col-md-8 border p-3">
-                    <p>{{ package.description_box }}</p>
+                    {{ package.description_box | safe | escape }}
                     <form method="post">
                         {% csrf_token %}
                         <input class="btn btn-danger float-right" type="submit" value="Unsubscribe">
