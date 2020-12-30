@@ -11,7 +11,7 @@ from site_data.models import (
     Gallery,
     Reference,
     Coupon, SiteLogo, BannerImage, Testimonial, Camp, CampImage, PrivacyPolicy, TermAndCondition, Agreement, Email,
-    ContactNumber, Address, SocialLink
+    ContactNumber, Address, SocialLink, GalleryVideo
 )
 
 # Register your models here.
@@ -133,6 +133,15 @@ class GalleryModelAdmin(admin.ModelAdmin):
         'updated'
     ]
 
+
+@admin.register(GalleryVideo)
+class GalleryVideoModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'youtube_video_id',
+        'created',
+        'updated'
+    ]
 
 
 @admin.register(Reference)

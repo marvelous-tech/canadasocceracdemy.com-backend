@@ -8,7 +8,7 @@
             <p>{{ app_feature_image_text.data | safe | escape }}</p>
         </div>
         <div class="genius-btn gradient-bg text-center text-uppercase ul-li-block bold-font">
-            <a href="{% url 'to_registration_platform' %}">VIEW ONLINE COURSES <i class="fas fa-caret-right"></i></a>
+            <a target="_blank" href="{% url 'to_registration_platform' %}">VIEW ONLINE COURSES <i class="fas fa-caret-right"></i></a>
         </div>
     </div>
 
@@ -46,7 +46,7 @@
         <div class="featured-course">
             <div class="best-course-pic-text relative-position">
                 <div class="best-course-pic relative-position">
-                    <a href="{% url 'to_registration_platform' %}"><img id="SiteLogo_feature_course_logo" src="{{ feature_course_logo.image.url }}" alt=""></a>
+                    <a target="_blank" href="{% url 'to_registration_platform' %}"><img id="SiteLogo_feature_course_logo" src="{{ feature_course_logo.image.url }}" alt=""></a>
                     <div class="trend-badge-2 text-center text-uppercase">
                         <i class="fas fa-bolt"></i>
                         <span>Popular</span>

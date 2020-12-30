@@ -30,7 +30,9 @@ from site_data.views import Home as SiteHome, About as SiteAbout, Contact as Sit
     TeacherList as SiteTeacherList, BlogList as SiteBlogList, Camps as SiteCampsList, \
     post_detail as site_blog_details, camp_details as site_camp_details, \
     teacher_details as site_teacher_details, contact as site_submit_contact_data, GalleryView as SiteGallery, \
-    BlankPage as SiteBlankPage, AgreementView as SiteAgreementView, agreement_details as site_agreement_details_view
+    BlankPage as SiteBlankPage, AgreementView as SiteAgreementView, agreement_details as site_agreement_details_view, \
+    BlogProgramList as SiteBlogProgramList, post_program_detail as site_post_program_detail, \
+    GalleryVideoView as SiteGalleryVideo
 from upload_chunk_video.views import ChunkedUploadDemo, MyChunkedUploadCompleteView, MyChunkedUploadView
 
 
@@ -92,10 +94,13 @@ urlpatterns = [
     path('team/', SiteTeacherList.as_view(), name="team"),
     path('team/<uuid:uuid>/', site_teacher_details, name="team details"),
     path('blog/', SiteBlogList.as_view(), name="blog"),
+    path('programs/', SiteBlogProgramList.as_view(), name="program"),
     path('blog/<slug:slug>/', site_blog_details, name="Blog Details"),
+    path('programs/<slug:slug>/', site_post_program_detail, name="Program Details"),
     path('camps/', SiteCampsList.as_view(), name="camps"),
     path('camps/<slug:slug>/', site_camp_details, name="Camp Details"),
-    path('gallery/', SiteGallery.as_view(), name="gallery"),
+    path('photos/', SiteGallery.as_view(), name="photos"),
+    path('videos/', SiteGalleryVideo.as_view(), name="videos"),
     path('agreements/', SiteAgreementView.as_view(), name="agreements"),
     path('agreements/<slug:slug>/', site_agreement_details_view, name="Agreement Details"),
     re_path('^private-media/', include('private_storage.urls')),

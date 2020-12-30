@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 
 from accounts.models import MockPackages, Member
 from site_data.models import Post, SiteLogo, Email, ContactNumber, Address, BannerImage, Upcoming, SocialLink, SiteData, \
-    Gallery, Partner, FAQ, Testimonial, Camp, ContactedVisitor, PrivacyPolicy, TermAndCondition, Agreement
+    Gallery, Partner, FAQ, Testimonial, Camp, ContactedVisitor, PrivacyPolicy, TermAndCondition, Agreement, GalleryVideo
 
 
 # Create your views here.
@@ -219,6 +219,29 @@ class BlogDetail(TemplateView):
         return context
 
 
+class BlogProgramList(TemplateView):
+    template_name = 'site_data/blog/blog.html'
+
+    def get_context_data(self, **kwargs):
+        tag = None
+        if self.request.GET.get('tag') is not None:
+            tag = self.request.GET.get('tag')
+
+        if tag is not None:
+            posts = Post.objects.select_related('category').filter(is_active=True, tags__icontains=tag, category__name__in='Program')
+        else:
+            posts = Post.objects.select_related('category').filter(is_active=True, category__name__in='Program')
+
+        paginator = Paginator(posts, 6)
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context = {
+            **get_sidebar_pages_default_context(),
+            'page_obj': page_obj
+        }
+        return context
+
+
 class Camps(TemplateView):
     template_name = 'site_data/camps/camps.html'
 
@@ -257,6 +280,18 @@ class GalleryView(TemplateView):
 
         return {
             'images': images,
+            **get_sidebar_pages_default_context()
+        }
+
+
+class GalleryVideoView(TemplateView):
+    template_name = 'site_data/videos.html'
+
+    def get_context_data(self, **kwargs):
+        videos = GalleryVideo.objects.filter(is_deleted=False)
+
+        return {
+            'videos': videos,
             **get_sidebar_pages_default_context()
         }
 
@@ -330,6 +365,22 @@ def agreement_details(request, slug):
 
 def post_detail(request, slug):
     q = Post.objects.filter(slug__iexact=slug)
+
+
+    if q.exists():
+        q = q.first()
+    else:
+        return HttpResponse('<h1>Post Not Found</h1>')
+    context = {
+        'blog': q,
+        'member': q.by,
+        **get_sidebar_pages_default_context(),
+    }
+    return render(request, 'site_data/blog/details/details.html', context)
+
+
+def post_program_detail(request, slug):
+    q = Post.objects.select_related('category').filter(slug__iexact=slug, category__name__in='Program')
 
 
     if q.exists():

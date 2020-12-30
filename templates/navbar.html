@@ -40,7 +40,7 @@
                                             >
                                                 {% csrf_token %}
                                                 <div class="contact-info">
-                                                    <input class="name" name="email" type="email"
+                                                    <input class="name" name="email"
                                                            placeholder="Your@email.com*">
                                                 </div>
                                                 <div class="contact-info">
@@ -65,8 +65,9 @@
                     <nav class="navbar-menu float-right vertical-center">
                         <div class="nav-menu ul-li">
                             <ul>
+                                <li><a href="{% url 'home' %}">Home</a></li>
                                 <li><a href="{% url 'camps' %}">Camps</a></li>
-                                <li><a href="{% url 'to_registration_platform' %}">Courses</a></li>
+                                <li><a target="_blank" href="{% url 'to_registration_platform' %}">Courses</a></li>
                                 <li class="menu-item-has-children ul-li-block">
                                     <a href="#">About Us</a>
                                     <ul class="sub-menu">
@@ -78,9 +79,16 @@
                                     </ul>
                                 </li>
                                 <li><a href="{% url 'blog' %}">Blog</a></li>
-                                <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                                <li><a href="{% url 'program' %}">Programs</a></li>
+                                <li class="menu-item-has-children ul-li-block">
+                                    <a href="#">Gallery</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="{% url 'photos' %}">Photos</a></li>
+                                        <li><a href="{% url 'videos' %}">Videos</a></li>
+                                    </ul>
+                                </li>
                                 <li><a href="{% url 'contact' %}">Contact Us</a></li>
-                                <li><a href="{% url 'to_registration_platform' %}">Sign up</a></li>
+                                <li><a target="_blank" href="{% url 'to_registration_platform' %}">Sign up</a></li>
                                 {% if request.user.is_authenticated %}<li><a href="{% url 'secure_accounts:Logging out' %}">Log out</a></li>{% endif %}
                                 {% if request.user.is_authenticated and request.user.is_superuser %}<li><a href="/admin">Admin</a></li>{% endif %}
                             </ul>
@@ -92,20 +100,29 @@
                         </div>
                         <nav>
                             <ul>
+                                <li><a href="{% url 'home' %}">Home</a></li>
                                 <li><a href="{% url 'camps' %}">Camps</a></li>
-                                <li><a href="{% url 'to_registration_platform' %}">Courses</a></li>
+                                <li><a target="_blank" href="{% url 'to_registration_platform' %}">Courses</a></li>
                                 <li><a href="#">About Us</a>
                                     <ul>
                                         <li><a href="{% url 'about' %}">Overview</a></li>
+                                        <li><a href="{% url 'agreements' %}">Agreements</a></li>
                                         <li><a href="{% url 'team' %}">Our Team Members</a></li>
                                         <li><a href="{% url 'documents' page='privacy' %}">Privacy Policy</a></li>
                                         <li><a href="{% url 'documents' page='terms' %}">Terms & Condition</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="{% url 'blog' %}">Blog</a></li>
-                                <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                                <li><a href="{% url 'program' %}">Programs</a></li>
+                                <li>
+                                    <a href="#">Gallery</a>
+                                    <ul>
+                                        <li><a href="{% url 'photos' %}">Photos</a></li>
+                                        <li><a href="{% url 'videos' %}">Videos</a></li>
+                                    </ul>
+                                </li>
                                 <li><a href="{% url 'contact' %}">Contact Us</a></li>
-                                <li><a href="{% url 'to_registration_platform' %}">Sign up</a></li>
+                                <li><a target="_blank" href="{% url 'to_registration_platform' %}">Sign up</a></li>
                                 {% if request.user.is_authenticated %}<li><a href="{% url 'secure_accounts:Logging out' %}">Log out</a></li>{% endif %}
                                 {% if request.user.is_authenticated and request.user.is_superuser %}<li><a href="/admin">Admin</a></li>{% endif %}
                             </ul>

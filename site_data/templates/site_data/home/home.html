@@ -133,3 +133,10 @@
         }
     </style>
 {% endblock %}
+{% block scripts %}
+    <script>
+        if (detectMob() === false) {
+	        document.getElementById("banner_links_col").classList.add("my-3");
+        }
+    </script>
+{% endblock %}

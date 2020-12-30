@@ -205,6 +205,24 @@ class Gallery(models.Model):
         return self.name
 
 
+class GalleryVideo(models.Model):
+    uuid = models.UUIDField(default=uuid4)
+    name = models.CharField(max_length=255)
+    youtube_video_id = models.CharField(max_length=255)
+    is_feature = models.BooleanField(default=False)
+    slug = models.SlugField(max_length=255, null=True, blank=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    is_deleted = models.BooleanField(default=False)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
+
+
 class Reference(models.Model):
     uuid = models.UUIDField(default=uuid4)
     name = models.CharField(max_length=255)
@@ -414,6 +432,7 @@ def pre_save_receiver_slug(sender, instance, *args, **kwargs):
 
 pre_save.connect(pre_save_receiver_slug, sender=Post)
 pre_save.connect(pre_save_receiver_slug, sender=Gallery)
+pre_save.connect(pre_save_receiver_slug, sender=GalleryVideo)
 pre_save.connect(pre_save_receiver_slug, sender=Question)
 pre_save.connect(pre_save_receiver_slug, sender=FAQ)
 pre_save.connect(pre_save_receiver_slug, sender=Upcoming)

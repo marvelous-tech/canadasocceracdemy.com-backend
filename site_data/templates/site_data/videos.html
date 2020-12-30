@@ -1,0 +1,85 @@
+{% extends "site_data/base-with-side-features-regular-footer.html" %}
+{% block styles %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"
+          integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw=="
+          crossorigin="anonymous"/>
+    <style>
+        .image-container > img {
+            border-radius: 20px;
+            box-shadow: 3px 3px 20px #ccc;
+            -webkit-box-shadow: 3px 3px 20px #ccc;
+            -moz-box-shadow: 3px 3px 20px #ccc;
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .image-container:before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            content: "\f144";
+            font-family: "Font Awesome 5 Free";
+            font-size: 100px;
+            color: #fff;
+            opacity: 1;
+            font-style: normal;
+            z-index: 10000;
+        }
+
+        .image-container:hover:before {
+            color: #eee;
+        }
+
+        #container {
+            overflow-y: auto;
+            max-height: 1000px;
+        }
+
+    </style>
+{% endblock %}
+{% block content %}
+    <div id="container">
+        <div id="row">
+            {% for video in videos %}
+                <div class="col-lg-12 my-3">
+                    <a id="{{ video.slug }}" class="videos" data-fancybox="gallery"
+                       href="https://www.youtube.com/watch?v={{ video.youtube_video_id }}">
+                            <div class="image-container">
+                                <img src="https://img.youtube.com/vi/{{ video.youtube_video_id }}/maxresdefault.jpg"
+                                     alt="{{ video.name }}">
+                            </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"
+            integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA=="
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $(".videos").click(function () {
+                $.fancybox({
+                    'transitionIn': 'none',
+                    'transitionOut': 'none',
+                    'title': this.title,
+                    'width': 680,
+                    'height': 495,
+                    'href': this.href.replace(new RegExp("watch\\?v=", "i"), 'v/'),
+                    'type': 'swf',
+                    'swf': {
+                        'wmode': 'transparent',
+                        'allowfullscreen': 'true'
+                    }
+                });
+
+                return false;
+            });
+        });
+    </script>
+{% endblock %}
