@@ -228,9 +228,9 @@ class BlogProgramList(TemplateView):
             tag = self.request.GET.get('tag')
 
         if tag is not None:
-            posts = Post.objects.select_related('category').filter(is_active=True, tags__icontains=tag, category__name__in='Program')
+            posts = Post.objects.select_related('category').filter(is_active=True, tags__icontains=tag, category__name__icontains='Program')
         else:
-            posts = Post.objects.select_related('category').filter(is_active=True, category__name__in='Program')
+            posts = Post.objects.select_related('category').filter(is_active=True, category__name__icontains='Program')
 
         paginator = Paginator(posts, 6)
         page_number = self.request.GET.get('page')
@@ -380,7 +380,7 @@ def post_detail(request, slug):
 
 
 def post_program_detail(request, slug):
-    q = Post.objects.select_related('category').filter(slug__iexact=slug, category__name__in='Program')
+    q = Post.objects.select_related('category').filter(slug__iexact=slug, category__name__icontains='Program')
 
 
     if q.exists():
