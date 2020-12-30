@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -204,9 +205,11 @@ class BlogDetail(TemplateView):
             tag = self.request.GET.get('tag')
 
         if tag is not None:
-            posts = Post.objects.filter(is_active=True, tags__icontains=tag)
+            posts = Post.objects.select_related('category').filter(~Q(category__name__icontains='Program'),
+                                                                   is_active=True, tags__icontains=tag)
         else:
-            posts = Post.objects.filter(is_active=True)
+            posts = Post.objects.select_related('category').filter(~Q(category__name__icontains='Program'),
+                                                                   is_active=True)
 
         paginator = Paginator(posts, 6)
         page_number = self.request.GET.get('page')
@@ -228,7 +231,8 @@ class BlogProgramList(TemplateView):
             tag = self.request.GET.get('tag')
 
         if tag is not None:
-            posts = Post.objects.select_related('category').filter(is_active=True, tags__icontains=tag, category__name__icontains='Program')
+            posts = Post.objects.select_related('category').filter(is_active=True, tags__icontains=tag,
+                                                                   category__name__icontains='Program')
         else:
             posts = Post.objects.select_related('category').filter(is_active=True, category__name__icontains='Program')
 
@@ -334,7 +338,6 @@ class BlankPage(TemplateView):
         }
 
 
-
 def camp_details(request, slug):
     q = Camp.objects.filter(slug__iexact=slug)
 
@@ -366,7 +369,6 @@ def agreement_details(request, slug):
 def post_detail(request, slug):
     q = Post.objects.filter(slug__iexact=slug)
 
-
     if q.exists():
         q = q.first()
     else:
@@ -381,7 +383,6 @@ def post_detail(request, slug):
 
 def post_program_detail(request, slug):
     q = Post.objects.select_related('category').filter(slug__iexact=slug, category__name__icontains='Program')
-
 
     if q.exists():
         q = q.first()
