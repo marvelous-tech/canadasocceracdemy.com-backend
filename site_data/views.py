@@ -182,29 +182,6 @@ class BlogList(TemplateView):
             tag = self.request.GET.get('tag')
 
         if tag is not None:
-            posts = Post.objects.filter(is_active=True, tags__icontains=tag)
-        else:
-            posts = Post.objects.filter(is_active=True)
-
-        paginator = Paginator(posts, 6)
-        page_number = self.request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-        context = {
-            **get_sidebar_pages_default_context(),
-            'page_obj': page_obj
-        }
-        return context
-
-
-class BlogDetail(TemplateView):
-    template_name = 'site_data/blog/details/details.html'
-
-    def get_context_data(self, **kwargs):
-        tag = None
-        if self.request.GET.get('tag') is not None:
-            tag = self.request.GET.get('tag')
-
-        if tag is not None:
             posts = Post.objects.select_related('category').filter(~Q(category__name__icontains='Program'),
                                                                    is_active=True, tags__icontains=tag)
         else:
@@ -215,7 +192,6 @@ class BlogDetail(TemplateView):
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context = {
-            **get_default_contexts(),
             **get_sidebar_pages_default_context(),
             'page_obj': page_obj
         }
