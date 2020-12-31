@@ -182,11 +182,9 @@ class BlogList(TemplateView):
             tag = self.request.GET.get('tag')
 
         if tag is not None:
-            posts = Post.objects.select_related('category').filter(~Q(category__name__icontains='Program'),
-                                                                   is_active=True, tags__icontains=tag)
+            posts = Post.objects.select_related('category').filter(is_active=True, tags__icontains=tag)
         else:
-            posts = Post.objects.select_related('category').filter(~Q(category__name__icontains='Program'),
-                                                                   is_active=True)
+            posts = Post.objects.select_related('category').filter(is_active=True)
 
         paginator = Paginator(posts, 6)
         page_number = self.request.GET.get('page')
