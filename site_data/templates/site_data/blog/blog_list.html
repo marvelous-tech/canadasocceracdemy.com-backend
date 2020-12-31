@@ -16,10 +16,10 @@
                                 </div>
                             </div>
                             <div class="blog-title-content headline">
-                                <h3><a href="{% url 'Program Details' slug=blog.slug %}">{{ blog.name | safe | escape }}</a></h3>
+                                <h3><a href="{% url 'Blog Details' slug=blog.slug %}">{{ blog.name | safe | escape }}</a></h3>
 
                                 <div class="view-all-btn bold-font">
-                                    <a href="{% url 'Program Details' slug=blog.slug %}">Read More <i class="fas fa-chevron-circle-right"></i></a>
+                                    <a href="{% url 'Blog Details' slug=blog.slug %}">Read More <i class="fas fa-chevron-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>
