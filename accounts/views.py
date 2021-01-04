@@ -364,12 +364,6 @@ def migrate(request, token):
 @login_required
 def cancel_subscriptions(request):
     package = request.user.user_profile.package
-    if package is None:
-        messages.add_message(
-            request=request,
-            message='We have not subscribed to any course',
-            level=messages.WARNING
-        )
     if request.method == "POST":
         subscription_id = request.user.user_profile.customer.customer_subscription_id
         if subscription_id is None:
@@ -430,7 +424,9 @@ def verify_email_with_registration_code(request, code):
     if user is not None:
         if account_activation_token.check_token(user, token):
             user.is_active = True
+            user.user_profile.activate_the_user()
             user.user_profile.email_verified = True
+            user.user_profile.save()
             user.save()
             user.user_profile.email_user_account_activated()
             logout(request)
