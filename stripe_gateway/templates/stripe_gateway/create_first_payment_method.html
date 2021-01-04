@@ -305,7 +305,7 @@
                     body: JSON.stringify({
                         customerId: customerId,
                         paymentMethodId: paymentMethodId,
-                        secret: {{ registration_token }}
+                        secret: '{{ registration_token }}'
                     }),
                 })
                     .then((response) => {
