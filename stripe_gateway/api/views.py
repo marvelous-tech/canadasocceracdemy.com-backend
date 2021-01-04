@@ -110,6 +110,7 @@ def create_another_payment_method(request):
 
         result = payment_method
         if customer.customer_subscription_id is not None or customer.customer_subscription_id != "":
+            print("Got subscription")
             result = stripe.Subscription.modify(
                 customer.customer_subscription_id,
                 default_payment_method=payment_method.id
