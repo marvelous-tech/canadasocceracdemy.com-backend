@@ -175,7 +175,7 @@ def update_user_profile(sender, instance: UserProfile, created, **kwargs):
     if created:
         stripe.api_key = settings.STRIPE_SECRET_KEY
         try:
-            stripe.Customer.create(
+            customer = stripe.Customer.create(
                 name=instance.user.first_name + ' ' + instance.user.last_name,
                 email=instance.user.email,
                 phone=instance.phone,
@@ -191,7 +191,8 @@ def update_user_profile(sender, instance: UserProfile, created, **kwargs):
             Customer.objects.create(
                 user_id=instance.id,
                 uuid=instance.uuid,
-                was_created_successfully=True
+                was_created_successfully=True,
+                stripe_customer_id=customer.id
             )
         except Exception as e:
             pass
