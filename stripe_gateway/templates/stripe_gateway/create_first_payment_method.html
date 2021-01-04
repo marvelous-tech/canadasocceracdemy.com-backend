@@ -228,6 +228,7 @@
 {% endblock %}
 {% block scripts %}
     <script src="https://js.stripe.com/v3/stripe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js" integrity="sha512-Meww2sXqNHxI1+5Dyh/9KAtvI9RZSA4c1K2k5iL02oiPO/RH3Q30L3M1albtqMg50u4gRTYdV4EXOQqXEI336A==" crossorigin="anonymous"></script>
     <script type="text/javascript">
         // Set your publishable key: remember to change this to your live publishable key in production
         // See your keys here: https://dashboard.stripe.com/account/apikeys
@@ -312,6 +313,7 @@
                 })
                     .then((response) =>  {
                         console.log(response.clone().json());
+                        const csrftoken = Cookies.get('csrftoken');
                         form.submit();
                         return response.json();
                     })

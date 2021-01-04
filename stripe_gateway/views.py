@@ -14,6 +14,7 @@ from accounts.models import CoursePackage
 from core.views import get_default_contexts
 from payments.gateway import *
 from payments.models import Customer, PaymentMethodToken
+from django.views.decorators.csrf import csrf_exempt
 
 
 def test_stripe(request):
@@ -76,7 +77,7 @@ def add_default_payment_method(request):
         **get_default_contexts(request.user)
     })
 
-
+@csrf_exempt
 @login_required
 def add_first_payment_method_with_registration_token(request, registration_token):
     payload = jwt_payload_handler(request.user)
