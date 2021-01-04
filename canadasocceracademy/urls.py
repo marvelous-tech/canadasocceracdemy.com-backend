@@ -79,6 +79,9 @@ urlpatterns = [
             path('courses/', include('e_learning.api.urls_v1', namespace='e_learning')),
             path('user/', include('accounts.api.urls_v1', namespace='accounts')),
             path('payment/', include('payments.api.urls_v1', namespace='payments_api')),
+        ])),
+        path('v2/', include([
+            path('payment/', include('stripe_gateway.api.urls', namespace='STRIPE_INTEGRATIONS_CORE_API'))
         ]))
     ])),
     path('dashboard/', include([

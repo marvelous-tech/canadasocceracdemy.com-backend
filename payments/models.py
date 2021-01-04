@@ -1,5 +1,7 @@
 from uuid import uuid4
 
+import stripe
+from django.conf import settings
 from django.db import models
 
 # Create your models here.
@@ -14,7 +16,7 @@ from payments import gateway
 
 class PaymentMethodToken(models.Model):
     uuid = models.UUIDField(default=uuid4, verbose_name='Token ID')
-    payment_method_token = models.CharField(max_length=100)
+    payment_method_token = models.CharField(max_length=100, help_text="Fingerprint for Stripe")
     type = models.CharField(max_length=20, choices=(
         ('Card', 'Card'),
         ('PayPal', 'PayPal')
@@ -24,6 +26,8 @@ class PaymentMethodToken(models.Model):
     is_verified = models.BooleanField(default=True)
     is_default = models.BooleanField(default=False)
     is_deleted = models.BooleanField(default=False)
+
+    stripe_payment_method_id = models.CharField(max_length=255, blank=True, null=True)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -41,9 +45,16 @@ class Customer(models.Model):
     is_deleted = models.BooleanField(default=False)
     was_created_successfully = models.BooleanField(default=False)
     customer_subscription_id = models.CharField(max_length=255, blank=True, null=True)
+    clear_till = models.DateTimeField(blank=True, null=True)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    # Stripe
+    stripe_customer_id = models.CharField(max_length=255, blank=True, null=True)
+
+    last_payment_has_error = models.BooleanField(default=False)
+    last_payment_error_comment = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return str(self.uuid)
@@ -162,16 +173,26 @@ class Transaction(models.Model):
 @receiver(post_save, sender=UserProfile)
 def update_user_profile(sender, instance: UserProfile, created, **kwargs):
     if created:
-        result = gateway.create_new_customer(
-            customer_id=str(instance.uuid),
-            first_name=instance.user.first_name,
-            last_name=instance.user.last_name,
-            email=instance.user.email,
-            phone=instance.phone
-        )
-        Customer.objects.create(
-            user_id=instance.id,
-            uuid=instance.uuid,
-            was_created_successfully=result.is_success
-        )
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        try:
+            stripe.Customer.create(
+                name=instance.user.first_name + ' ' + instance.user.last_name,
+                email=instance.user.email,
+                phone=instance.phone,
+                metadata={'uuid': instance.uuid, 'type': instance.get_type_display()}
+            )
+            # result = gateway.create_new_customer(
+            #     customer_id=str(instance.uuid),
+            #     first_name=instance.user.first_name,
+            #     last_name=instance.user.last_name,
+            #     email=instance.user.email,
+            #     phone=instance.phone
+            # )
+            Customer.objects.create(
+                user_id=instance.id,
+                uuid=instance.uuid,
+                was_created_successfully=True
+            )
+        except Exception as e:
+            pass
     instance.customer.save()

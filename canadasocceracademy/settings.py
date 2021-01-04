@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import dotenv
+
 dotenv.read_dotenv()
 
 from pathlib import Path
@@ -24,7 +25,6 @@ import braintree
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -40,7 +40,6 @@ ON_UPLOADED = False if os.environ.get('ON_UPLOADED') == 'false' else True
 HOSTS = os.environ.get('ALLOWED_HOSTS')
 
 ALLOWED_HOSTS = HOSTS.split(',') if HOSTS else []
-
 
 # Application definition
 
@@ -86,7 +85,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'canadasocceracademy.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -96,7 +94,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -116,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -129,7 +125,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -194,6 +189,7 @@ INSTALLED_APPS += [
     'payments',
     'email_client',
     'studio',
+    'stripe_gateway'
 ]
 
 
@@ -206,7 +202,6 @@ private_key = ec.generate_private_key(
     backend=default_backend()
 )
 public_key = private_key.public_key()
-
 
 private_pem = private_key.private_bytes(
     encoding=serialization.Encoding.PEM,
@@ -237,24 +232,24 @@ print(DEBUG)
 
 JWT_AUTH = {
     'JWT_ENCODE_HANDLER':
-    'rest_framework_jwt.utils.jwt_encode_handler',
+        'rest_framework_jwt.utils.jwt_encode_handler',
 
     'JWT_DECODE_HANDLER':
-    'rest_framework_jwt.utils.jwt_decode_handler',
+        'rest_framework_jwt.utils.jwt_decode_handler',
 
     'JWT_PAYLOAD_HANDLER':
-    'rest_framework_jwt.utils.jwt_payload_handler',
+        'rest_framework_jwt.utils.jwt_payload_handler',
 
     'JWT_PAYLOAD_GET_USER_ID_HANDLER':
-    'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
+        'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
 
     'JWT_RESPONSE_PAYLOAD_HANDLER':
-    'rest_framework_jwt.utils.jwt_response_payload_handler',
+        'rest_framework_jwt.utils.jwt_response_payload_handler',
 
     'JWT_SECRET_KEY': SECRET_KEY,
     'JWT_GET_USER_SECRET_KEY': None,
-    'JWT_PUBLIC_KEY': None if DEBUG else  public_pem,
-    'JWT_PRIVATE_KEY': None if DEBUG else  private_pem,
+    'JWT_PUBLIC_KEY': None if DEBUG else public_pem,
+    'JWT_PRIVATE_KEY': None if DEBUG else private_pem,
     'JWT_ALGORITHM': 'HS256' if DEBUG else 'ES512',
     'JWT_VERIFY': True,
     'JWT_VERIFY_EXPIRATION': True,
@@ -305,7 +300,6 @@ BRAINTREE_ENVIRONMENT = braintree.Environment.Sandbox \
     if os.environ.get('BEV') == 's' else \
     braintree.Environment.Production
 
-
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 TOKEN_EXPIRATION_TIMEDELTA = datetime.timedelta(days=1)
@@ -322,4 +316,8 @@ if ON_UPLOADED:
     REGISTRATION_PLATFORM = 'https://website.canadasocceracademy.com/registration/'
     SERVER = 'https://website.canadasocceracademy.com'
 
+"""STRIPE"""
 
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
+STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')

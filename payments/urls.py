@@ -1,7 +1,10 @@
-from django.urls import path
+from django.urls import path, include
 
 from payments.views import list_all_payment_methods, \
-    add_default_payment_method, delete_a_payment_method
+    add_default_payment_method, \
+    delete_a_payment_method
+
+from stripe_gateway.views import add_default_payment_method, delete_a_payment_method
 
 app_name = "payments"
 

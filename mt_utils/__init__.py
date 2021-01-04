@@ -143,3 +143,15 @@ def email(serializer, user_id):
         else:
             serializer.save(user_id=user_id, status=False, status_code=email_.status_code,
                             error_message=data["ErrorMessage"])
+
+
+CARD_IMAGES = {
+    'VISA': 'https://usa.visa.com/dam/VCOM/regional/lac/ENG/Default/Partner%20With%20Us/Payment%20Technology/visapos/full-color-800x450.jpg',
+    'AMEX': 'https://about.americanexpress.com/files/images/brand_imagery/AXP_BlueBoxLogo_EXTRALARGEscale_RGB_DIGITAL_1600x1600.png',
+    'DINERS': 'https://www.dinersclub.com/assets/images/media-kit/acceptance-marks-logos-acceptance-marks.jpg',
+    'DISCOVER': 'https://www.discoverglobalnetwork.com/assets/img/free-signage-logos/discover_logo.jpg',
+    'JCB': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/JCB_logo.svg/993px-JCB_logo.svg.png',
+    'MASTERCARD': 'https://brand.mastercard.com/content/dam/mccom/brandcenter/thumbnails/mastercard_vrt_pos_92px_2x.png',
+    'UNKNOWN': 'https://occ-0-448-2705.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABZ920_DLQ-Re8Pl8IkAwVpkXNTdWMzvkv7ZVYrcF900fDnoWAEKxLknECbhuYN1d5nXRydU83GEaZUMmVxZIV5UD2Z59-ynYBCat.png?r=9d3',
+    'UNIONPAY': 'https://seeklogo.com/images/U/unionpay-logo-3E20E52659-seeklogo.com.png',
+}

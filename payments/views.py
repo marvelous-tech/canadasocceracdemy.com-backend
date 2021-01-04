@@ -12,6 +12,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework_jwt.serializers import jwt_payload_handler, jwt_encode_handler
 
 from accounts.models import CoursePackage
 from core.views import get_default_contexts
@@ -157,9 +158,12 @@ def grab_webhook(request):
 
 @login_required
 def list_all_payment_methods(request):
+    payload = jwt_payload_handler(request.user)
+    encode = jwt_encode_handler(payload)
     default_contexts = get_default_contexts(request.user)
     methods = Customer.objects.get(user_id=request.user.user_profile.id).payment_method_token.filter(is_deleted=False)
     context = {
+        'token': encode,
         'methods': methods,
         'total': methods.count(),
         **default_contexts

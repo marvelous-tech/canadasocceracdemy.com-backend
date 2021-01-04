@@ -2,7 +2,7 @@ from django.urls import path, include, re_path
 
 from accounts.views import secure_login, login_user, logout_user, enroll, migrate, cancel_subscriptions, \
     verify_email_with_registration_code
-from payments.views import add_first_payment_method_with_registration_token
+from stripe_gateway.views import add_first_payment_method_with_registration_token
 
 app_name = "secure_accounts"
 

@@ -56,6 +56,8 @@ class CoursePackage(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    stripe_price_id = models.CharField(max_length=200, blank=True, null=True)
+
     def __str__(self):
         return self.name
 

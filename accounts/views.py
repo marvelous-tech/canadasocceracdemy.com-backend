@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+import stripe
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db.models import QuerySet
@@ -208,24 +209,25 @@ def enroll(request, token):
             )
             return HttpResponseRedirect(reverse('payments:Add Payment Method'))
         if request.method == "POST":
-            token = default_payment_method.first().payment_method_token
-            result = gateway.create_subscription(
-                payment_method_token=token,
-                plan_id=package.name
-            )
+            result = True
             print(result)
-            if result.is_success:
-                user_profile = request.user.user_profile
-                user_profile.package_id = package.id
-                customer = user_profile.customer
-                customer.customer_subscription_id = result.subscription.id
-                customer.save()
-                user_profile.save()
-                messages.add_message(
-                    request=request,
-                    message='Successfully enrolled to ' + package.name,
-                    level=messages.SUCCESS
+            if result:
+                stripe.api_key = settings.STRIPE_SECRET_KEY
+                subscription = stripe.Subscription.create(
+                    customer=request.user.user_profile.customer.stripe_customer_id,
+                    items=[
+                        {
+                            'price': package.stripe_price_id
+                        }
+                    ],
+                    expand=['latest_invoice.payment_intent']
                 )
+                if subscription.status == 'active':
+                    messages.add_message(request, level=messages.SUCCESS,
+                                         message="Successfully enrolled to package " + str(package.name))
+                    return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
+                messages.add_message(request, level=messages.ERROR,
+                                     message="Failed enrolled to package " + str(package.name))
                 return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
             messages.add_message(
                 request=request,
@@ -377,14 +379,10 @@ def cancel_subscriptions(request):
                 level=messages.WARNING
             )
             return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
-        result = gateway.cancel_subscription(subscription_id=subscription_id)
-        if result.is_success:
-            user_profile = request.user.user_profile
-            user_profile.package = None
-            user_profile.save()
-            customer = user_profile.customer
-            customer.customer_subscription_id = None
-            customer.save()
+        result = True  # gateway.cancel_subscription(subscription_id=subscription_id)
+        if result:
+            stripe.api_key = settings.STRIPE_SECRET_KEY
+            stripe.Subscription.delete(subscription_id)
             messages.add_message(
                 request=request,
                 message='The subscription has been canceled!!!',

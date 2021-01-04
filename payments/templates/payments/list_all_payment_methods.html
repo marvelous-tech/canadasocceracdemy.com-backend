@@ -1,32 +1,69 @@
 {% extends 'dashboard/base.html' %}
 {% block content %}
     <div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <a href="{% url 'payments:Add Payment Method' %}" class="btn btn-primary" style="margin-bottom: 50px; margin-top: 20px">Add a method</a>
-            <div class="table-responsive">
-                {% if total %}
-                    <table class="table">
-                        <tbody>
-                        {% for method in methods %}
-                            <tr class="{% if method.is_default == True %}bg-success text-white{% endif %}">
-                                <td><img style="width: 45px" src="{{ method.image_url }}" alt=""> {{ method.type }}</td>
-                                <td>{{ method.data }}</td>
-                                <td>{% if method.is_verified == True %}Verified{% else %}Not verified{% endif %}</td>
-                                <td>
-                                    <form action="{% url 'payments:Delete Payment Method' %}" method="post">
-                                        <input type="hidden" value="{{ method.uuid }}" name="id">
-                                        {% csrf_token %}
-                                        <input type="submit" class="btn btn-danger" value="Delete">
-                                    </form>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                {% endif %}
+        <div class="row">
+            <div class="col-lg-12">
+                <a href="{% url 'payments:Add Payment Method' %}" class="btn btn-primary"
+                   style="margin-bottom: 50px; margin-top: 20px">Add a method</a>
+                <div class="table-responsive">
+                    {% if total %}
+                        <table class="table">
+                            <tbody>
+                            {% for method in methods %}
+                                <tr class="{% if method.is_default == True %}bg-success text-white{% endif %}">
+                                    <td><img style="width: 45px" src="{{ method.image_url }}" alt=""> {{ method.type }}
+                                    </td>
+                                    <td>{{ method.data }}</td>
+                                    <td>{% if method.is_verified == True %}Verified{% else %}Not
+                                        verified{% endif %}</td>
+                                    <td>
+                                        {% if method.is_default == False %}
+                                            <button class="btn btn-info" onclick="make_default({id: '{{ method.uuid }}'})">Make default</button>{% endif %}
+                                    </td>
+                                    <td>{% if method.is_default == False %}
+                                        <form action="{% url 'payments:Delete Payment Method' %}" method="post">
+                                            <input type="hidden" value="{{ method.uuid }}" name="id">
+                                            {% csrf_token %}
+                                            <input type="submit" class="btn btn-danger" value="Delete">
+                                        </form>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
-    </div>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript">
+        function make_default({id}) {
+            fetch('{% url 'STRIPE_INTEGRATIONS_CORE_API:MAKE_DEFAULT_API_VIEW' %}', {
+                method: 'post',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': 'JWT {{ token }}'
+                },
+                body: JSON.stringify({
+                    id: id,
+                }),
+            })
+                .then((response) => {
+                    location.href = '{% url 'payments:All Payment Methods' %}';
+                    console.log(response.clone().json());
+                    return response.json();
+                })
+                // If the card is declined, display an error to the user.
+                .then((result) => {
+                    if (result.error) {
+                        // The card had an error when trying to attach it to a customer.
+                        throw result;
+                    }
+                    return result;
+                });
+        }
+    </script>
 {% endblock %}
