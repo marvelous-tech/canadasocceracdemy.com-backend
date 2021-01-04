@@ -62,6 +62,9 @@ class CoursePackage(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['id']
+
 
 class MockPackages(models.Model):
     uuid = models.UUIDField(default=uuid4)
