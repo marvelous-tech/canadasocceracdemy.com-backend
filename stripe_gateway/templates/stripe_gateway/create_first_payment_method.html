@@ -176,7 +176,7 @@
                             </div>
 
                             {% csrf_token %}
-                            <button id="sub" class="btn btn-block btn-info">Subscribe</button>
+                            <button id="sub" type="submit" class="btn btn-block btn-info">Subscribe</button>
                         </fieldset>
                         {#                        <div class="error" role="alert">#}
                         {#                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17">#}
@@ -253,7 +253,7 @@
 
         var form = document.getElementById('payment-form');
 
-        document.getElementById("sub").addEventListener("click", function(ev) {
+        form.addEventListener("submit", function(ev) {
             ev.preventDefault();
             createPaymentMethod({card: card})
         });
