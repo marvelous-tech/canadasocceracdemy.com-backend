@@ -309,10 +309,9 @@
                         secret: '{{ registration_token }}'
                     }),
                 })
-                    .then((response) => {
+                    .then((response) =>  {
                         console.log(response.clone().json());
-                        localStorage.setItem('msg', response.clone().json().toString());
-                        form.submit();
+                        // form.submit();
                         return response.json();
                     })
                     // If the card is declined, display an error to the user.
