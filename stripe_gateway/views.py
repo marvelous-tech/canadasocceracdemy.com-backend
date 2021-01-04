@@ -77,6 +77,7 @@ def add_default_payment_method(request):
         **get_default_contexts(request.user)
     })
 
+
 @csrf_exempt
 @login_required
 def add_first_payment_method_with_registration_token(request, registration_token):
