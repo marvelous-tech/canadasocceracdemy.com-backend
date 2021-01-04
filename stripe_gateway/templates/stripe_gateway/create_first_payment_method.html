@@ -121,7 +121,6 @@
                 <!--Example 5-->
                 <div class="cell example example5" id="example-5">
                     <form id="payment-form" method="post">
-                        {% csrf_token %}
                         <div id="example5-paymentRequest">
                             <!--Stripe paymentRequestButton Element inserted here-->
                         </div>
@@ -175,6 +174,8 @@
                                     <div id="example5-card" class="input"></div>
                                 </div>
                             </div>
+
+                            {% csrf_token %}
                             <button id="sub" class="btn btn-block btn-info">Subscribe</button>
                         </fieldset>
                         {#                        <div class="error" role="alert">#}
@@ -311,7 +312,7 @@
                 })
                     .then((response) =>  {
                         console.log(response.clone().json());
-                        // form.submit();
+                        form.submit();
                         return response.json();
                     })
                     // If the card is declined, display an error to the user.
