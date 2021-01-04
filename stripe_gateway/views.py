@@ -79,6 +79,8 @@ def add_default_payment_method(request):
 
 @login_required
 def add_first_payment_method_with_registration_token(request, registration_token):
+    payload = jwt_payload_handler(request.user)
+    encode = jwt_encode_handler(payload)
     stripe.api_key = settings.STRIPE_SECRET_KEY
 
     try:
@@ -134,7 +136,8 @@ def add_first_payment_method_with_registration_token(request, registration_token
         'stripe_client_id': request.user.user_profile.customer.stripe_customer_id,
         'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
         'stripe_price_id': package.stripe_price_id,
-        'registration_token': registration_token
+        'registration_token': registration_token,
+        'token': encode
     }
     return render(request, "stripe_gateway/create_first_payment_method.html", {
         **context,
