@@ -133,7 +133,7 @@ def add_first_payment_method_with_registration_token(request, registration_token
         return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
 
     context = {
-        'stripe_client_id': request.user.user_profile.customer.stripe_customer_id,
+        'stripe_customer_id': request.user.user_profile.customer.stripe_customer_id,
         'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
         'stripe_price_id': package.stripe_price_id,
         'registration_token': registration_token,
