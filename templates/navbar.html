@@ -77,7 +77,13 @@
                                     </ul>
                                 </li>
                                 <li><a href="{% url 'camps' %}">Camps</a></li>
-                                <li><a target="_blank" href="{% url 'to_registration_platform' %}">Programs</a></li>
+                                <li>
+                                    {% if request.user.is_authenticated %}
+                                        <a target="_blank" href="{% url 'to_e_learning_platform' %}">Programs</a>
+                                    {% else %}
+                                        <a target="_blank" href="{% url 'to_registration_platform' %}">Programs</a>
+                                    {% endif %}
+                                </li>
                                 <li><a href="{% url 'blog' %}">Blog</a></li>
                                 <li class="menu-item-has-children ul-li-block">
                                     <a href="#">Gallery</a>
@@ -111,7 +117,13 @@
                                     </ul>
                                 </li>
                                 <li><a href="{% url 'camps' %}">Camps</a></li>
-                                <li><a target="_blank" href="{% url 'to_registration_platform' %}">Programs</a></li>
+                                <li>
+                                    {% if request.user.is_authenticated %}
+                                        <a target="_blank" href="{% url 'to_e_learning_platform' %}">Programs</a>
+                                    {% else %}
+                                        <a target="_blank" href="{% url 'to_registration_platform' %}">Programs</a>
+                                    {% endif %}
+                                </li>
                                 <li><a href="{% url 'blog' %}">Blog</a></li>
                                 <li class="menu-item-has-children ul-li-block">
                                     <a href="#">Gallery</a>
