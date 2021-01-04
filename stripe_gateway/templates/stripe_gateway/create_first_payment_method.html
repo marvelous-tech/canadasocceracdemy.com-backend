@@ -311,6 +311,7 @@
                 })
                     .then((response) => {
                         console.log(response.clone().json());
+                        localStorage.setItem('msg', response.clone().json().toString());
                         form.submit();
                         return response.json();
                     })
