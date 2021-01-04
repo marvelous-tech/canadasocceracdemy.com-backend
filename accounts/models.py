@@ -1,5 +1,6 @@
 from uuid import uuid4
 
+import stripe
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
@@ -289,19 +290,9 @@ def update_user_profile(sender, instance, created, **kwargs):
 @receiver(pre_delete, sender=User)
 def user_auto_unsubscribe(sender, instance, using, **kwargs):
     try:
-        subscription_id = instance.user_profile.customer.customer_subscription_id
-        if subscription_id is None or subscription_id == "":
-            pass
-        else:
-            result = gateway.cancel_subscription(subscription_id=subscription_id)
-            if result.is_success:
-                user_profile = instance.user_profile
-                user_profile.package = None
-                user_profile.save()
-                customer = user_profile.customer
-                customer.customer_subscription_id = None
-                customer.save()
-            else:
-                pass
-    except User.DoesNotExist as e:
+        customer_id = instance.user_profile.customer.stripe_customer_id
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        stripe.Customer.delete(customer_id)
+    except Exception as e:
+        print(e)
         pass
