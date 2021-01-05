@@ -11,6 +11,7 @@ from django.utils import timezone
 
 from accounts.models import CoursePackage
 from payments.models import Customer, PaymentMethodToken
+from stripe_gateway.models import Webhook, WebhookError
 
 
 @csrf_exempt
@@ -39,6 +40,20 @@ def webhook_capture(request):
         event_type = request_data['type']
 
     data_object = data['object']
+
+    try:
+        Webhook.objects.create(
+            event_id=request_data['id'],
+            event_type=event_type,
+            body=json.dumps(request_data)
+        )
+    except Exception as e:
+        try:
+            WebhookError.objects.create(error_data=str(e))
+        except Exception as e1:
+            print(e1)
+            pass
+        print(e)
 
     if event_type == 'invoice.paid':
         # Used to provision services after the trial has ended.
