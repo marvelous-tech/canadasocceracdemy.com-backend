@@ -27,7 +27,8 @@ class CoursePackageModelAdmin(admin.ModelAdmin):
         'points',
         'stripe_price_id',
         'created',
-        'updated'
+        'updated',
+        'Cycle'
     ]
     ordering = ('-points', )
     search_fields = ['stripe_price_id', 'uuid', 'slug', 'name']
