@@ -1,5 +1,6 @@
 import datetime
 from datetime import timedelta
+from django.utils.timezone import now
 
 import stripe
 from django.conf import settings
@@ -426,8 +427,27 @@ def migrate(request, token):
 @login_required
 def cancel_subscriptions(request):
     package = request.user.user_profile.package
+    customer = request.user.user_profile.customer
+    subscription_id = customer.customer_subscription_id
+    if customer.clear_till:
+        if customer.clear_till <= now():
+            if subscription_id is not None:
+                try:
+                    stripe.Subscription.delete(subscription_id)
+                except Exception as e:
+                    print(e)
+                    customer.customer_subscription_id = None
+                    customer.was_created_successfully = True
+                    customer.last_payment_has_error = False
+                    customer.last_payment_error_comment = None
+                    customer.clear_till = None
+                    customer.user.package_id = None
+                    customer.user.save()
+                    customer.cancel_scheduled = False
+                    customer.save()
+                    pass
+
     if request.method == "POST":
-        subscription_id = request.user.user_profile.customer.customer_subscription_id
         if subscription_id is None:
             messages.add_message(
                 request=request,
@@ -442,9 +462,11 @@ def cancel_subscriptions(request):
                 subscription_id,
                 cancel_at_period_end=True
             )
+            customer = request.user.user_profile.customer
+            customer.cancel_scheduled = True
             messages.add_message(
                 request=request,
-                message='The subscription has been canceled!!!',
+                message=f'The subscription has been scheduled to cancel at {customer.clear_till.ctime()}',
                 level=messages.WARNING
             )
             return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
@@ -455,7 +477,9 @@ def cancel_subscriptions(request):
                 level=messages.ERROR
             )
     return render(request, 'accounts/subscribed_package.html', {
-        'package': package
+        'package': package,
+        'customer': customer,
+        'clear': customer.clear_till >= now() if customer.clear_till else False
     })
 
 

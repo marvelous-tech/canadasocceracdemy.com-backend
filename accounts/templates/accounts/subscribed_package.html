@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container">
-        {% if package %}
+        {% if package and clear %}
             <div class="row">
                 <div class="col-md-4">
                     <div class="card text-center shadow">
@@ -14,10 +14,14 @@
                 </div>
                 <div class="col-md-8 border p-3">
                     {{ package.description_box | safe | escape }}
-                    <form method="post">
-                        {% csrf_token %}
-                        <input class="btn btn-danger float-right" type="submit" value="Unsubscribe">
-                    </form>
+                    {% if customer.cancel_scheduled %}
+                        <p class="font-weight-bolder mt-3 text-blue float-right" style="font-weight: bolder; font-family: Sans-serif,serif">Cancels {{ customer.clear_till }} | After {{ customer.clear_till | timeuntil | title }}</p>
+                    {% else %}
+                        <form method="post" class="my-2">
+                            {% csrf_token %}
+                            <input class="btn btn-danger float-right" type="submit" value="Unsubscribe">
+                        </form>
+                    {% endif %}
                 </div>
             </div>
             {% else %}

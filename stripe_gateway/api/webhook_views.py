@@ -86,12 +86,14 @@ def webhook_capture(request):
             customer.user.activate_the_user()
             customer.user.package_id = package.id
             customer.user.save()
+            customer.cancel_scheduled = False
             customer.save()
 
     if event_type == 'customer.subscription.updated':
         subscription_price_id = data_object['items']['data'][0]['price']['id']
-        subscription_id = data_object['items']['data'][0]['subscription']
+        subscription_id = data_object['id']
         customer = data_object['customer']
+        cancel_at_period_end = data_object['cancel_at_period_end']
         try:
             package = CoursePackage.objects.get(stripe_price_id=subscription_price_id)
         except (CoursePackage.DoesNotExist, CoursePackage.MultipleObjectsReturned) as e:
@@ -108,6 +110,7 @@ def webhook_capture(request):
             customer.user.activate_the_user()
             customer.user.package_id = package.id
             customer.user.save()
+            customer.cancel_scheduled = cancel_at_period_end
             customer.save()
             print(subscription_price_id)
             print(customer)
@@ -160,9 +163,10 @@ def webhook_capture(request):
             customer.last_payment_has_error = False
             customer.last_payment_error_comment = None
             customer.clear_till = None
-            customer.user.inactivate_the_user()
+            customer.cancel_scheduled = False
             customer.user.package_id = None
             customer.user.save()
+            customer.cancel_scheduled = False
             customer.save()
             print(subscription_id)
             print(customer)

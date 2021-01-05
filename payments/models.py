@@ -46,6 +46,7 @@ class Customer(models.Model):
     was_created_successfully = models.BooleanField(default=False)
     customer_subscription_id = models.CharField(max_length=255, blank=True, null=True)
     clear_till = models.DateTimeField(blank=True, null=True)
+    cancel_scheduled = models.BooleanField(default=False)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
