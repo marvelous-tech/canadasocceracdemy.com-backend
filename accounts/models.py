@@ -147,7 +147,7 @@ class UserProfile(models.Model):
                 'button_text': 'VERIFY YOUR EMAIL ADDRESS'
             })
         })
-        print(serializer)
+        print("Attempt to Sending email")
         email(serializer, self.user_id)
 
     def email_user_activation_code_with_registration_token(self, registration_token):
@@ -177,7 +177,7 @@ class UserProfile(models.Model):
                 'button_text': 'VERIFY YOUR EMAIL ADDRESS'
             })
         })
-        print(serializer)
+        print("Attempt to Sending email")
         email(serializer, self.user_id)
 
     def email_user_account_activated(self):
@@ -200,7 +200,7 @@ class UserProfile(models.Model):
                 'button_text': 'GO TO YOUR ACCOUNT'
             })
         })
-        print(serializer)
+        print("Attempt to Sending email")
         email(serializer, self.user_id)
 
     def email_user_password_reset_code(self):
@@ -252,7 +252,7 @@ class UserProfile(models.Model):
                 'button_text': 'GO TO YOUR ACCOUNT'
             })
         })
-        print(serializer)
+        print("Attempt to Sending email")
         email(serializer, self.user_id)
 
     def email_user_password_has_been_changed(self):
@@ -275,7 +275,7 @@ class UserProfile(models.Model):
                 'button_text': 'GO TO YOUR ACCOUNT'
             })
         })
-        print(serializer)
+        print("Attempt to Sending email")
         email(serializer, self.user_id)
 
 
