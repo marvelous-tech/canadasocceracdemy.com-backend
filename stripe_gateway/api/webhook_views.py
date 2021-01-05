@@ -64,14 +64,18 @@ def webhook_capture(request):
         subscription_id = data_object['lines']['data'][0]['subscription']
         customer = data_object['customer']
         clear_till = data_object['lines']['data'][0]['period']['end']
+        print(subscription_price_id)
+        print(customer)
         try:
             package = CoursePackage.objects.get(stripe_price_id=subscription_price_id)
         except (CoursePackage.DoesNotExist, CoursePackage.MultipleObjectsReturned) as e:
             package = None
+        print(package)
         try:
             customer = Customer.objects.get(stripe_customer_id=customer)
         except (Customer.MultipleObjectsReturned, Customer.DoesNotExist) as e:
             customer = None
+        print(customer)
         if customer is not None and package is not None:
             customer.customer_subscription_id = subscription_id
             customer.was_created_successfully = True
@@ -82,8 +86,6 @@ def webhook_capture(request):
             customer.user.package_id = package.id
             customer.user.save()
             customer.save()
-            print(subscription_price_id)
-            print(customer)
 
     if event_type == 'customer.subscription.updated':
         subscription_price_id = data_object['items']['data'][0]['price']['id']
