@@ -67,12 +67,12 @@ def webhook_capture(request):
         print(subscription_price_id)
         print(customer)
         try:
-            package = CoursePackage.objects.get(stripe_price_id=subscription_price_id)
+            package = CoursePackage.objects.get(stripe_customer_id__icontains=subscription_price_id)
         except (CoursePackage.DoesNotExist, CoursePackage.MultipleObjectsReturned) as e:
             package = None
         print(package)
         try:
-            customer = Customer.objects.get(stripe_customer_id=customer)
+            customer = Customer.objects.get(stripe_customer_id__icontains=customer)
         except (Customer.MultipleObjectsReturned, Customer.DoesNotExist) as e:
             customer = None
         print(customer)
