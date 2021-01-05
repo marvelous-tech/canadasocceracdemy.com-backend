@@ -19,7 +19,7 @@ urlpatterns = [
     path('activate/<str:uidb64>/<str:token>/',
          verify_email_api_view, name="activate_account"),
     path('get-reset-code/<str:email>/', get_password_reset_code, name="get_password_reset_code"),
-    path('reset/<str:uidb64>/<str:token>/',
+    path('reset/<str:code>/',
          password_reset_api_view, name="password_reset_api_view"),
     path('change-password/', password_change_api_view, name="password_change_api_view"),
     path('data/', get_default_data, name="get_default_data"),

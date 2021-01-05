@@ -7,12 +7,8 @@ login-page
 {% endblock %}
 {% block content %}
 <div class="login-box">
-  <div class="login-logo">
-    <a href="{% url 'to_e_learning_platform' %}">
-        <img src="http://www.canadasocceracademy.com/wp-content/uploads/2017/02/logo-web.png" class="img-fluid img-responsive">
-    </a>
-      <p class="small text-dark" style="font-size: 1rem">V1.1.32</p>
-  </div>
+
+        {% include 'anon/center_above_logo.html' %}
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
@@ -46,10 +42,10 @@ login-page
       </form>
 
       <p class="mb-1">
-        <a href="forgot-password.html">I forgot my password</a>
+        <a href="{% url 'secure_accounts:reset_password_email_entry' %}">I forgot my password</a>
       </p>
       <p class="mb-0">
-        <a href="register.html" class="text-center">Register a new membership</a>
+        <a href="{% url 'to_registration_platform' %}" class="text-center">Register a new membership</a>
       </p>
     </div>
     <!-- /.login-card-body -->

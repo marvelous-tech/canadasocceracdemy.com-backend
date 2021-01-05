@@ -206,7 +206,11 @@ class UserProfile(models.Model):
     def email_user_password_reset_code(self):
         uid = urlsafe_base64_encode(force_bytes(self.user.pk))
         token = account_activation_token.make_token(self.user)
-        link = f'{settings.SERVER}/secure/password/reset/{uid}/{token}/'
+        code = signing.dumps({
+            'uidb64': uid,
+            'token': token
+        })
+        link = f'{settings.SERVER}/secure/password/reset/{code}/'
         serializer = EmailSerializer(data={
             'from_email': 'customers@marvelous-tech.com',
             'from_name': 'Password Reset Code Canadasocceracademy.com',
@@ -229,7 +233,7 @@ class UserProfile(models.Model):
         email(serializer, self.user_id)
 
     def email_user_password_has_been_reset(self):
-        link = f'{settings.SERVER}/secure/'
+        link = f'{settings.SERVER}/secure/login/'
         serializer = EmailSerializer(data={
             'from_email': 'customers@marvelous-tech.com',
             'from_name': 'Password Reset Notification Canadasocceracademy.com',
@@ -252,7 +256,7 @@ class UserProfile(models.Model):
         email(serializer, self.user_id)
 
     def email_user_password_has_been_changed(self):
-        link = f'{settings.SERVER}/secure/'
+        link = f'{settings.SERVER}/secure/login/'
         serializer = EmailSerializer(data={
             'from_email': 'customers@marvelous-tech.com',
             'from_name': 'Password Changed Canadasocceracademy.com',

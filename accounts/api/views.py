@@ -74,7 +74,13 @@ def password_change_api_view(request):
 
 @api_view(['POST'])
 @permission_classes([AllowAny, ])  # TODO: add urls
-def password_reset_api_view(request, uidb64, token):
+def password_reset_api_view(request, code):
+    try:
+        data = signing.loads(code, max_age=settings.TOKEN_EXPIRATION_TIMEDELTA)
+    except (signing.BadSignature, signing.SignatureExpired) as e:
+        return Response({"token_error": True, "error": "Invalid ticket"})
+    uidb64 = data.get('uidb64')
+    token = data.get('token')
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)

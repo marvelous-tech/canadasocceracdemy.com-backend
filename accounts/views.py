@@ -1,3 +1,4 @@
+import datetime
 from datetime import timedelta
 
 import stripe
@@ -27,6 +28,65 @@ from payments.models import PaymentMethodToken
 def home_registration(request, *args, **kwargs):
     logout(request)
     return render(request, 'accounts/home.html')
+
+
+def password_reset_email_entry_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email', None)
+        if email is None:
+            messages.add_message(request, messages.ERROR, "Please, give your email")
+            return HttpResponseRedirect(reverse('secure_accounts:reset_password_email_entry'))
+        try:
+            user = User.objects.get(email=email)
+        except (User.DoesNotExist, User.MultipleObjectsReturned) as e:
+            user = None
+
+        if user is not None:
+            if user.email:
+                user.user_profile.email_user_password_reset_code()
+
+        messages.add_message(request, messages.SUCCESS, f"Password reset url has been sent to {email}")
+        return HttpResponseRedirect(reverse('secure_accounts:reset_password_email_entry'))
+
+    return render(request, 'accounts/password-reset-email-entry.html', {})
+
+
+def password_reset_view(request, code):
+    try:
+        data = signing.loads(code, max_age=datetime.timedelta(seconds=3600))
+    except (signing.BadSignature, signing.SignatureExpired) as e:
+        messages.add_message(request, messages.ERROR, "Invalid signature, typically it is valid 5 minutes.")
+        return HttpResponseRedirect(reverse('secure_accounts:reset_password'))
+
+    uidb64 = data.get('uidb64')
+    token = data.get('token')
+
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        messages.add_message(request, messages.ERROR, "Invalid user, typically it is valid 5 minutes.")
+        return HttpResponseRedirect(reverse('secure_accounts:reset_password'))
+
+    if request.method == 'POST':
+        password = request.POST.get('password', None)
+        password_confirm = request.POST.get('password_confirm', None)
+
+        if password and password_confirm and password == password_confirm:
+            if user is not None and account_activation_token.check_token(user, token):
+                user.set_password(password)
+                user.save()
+                user.user_profile.email_user_password_has_been_reset()
+                messages.add_message(request, messages.WARNING, "Your password has been reset")
+                return HttpResponseRedirect(reverse('secure_accounts:Login to your account'))
+
+            messages.add_message(request, messages.ERROR, "User validation failed, typically it is valid 5 minutes.")
+            return HttpResponseRedirect(reverse('secure_accounts:reset_password'))
+
+        messages.add_message(request, messages.ERROR, "Please, fill-up the form")
+        return HttpResponseRedirect(reverse('secure_accounts:reset_password'))
+
+    return render(request, 'accounts/password-reset.html', {})
 
 
 def login_user(request):

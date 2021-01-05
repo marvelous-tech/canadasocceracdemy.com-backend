@@ -7,11 +7,8 @@
 {% endblock %}
 {% block content %}
     <div class="lockscreen-wrapper">
-        <div class="lockscreen-logo">
-            <a href="{% url 'to_e_learning_platform' %}"><img src="http://www.canadasocceracademy.com/wp-content/uploads/2017/02/logo-web.png" class="img-fluid img-responsive"></a>
 
-        <p class="small text-dark" style="font-size: 1rem">V1.1.32</p>
-        </div>
+        {% include 'anon/center_above_logo.html' %}
         <!-- User name -->
         <div class="lockscreen-name">{{ user.first_name }} {{ user.last_name }}</div>
 
@@ -44,11 +41,10 @@
             Enter your password to retrieve your session
         </div>
         <div class="text-center">
-            <a href="login.html">Or sign in as a different user</a>
+            <a href="{% url 'secure_accounts:Login to your account' %}">Or sign in as a different user</a>
         </div>
         <div class="lockscreen-footer text-center">
-            Copyright &copy; 2014-2020 <b><a href="https://adminlte.io" class="text-black">AdminLTE.io</a></b><br>
-            All rights reserved
+            Copyright &copy; Canadasocceracademy.com
         </div>
     </div>
 {% endblock %}
