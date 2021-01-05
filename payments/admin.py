@@ -32,6 +32,7 @@ class CustomerModelAdmin(admin.ModelAdmin):
         'created',
         'updated'
     ]
+    search_fields = ['stripe_customer_id', ]
 
 
 @admin.register(Subscription)
