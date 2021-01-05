@@ -69,6 +69,7 @@ def webhook_capture(request):
         try:
             package = CoursePackage.objects.get(stripe_price_id__icontains=subscription_price_id)
         except (CoursePackage.DoesNotExist, CoursePackage.MultipleObjectsReturned) as e:
+            print(e)
             package = None
         print(package)
         try:

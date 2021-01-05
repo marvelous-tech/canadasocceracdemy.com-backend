@@ -30,6 +30,7 @@ class CoursePackageModelAdmin(admin.ModelAdmin):
         'updated'
     ]
     ordering = ('-points', )
+    search_fields = ['stripe_price_id', 'uuid', 'slug', 'name']
 
 
 
