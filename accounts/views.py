@@ -438,7 +438,10 @@ def cancel_subscriptions(request):
         result = True  # gateway.cancel_subscription(subscription_id=subscription_id)
         if result:
             stripe.api_key = settings.STRIPE_SECRET_KEY
-            stripe.Subscription.delete(subscription_id)
+            stripe.Subscription.modify(
+                subscription_id,
+                cancel_at_period_end=True
+            )
             messages.add_message(
                 request=request,
                 message='The subscription has been canceled!!!',
