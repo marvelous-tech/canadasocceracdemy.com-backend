@@ -101,7 +101,7 @@ class Home(TemplateView):
         context = {
             'banner_logos': banner_logos,
             'banner_images': BannerImage.objects.all(),
-            'mock_courses': MockPackages.objects.filter(is_deleted=False),
+            'mock_courses': MockPackages.objects.filter(is_deleted=False).order_by('id'),
             'partners': Partner.objects.filter(is_deleted=False),
             'home_about_us_header': SiteData.objects.filter(name='home_about_us_header').first(),
             'home_about_us_sub_header': SiteData.objects.filter(name='home_about_us_sub_header').first(),
