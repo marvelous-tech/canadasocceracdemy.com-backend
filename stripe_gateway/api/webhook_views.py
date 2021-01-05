@@ -54,7 +54,7 @@ def webhook_capture(request):
             print(e1)
             pass
         print(e)
-
+    print(event_type)
     if event_type == 'invoice.paid':
         # Used to provision services after the trial has ended.
         # The status of the invoice will show up as paid. Store the status in your
