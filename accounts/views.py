@@ -42,7 +42,9 @@ def password_reset_email_entry_view(request):
             user = None
 
         if user is not None:
+            print("user got")
             if user.email:
+                print("user email got")
                 user.user_profile.email_user_password_reset_code()
 
         messages.add_message(request, messages.SUCCESS, f"Password reset url has been sent to {email}")

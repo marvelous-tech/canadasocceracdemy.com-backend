@@ -108,7 +108,7 @@ def unique_slug_generator(instance, new_slug=None):
 
 
 def email(serializer, user_id):
-    print(serializer.is_valid())
+    print(f"Serializer valid is ===> {serializer.is_valid()}")
     if serializer.is_valid():
         email_ = requests.post(
             'https://api.mailjet.com/v3.1/send',
@@ -135,12 +135,14 @@ def email(serializer, user_id):
             headers={'Content-Type': 'application/json'}
         )
         data = email_.json()
-        print(data)
+        print("Saving to data base")
         if email_.status_code == 200:
+            print("Email sent")
             to = data["Messages"][0]["To"][0]
             serializer.save(user_id=user_id, message_uuid=to["MessageUUID"], message_id=to["MessageID"],
                             status=True)
         else:
+            print("Email failed to sent")
             serializer.save(user_id=user_id, status=False, status_code=email_.status_code,
                             error_message=data["ErrorMessage"])
 

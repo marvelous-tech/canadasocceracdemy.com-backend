@@ -229,7 +229,7 @@ class UserProfile(models.Model):
                 'button_text': 'RESET YOUR PASSWORD'
             })
         })
-        print(serializer)
+        print("Attempt to Sending email")
         email(serializer, self.user_id)
 
     def email_user_password_has_been_reset(self):
