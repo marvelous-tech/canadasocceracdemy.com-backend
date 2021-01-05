@@ -25,7 +25,7 @@ class CoursePackageModelAdmin(admin.ModelAdmin):
         'name',
         'amount',
         'points',
-        'slug',
+        'stripe_price_id',
         'created',
         'updated'
     ]
