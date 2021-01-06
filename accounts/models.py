@@ -125,6 +125,98 @@ class UserProfile(models.Model):
             self.is_expired = True
             self.save()
 
+    def email_user_subscription_scheduled(self, cancel_at):
+        link = f'{settings.SERVER}/dashboard/subscriptions/'
+        serializer = EmailSerializer(data={
+            'from_email': 'customers@marvelous-tech.com',
+            'from_name': 'Subscription Scheduled Canadasocceracademy.com',
+            'to_email': self.user.email,
+            'to_name': f'{self.user.first_name} {self.user.last_name}',
+            'subject': f'Subscription Scheduled to Cancel at UTC {cancel_at.ctime()}',
+            'text_body': f'Your subscription for {self.package.name} was scheduled to cancel at {cancel_at.ctime()} for {self.user.email}',
+            'html_body': render_to_string('email_client/account_notification_template.html', {
+                'link': link,
+                'name': f'{self.user.first_name} {self.user.last_name}',
+                'email': self.user.email,
+                'company': 'Canadasocceracademy.com',
+                'company_phone': '+880 1632 77-6159',
+                'company_support_email': 'support@marvelous-tech.com',
+                'msg': f'Your subscription for {self.package.name} was scheduled to cancel at {cancel_at.ctime()} for',
+                'button_text': 'GO TO YOUR ACCOUNT'
+            })
+        })
+        print("Attempt to Sending email")
+        email(serializer, self.user_id)
+
+    def email_user_subscription_deleted(self, timestamp):
+        link = f'{settings.SERVER}/dashboard/subscriptions/'
+        serializer = EmailSerializer(data={
+            'from_email': 'customers@marvelous-tech.com',
+            'from_name': 'Subscription Canceled Canadasocceracademy.com',
+            'to_email': self.user.email,
+            'to_name': f'{self.user.first_name} {self.user.last_name}',
+            'subject': f'Subscription Canceled',
+            'text_body': f'Your subscription for {self.package.name} was canceled at {timestamp.ctime()} for {self.user.email}',
+            'html_body': render_to_string('email_client/account_notification_template.html', {
+                'link': link,
+                'name': f'{self.user.first_name} {self.user.last_name}',
+                'email': self.user.email,
+                'company': 'Canadasocceracademy.com',
+                'company_phone': '+880 1632 77-6159',
+                'company_support_email': 'support@marvelous-tech.com',
+                'msg': f'Your subscription for {self.package.name} was canceled at {timestamp.ctime()} for',
+                'button_text': 'GO TO YOUR ACCOUNT'
+            })
+        })
+        print("Attempt to Sending email")
+        email(serializer, self.user_id)
+
+    def email_user_payment_failed(self, card_data, timestamp, error_msg):
+        link = f'{settings.SERVER}/dashboard/payments/all/'
+        serializer = EmailSerializer(data={
+            'from_email': 'customers@marvelous-tech.com',
+            'from_name': 'Payment Canadasocceracademy.com',
+            'to_email': self.user.email,
+            'to_name': f'{self.user.first_name} {self.user.last_name}',
+            'subject': f'Payment Failed',
+            'text_body': f'{error_msg} Your payment with {card_data} was Failed at UTC {timestamp.ctime()} for {self.user.email}',
+            'html_body': render_to_string('email_client/account_notification_template.html', {
+                'link': link,
+                'name': f'{self.user.first_name} {self.user.last_name}',
+                'email': self.user.email,
+                'company': 'Canadasocceracademy.com',
+                'company_phone': '+880 1632 77-6159',
+                'company_support_email': 'support@marvelous-tech.com',
+                'msg': f'{error_msg} Your payment with {card_data} was failed at UTC {timestamp.ctime()} for',
+                'button_text': 'GO TO YOUR BILLING'
+            })
+        })
+        print("Attempt to Sending email")
+        email(serializer, self.user_id)
+
+    def email_user_payment_succeeded(self, card_data, timestamp, trx_id):
+        link = f'{settings.SERVER}/to-elearning-platform/'
+        serializer = EmailSerializer(data={
+            'from_email': 'customers@marvelous-tech.com',
+            'from_name': 'Payment Canadasocceracademy.com',
+            'to_email': self.user.email,
+            'to_name': f'{self.user.first_name} {self.user.last_name}',
+            'subject': f'Payment Succeeded for TRX_ID: #{trx_id}',
+            'text_body': f'Your payment with {card_data} was successfully done at UTC {timestamp.ctime()} for {self.user.email}',
+            'html_body': render_to_string('email_client/account_notification_template.html', {
+                'link': link,
+                'name': f'{self.user.first_name} {self.user.last_name}',
+                'email': self.user.email,
+                'company': 'Canadasocceracademy.com',
+                'company_phone': '+880 1632 77-6159',
+                'company_support_email': 'support@marvelous-tech.com',
+                'msg': f'Your payment with {card_data} was successfully done at UTC {timestamp.ctime()} for',
+                'button_text': 'GO TO YOUR ACCOUNT'
+            })
+        })
+        print("Attempt to Sending email")
+        email(serializer, self.user_id)
+
     def email_user_activation_code(self):
         uid = urlsafe_base64_encode(force_bytes(self.user.pk))
         token = account_activation_token.make_token(self.user)

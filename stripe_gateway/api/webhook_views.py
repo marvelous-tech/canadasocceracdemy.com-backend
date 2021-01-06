@@ -1,17 +1,27 @@
 import pytz
-
 import stripe
+from django.conf import settings
+from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes
-from django.conf import settings
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.utils import json
-from django.utils import timezone
 
 from accounts.models import CoursePackage
-from payments.models import Customer, PaymentMethodToken
+from payments.models import Customer
 from stripe_gateway.models import Webhook, WebhookError
+
+
+def construct_data(card):
+    brand = card['brand']
+    exp = f'{card["exp_month"]}/{card["exp_year"]}'
+    funding = card["funding"]
+    last_4 = card["last4"]
+
+    data = f'{brand} {funding} card ********{last_4}, EXP: {exp}'
+
+    return data
 
 
 @csrf_exempt
@@ -94,6 +104,8 @@ def webhook_capture(request):
         subscription_id = data_object['id']
         customer = data_object['customer']
         cancel_at_period_end = data_object['cancel_at_period_end']
+        clear_till = data_object['current_period_end']
+
         try:
             package = CoursePackage.objects.get(stripe_price_id=subscription_price_id)
         except (CoursePackage.DoesNotExist, CoursePackage.MultipleObjectsReturned) as e:
@@ -115,19 +127,44 @@ def webhook_capture(request):
             print(subscription_price_id)
             print(customer)
 
+        if cancel_at_period_end:
+            customer.user.email_user_subscription_scheduled(timezone.datetime.fromtimestamp(clear_till, tz=pytz.UTC))
+
     if event_type == 'payment_intent.succeeded':
+        customer = data_object['customer']
         card = data_object['charges']['data'][0]['payment_method_details']['card']
+        trx_id = data_object['charges']['data'][0]['balance_transaction']
+        payment_method = data_object['payment_method']
+        timestamp = timezone.datetime.fromtimestamp(data_object['created'], tz=pytz.UTC)
 
-        fingerprint = card['fingerprint']
+        try:
+            customer = Customer.objects.prefetch_related('payment_method_token').get(stripe_customer_id=customer)
+        except (Customer.MultipleObjectsReturned, Customer.DoesNotExist) as e:
+            customer = None
 
-        PaymentMethodToken.objects.filter(payment_method_token__exact=fingerprint).update(is_verified=True)
+        if customer is not None:
+            customer.payment_method_token.filter(stripe_payment_method_id=payment_method).update(
+                is_verified=True)
+            customer.user.email_user_payment_succeeded(card_data=construct_data(card), timestamp=timestamp,
+                                                       trx_id=trx_id)
 
     if event_type == 'payment_intent.payment_failed':
+        customer = data_object['customer']
         card = data_object['charges']['data'][0]['payment_method_details']['card']
+        timestamp = timezone.datetime.fromtimestamp(data_object['created'], tz=pytz.UTC)
+        error_msg = data_object['last_payment_error']['message']
 
         fingerprint = card['fingerprint']
 
-        PaymentMethodToken.objects.filter(payment_method_token__exact=fingerprint).update(is_verified=False)
+        try:
+            customer = Customer.objects.prefetch_related('payment_method_token').get(stripe_customer_id=customer)
+        except (Customer.MultipleObjectsReturned, Customer.DoesNotExist) as e:
+            customer = None
+
+        if customer is not None:
+            customer.payment_method_token.filter(payment_method_token__icontains=fingerprint).update(
+                is_verified=False)
+            customer.user.email_user_payment_failed(construct_data(card), timestamp, error_msg)
 
     if event_type == 'charge.failed':
         # If the payment fails or the customer does not have a valid payment method,
@@ -153,11 +190,13 @@ def webhook_capture(request):
     if event_type == 'customer.subscription.deleted':
         customer = data_object['customer']
         subscription_id = data_object['id']
+        created = data_object['created']
         try:
             customer = Customer.objects.get(stripe_customer_id=customer)
         except (Customer.MultipleObjectsReturned, Customer.DoesNotExist) as e:
             customer = None
         if customer is not None:
+            customer.user.email_user_subscription_deleted(timestamp=timezone.datetime.fromtimestamp(created, tz=pytz.UTC))
             customer.customer_subscription_id = None
             customer.was_created_successfully = True
             customer.last_payment_has_error = False

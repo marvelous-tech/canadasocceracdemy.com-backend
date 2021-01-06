@@ -122,6 +122,7 @@ def create_another_payment_method(request):
 
         return Response(data={'result': result, 'redirect': reverse('payments:All Payment Methods')}, status=status.HTTP_200_OK)
     except Exception as e:
+        messages.add_message(request, level=messages.ERROR, message=f"Card was declined")
         return Response(data={'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
