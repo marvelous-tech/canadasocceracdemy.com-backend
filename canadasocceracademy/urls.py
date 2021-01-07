@@ -52,6 +52,7 @@ def to_registration_platform(request):
 
 
 urlpatterns = [
+    # path("stripe/", include("djstripe.urls", namespace="djstripe")),
     path('studio/', include('studio.urls', namespace='studio')),
     re_path(r'^progressbarupload/', include('progressbarupload.urls')),
     path('to-registration-platform/', to_registration_platform, name="to_registration_platform"),

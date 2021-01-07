@@ -55,7 +55,7 @@ def webhook_capture(request):
         Webhook.objects.create(
             event_id=request_data['id'],
             event_type=event_type,
-            body=json.dumps(request_data)
+            body=json.dumps(request_data, sort_keys=True, indent=2)
         )
     except Exception as e:
         try:
