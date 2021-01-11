@@ -143,5 +143,3 @@ cython_debug/
 nginx/
 
 chunked_uploads/
-
-staticfiles/

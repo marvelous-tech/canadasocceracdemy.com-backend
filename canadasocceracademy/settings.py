@@ -130,7 +130,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'https://cdn.jsdelivr.net/gh/marvelous-tech/canadasocceracdemy.com-backend@master/assets/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assets/')
