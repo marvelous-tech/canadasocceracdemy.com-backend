@@ -5,7 +5,7 @@
                 <div class="contact-left-content">
                     <div class="section-title  mb45 headline text-left">
                         <span class="subtitle ml42  text-uppercase">CONTACT US</span>
-                        <h2><span>Get in Touch</span></h2>
+                        <h2 class="text-capitalize"><span>Get in Touch</span></h2>
                         <p id="SiteData_contact_us_text">
                             {{ contact_us_text.data | safe | escape }}
                         </p>
@@ -58,7 +58,7 @@
             <div class="col-md-6">
                 <div class="contact_secound_form">
                     <div class="section-title-2 mb65 headline text-left">
-                        <h2>Send Us a message</h2>
+                        <h2 class="text-capitalize">Send Us a message</h2>
                     </div>
                     <form class="contact_form" action="{% url 'contact now' %}" method="POST"
                           enctype="multipart/form-data">
