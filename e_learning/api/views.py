@@ -83,7 +83,7 @@ def get_all_playlist_api_view(request):
 @permission_classes([AllowAny, ])
 def get_all_packages_api_view(request):
     currency = request.query_params.get('currency', 'USD')
-    serializer = MockPackagesSerializer(instance=MockPackages.objects.filter(is_deleted=False, currency__in=currency).order_by('id'), many=True)
+    serializer = MockPackagesSerializer(instance=MockPackages.objects.filter(is_deleted=False, currency__icontains=currency).order_by('id'), many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
