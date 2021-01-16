@@ -21,6 +21,7 @@ from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 
 from accounts.api.tokens import account_activation_token
+from accounts.forms import ChangeUserProfileForm, ChangeProfilePicture
 from accounts.models import CoursePackage, UserProfile
 from payments import gateway
 from payments.models import PaymentMethodToken
@@ -523,3 +524,15 @@ def verify_email_with_registration_code(request, code):
 
     messages.add_message(request, level=messages.ERROR, message="Invalid ticket. Typically these links are valid for 1 day.")
     return HttpResponseRedirect(reverse('to_registration_platform'))
+
+
+def change_user_profile_view(request):
+    if request.method == 'POST':
+        form = ChangeUserProfileForm(data=request.POST, instance=request.user)
+        form.save()
+
+
+def change_user_profile_image(request):
+    if request.method == 'POST':
+        form = ChangeProfilePicture(files=request.FILES, data=request.POST, instance=request.user.user_profile)
+        form.save()

@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+from accounts.models import UserProfile
 from choices import USER_PROFILE_TYPE_CHOICES
 
 
@@ -17,3 +18,21 @@ class SignUpForm(UserCreationForm):
             'phone', 'type',
             'password1', 'password2',
         )
+
+
+class ChangeUserProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = [
+            'first_name', 'last_name', 'email'
+        ]
+
+
+class ChangeProfilePicture(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = [
+            'profile_image'
+        ]

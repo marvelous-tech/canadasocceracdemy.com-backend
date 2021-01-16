@@ -7,7 +7,7 @@
           <div class="card text-center shadow">
             <div class="card-header">
               <h4 class="text-muted">CODE: {{package.name}}</h4>
-              <h5>{{package.amount}} {{package.cycle}}</h5>
+              <h5>{{ package.currency | upper }} ${{package.amount}} {{package.cycle}}</h5>
             </div>
           </div>
         </div>

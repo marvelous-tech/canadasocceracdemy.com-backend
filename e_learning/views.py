@@ -9,7 +9,7 @@ from e_learning.models import CourseCategory, CourseVideo
 
 
 @login_required
-def home_e_learning(request):
+def home_e_learning(request, *args, **kwargs):
     return render(request, 'e_learning/home.html')
 
 
