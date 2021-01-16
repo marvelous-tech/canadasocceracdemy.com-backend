@@ -72,7 +72,6 @@ urlpatterns = [
     path('secure/', include('accounts.urls', namespace='secure_accounts')),
     path('__debug__/', include(debug_toolbar.urls)),
     path('tinymce/', include('tinymce.urls')),
-    path('admin/', admin.site.urls),
     path('api/', include([
         path('v1/', include([
             re_path(r'^rest-auth/', include('rest_auth.urls')),
@@ -113,3 +112,12 @@ urlpatterns = [
     path('api/chunked_upload/', MyChunkedUploadView.as_view(), name='api_chunked_upload'),
     path('<str:page>/', SiteBlankPage.as_view(), name='documents')
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        path('admin/', admin.site.urls),
+    ]
+else:
+    urlpatterns += [
+        path('sldfkjsdfgjsdflkgj/', admin.site.urls),
+    ]
