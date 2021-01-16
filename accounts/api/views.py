@@ -32,7 +32,7 @@ def get_default_data(request):
     if bool(user_profile.profile_image) is False:
         profile_image = None
     else:
-        profile_image = user_profile.profile_image
+        profile_image = user_profile.profile_image.url
     data = {
         'email': user.email,
         'phone': user_profile.phone.as_international,
