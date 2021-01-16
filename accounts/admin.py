@@ -31,6 +31,7 @@ class MockPackagesModelAdmin(admin.ModelAdmin):
         'amount_text',
         'is_monthly',
         'is_annually',
+        'is_deleted',
         'created',
         'updated'
     ]

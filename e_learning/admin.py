@@ -27,6 +27,7 @@ class CoursePackageModelAdmin(admin.ModelAdmin):
         'cycle',
         'points',
         'stripe_price_id',
+        'is_deleted',
         'created',
         'updated',
     ]

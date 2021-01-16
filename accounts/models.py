@@ -52,6 +52,7 @@ class CoursePackage(models.Model):
     cycle = models.CharField(max_length=50, choices=CYCLE_TYPE_CHOICES, default="MONTHLY")
     image = models.ImageField(upload_to=get_package_feature_image_path, blank=True, null=True)
     points = models.PositiveSmallIntegerField(default=0)
+    currency = models.CharField(max_length=3, choices=(('CAD', 'CAD'), ('USD', 'USD')), default='USD')
     is_deleted = models.BooleanField(default=False)
 
     created = models.DateTimeField(auto_now_add=True)
@@ -73,6 +74,7 @@ class MockPackages(models.Model):
     description_box = HTMLField(blank=True, null=True)
     image = models.ImageField(upload_to=get_package_feature_image_path, null=True)
     packages = models.ManyToManyField(CoursePackage, related_name='mocks', blank=True)
+    currency = models.CharField(max_length=3, choices=(('CAD', 'CAD'), ('USD', 'USD')), default='USD')
     is_monthly = models.BooleanField(null=True)
     is_annually = models.BooleanField(null=True)
     is_deleted = models.BooleanField(default=False)

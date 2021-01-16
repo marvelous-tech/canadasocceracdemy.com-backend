@@ -16,6 +16,7 @@ class PackagesSerializer(serializers.ModelSerializer):
             'name',
             'amount',
             'description_box',
+            'currency',
             'cycle'
         ]
 
@@ -32,6 +33,7 @@ class MockPackagesSerializer(serializers.ModelSerializer):
             'description_box',
             'is_monthly',
             'is_annually',
+            'currency',
             'packages'
         ]
 
