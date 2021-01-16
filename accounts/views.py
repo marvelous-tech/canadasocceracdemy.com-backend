@@ -532,6 +532,7 @@ def change_user_profile_view(request):
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.SUCCESS, "Profile saved")
+            return HttpResponseRedirect(reverse('secure_accounts:Update Profile'))
         messages.add_message(request, messages.ERROR, "Please, fill-up the form correctly")
         return HttpResponseRedirect(reverse('secure_accounts:Update Profile'))
     form = ChangeUserProfileForm(instance=request.user)
@@ -544,6 +545,8 @@ def change_user_profile_image(request):
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.SUCCESS, "Profile picture saved")
+            return HttpResponseRedirect(reverse('secure_accounts:Update Profile'))
+        messages.add_message(request, messages.ERROR, "Please, fill-up the form correctly")
         return HttpResponseRedirect(reverse('secure_accounts:Update Profile Picture'))
     form = ChangeProfilePicture(instance=request.user)
     profile_picture = request.user.user_profile.profile_image
