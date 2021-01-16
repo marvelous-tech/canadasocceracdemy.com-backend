@@ -24,6 +24,7 @@ class CoursePackageModelAdmin(admin.ModelAdmin):
     list_display = [
         'name',
         'amount',
+        'currency',
         'cycle',
         'points',
         'stripe_price_id',

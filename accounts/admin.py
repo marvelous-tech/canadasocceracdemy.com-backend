@@ -29,6 +29,7 @@ class MockPackagesModelAdmin(admin.ModelAdmin):
     list_display = [
         'name',
         'amount_text',
+        'currency',
         'is_monthly',
         'is_annually',
         'is_deleted',
