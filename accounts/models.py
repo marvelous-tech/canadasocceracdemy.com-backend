@@ -73,6 +73,8 @@ class MockPackages(models.Model):
     description_box = HTMLField(blank=True, null=True)
     image = models.ImageField(upload_to=get_package_feature_image_path, null=True)
     packages = models.ManyToManyField(CoursePackage, related_name='mocks', blank=True)
+    is_monthly = models.BooleanField(null=True)
+    is_annually = models.BooleanField(null=True)
     is_deleted = models.BooleanField(default=False)
 
     created = models.DateTimeField(auto_now_add=True)
