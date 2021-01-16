@@ -61,7 +61,7 @@ class CourseVideoQueryset(models.QuerySet):
 
     @staticmethod
     def get_course_videos_by_package_points(queryset, package_points) -> models.QuerySet:
-        return queryset.filter(package__points__lte=package_points).order_by('-id')
+        return queryset.filter(package__points__lte=package_points, is_deleted=False).order_by('-id')
 
     @staticmethod
     def get_course_videos_by_package_points_by_category_id(queryset, package_points, category_id) -> models.QuerySet:
