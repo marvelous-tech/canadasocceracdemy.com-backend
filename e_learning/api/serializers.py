@@ -30,6 +30,8 @@ class MockPackagesSerializer(serializers.ModelSerializer):
             'name',
             'amount_text',
             'description_box',
+            'is_monthly',
+            'is_annually'
             'packages'
         ]
 
