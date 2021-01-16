@@ -6,7 +6,10 @@
     <div class="container">
         <div class="col-md-4">
             <form method="post">
-                {{ my_formset|crispy }}
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button class="my-3 btn btn-primary" type="submit">Save</button>
+                <a href="{% url 'secure_accounts:Update Profile Picture' %}" class="my-3 float-right btn btn-info">Change profile image</a>
             </form>
         </div>
     </div>

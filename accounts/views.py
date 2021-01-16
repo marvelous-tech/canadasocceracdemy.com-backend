@@ -529,10 +529,23 @@ def verify_email_with_registration_code(request, code):
 def change_user_profile_view(request):
     if request.method == 'POST':
         form = ChangeUserProfileForm(data=request.POST, instance=request.user)
-        form.save()
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, "Profile saved")
+        messages.add_message(request, messages.ERROR, "Please, fill-up the form correctly")
+        return HttpResponseRedirect(reverse('secure_accounts:Update Profile'))
+    form = ChangeUserProfileForm(instance=request.user)
+    return render(request, template_name='accounts/user_change.html', context={'form': form})
 
 
 def change_user_profile_image(request):
     if request.method == 'POST':
         form = ChangeProfilePicture(files=request.FILES, data=request.POST, instance=request.user.user_profile)
-        form.save()
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, "Profile picture saved")
+        return HttpResponseRedirect(reverse('secure_accounts:Update Profile Picture'))
+    form = ChangeProfilePicture(instance=request.user)
+    profile_picture = request.user.user_profile.profile_image
+    return render(request, 'accounts/profile_image_change.html', {'form': form, 'dp': profile_picture})
+

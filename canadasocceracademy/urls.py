@@ -52,7 +52,7 @@ def to_registration_platform(request):
 
 
 urlpatterns = [
-    path('sldfkjsdfgjsdflkgj/', admin.site.urls),
+    path('admin/' if settings.DEBUG else 'sldfkjsdfgjsdflkgj/', admin.site.urls),
     # path("stripe/", include("djstripe.urls", namespace="djstripe")),
     path('studio/', include('studio.urls', namespace='studio')),
     re_path(r'^progressbarupload/', include('progressbarupload.urls')),
@@ -113,12 +113,3 @@ urlpatterns = [
     path('api/chunked_upload/', MyChunkedUploadView.as_view(), name='api_chunked_upload'),
     path('<str:page>/', SiteBlankPage.as_view(), name='documents')
 ]
-
-if settings.DEBUG:
-    urlpatterns += [
-        path('admin/', admin.site.urls),
-    ]
-else:
-    urlpatterns += [
-        path('sldfkjsdfgjsdflkgj/', admin.site.urls),
-    ]

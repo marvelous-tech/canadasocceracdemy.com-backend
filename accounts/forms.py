@@ -21,6 +21,9 @@ class SignUpForm(UserCreationForm):
 
 
 class ChangeUserProfileForm(forms.ModelForm):
+    first_name = forms.CharField(required=True, min_length=2)
+    last_name = forms.CharField(required=True, min_length=1)
+    email = forms.EmailField(required=True, min_length=4)
 
     class Meta:
         model = User

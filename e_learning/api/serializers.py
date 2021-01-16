@@ -93,7 +93,7 @@ class CourseVideoSingleMemberSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_username(obj):
-        return obj.user.username
+        return obj.user.first_name + " " + obj.user.last_name
 
 
 class CourseVideoSingleCommentSerializer(serializers.ModelSerializer):
