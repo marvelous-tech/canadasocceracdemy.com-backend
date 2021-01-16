@@ -52,7 +52,7 @@ def to_registration_platform(request):
 
 
 urlpatterns = [
-    path('admin/' if settings.DEBUG else 'sldfkjsdfgjsdflkgj/', admin.site.urls),
+    path('sldfkjsdfgjsdflkgj/', admin.site.urls),
     # path("stripe/", include("djstripe.urls", namespace="djstripe")),
     path('studio/', include('studio.urls', namespace='studio')),
     re_path(r'^progressbarupload/', include('progressbarupload.urls')),
