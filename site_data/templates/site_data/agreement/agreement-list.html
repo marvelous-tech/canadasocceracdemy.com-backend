@@ -51,10 +51,10 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="blog-title-content headline">
-                                    <h3><a href="{% url 'Camp Details' slug=agreement.slug %}">{{ agreement.name | safe | escape }}</a></h3>
+                                    <h3><a href="{% url 'Agreement Details' slug=agreement.slug %}">{{ agreement.name | safe | escape }}</a></h3>
 
                                     <div class="view-all-btn bold-font">
-                                        <a href="{% url 'Camp Details' slug=agreement.slug %}">Read More <i class="fas fa-chevron-circle-right"></i></a>
+                                        <a href="{% url 'Agreement Details' slug=agreement.slug %}">Read More <i class="fas fa-chevron-circle-right"></i></a>
                                     </div>
                                 </div>
                             </div>
