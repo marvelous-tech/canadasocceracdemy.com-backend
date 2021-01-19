@@ -314,9 +314,9 @@ DEC_LOADER = "disposable_email_checker.emails.email_domain_loader"
 SERVER = 'http://127.0.0.1:8000'
 
 if ON_UPLOADED:
-    E_LEARNING_PLATFORM = 'https://website.canadasocceracademy.com/e-learning/'
-    REGISTRATION_PLATFORM = 'https://website.canadasocceracademy.com/registration/'
-    SERVER = 'https://website.canadasocceracademy.com'
+    E_LEARNING_PLATFORM = 'https://canadasocceracademy.com/e-learning/'
+    REGISTRATION_PLATFORM = 'https://canadasocceracademy.com/registration/'
+    SERVER = 'https://canadasocceracademy.com'
 
 """STRIPE"""
 
