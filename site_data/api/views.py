@@ -1,6 +1,7 @@
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import permissions
 
@@ -22,6 +23,7 @@ class SiteDataRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny, ])
 def docs_list_api_view(request, name):
     try:
         document = Document.objects.get(name=name)
