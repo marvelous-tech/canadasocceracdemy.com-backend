@@ -9,7 +9,7 @@ MEMBER_TYPE_CHOICES = (
 )
 
 USER_PROFILE_TYPE_CHOICES = (
-    ('STUDENT', 'STUDENT'),
+    ('PLAYER', 'PLAYER'),
     ('COACH', 'COACH'),
 )
 
