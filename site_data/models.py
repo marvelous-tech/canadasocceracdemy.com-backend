@@ -425,6 +425,21 @@ class SocialLink(models.Model):
         return self.name
 
 
+class Document(models.Model):
+    uuid = models.UUIDField(default=uuid4)
+
+    name = models.CharField(max_length=50)
+    body = HTMLField()
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
+
+
 def pre_save_receiver_slug(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)

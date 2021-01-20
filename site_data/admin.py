@@ -11,7 +11,7 @@ from site_data.models import (
     Gallery,
     Reference,
     Coupon, SiteLogo, BannerImage, Testimonial, Camp, CampImage, PrivacyPolicy, TermAndCondition, Agreement, Email,
-    ContactNumber, Address, SocialLink, GalleryVideo
+    ContactNumber, Address, SocialLink, GalleryVideo, Document
 )
 
 # Register your models here.
@@ -258,6 +258,15 @@ class SocialLinkModelAdmin(admin.ModelAdmin):
     list_display = [
         'name',
         'link',
+        'created',
+        'updated'
+    ]
+
+
+@admin.register(Document)
+class DocumentModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
         'created',
         'updated'
     ]
