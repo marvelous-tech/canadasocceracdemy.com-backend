@@ -1,4 +1,5 @@
 # Create your views here.
+import pytz
 import stripe
 from django.contrib import messages
 from django.contrib.auth import logout
@@ -8,6 +9,7 @@ from django.db.models import QuerySet, Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import timezone
 from rest_framework_jwt.serializers import jwt_payload_handler, jwt_encode_handler
 
 from accounts.models import CoursePackage
@@ -124,6 +126,16 @@ def add_first_payment_method_with_registration_token(request, registration_token
                 expand=['latest_invoice.payment_intent']
             )
             if subscription.status == 'active':
+                customer.customer_subscription_id = subscription['id']
+                customer.was_created_successfully = True
+                customer.last_payment_has_error = False
+                customer.last_payment_error_comment = None
+                customer.clear_till = timezone.datetime.fromtimestamp(subscription['current_period_end'], tz=pytz.UTC)
+                customer.user.activate_the_user()
+                customer.user.package_id = package.id
+                customer.user.save()
+                customer.cancel_scheduled = False
+                customer.save()
                 messages.add_message(request, level=messages.SUCCESS,
                                      message="Successfully enrolled to package " + str(package.name))
                 return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
