@@ -138,7 +138,7 @@ def add_first_payment_method_with_registration_token(request, registration_token
                 customer.save()
                 messages.add_message(request, level=messages.SUCCESS,
                                      message="Successfully enrolled to package " + str(package.name))
-                return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
+                return HttpResponseRedirect(reverse('to_e_learning_platform'))
             messages.add_message(request, level=messages.ERROR,
                                  message="Failed enrolled to package " + str(package.name))
             return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
