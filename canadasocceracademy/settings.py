@@ -169,6 +169,7 @@ if DEBUG:
 else:
     CORS_ALLOWED_ORIGIN_REGEXES = [
         r"^https://\w+\.canadasocceracademy\.com$",
+        "http://localhost:4200"
     ]
 
 #
