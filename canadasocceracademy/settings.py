@@ -275,6 +275,7 @@ JWT_AUTH = {
 ROOT_HOSTCONF = 'canadasocceracademy.hosts'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+import storages.backends.s3boto3
 DEFAULT_HOST = "www"
 
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')

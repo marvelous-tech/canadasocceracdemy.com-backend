@@ -13,7 +13,7 @@
                     </div>
                     {% if request.user.is_authenticated == False %}
                         <div class="log-in float-right">
-                            <a data-toggle="modal" data-target="#myModal" href="#">log in</a>
+                            <a data-toggle="modal" href="{% url 'secure_accounts:Login to your account' %}">log in</a>
                             <!-- The Modal -->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog">

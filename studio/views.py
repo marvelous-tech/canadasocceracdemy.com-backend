@@ -25,6 +25,7 @@ def save_from_disk_to_storage_server(upload_id, video_id):
     video: CourseVideo = CourseVideo.objects.get(pk=video_id)
     print("Course video found")
     print("Course video is being uploaded")
+    video.video.storage.object_parameters = {"ContentType": "video/mp4"}
     video.video.save(f.name, f.file, save=True)
     print("File finalizing uploading")
     print("File uploaded")
