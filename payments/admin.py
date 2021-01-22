@@ -53,11 +53,11 @@ class CustomerModelAdmin(admin.ModelAdmin):
             data += f"{p.data} stripe={p.stripe_payment_method_id} "
             if p.is_verified:
                 data += "<span>"
-                data += "<img width='13px' src='https://marvelous-tech.nyc3.cdn.digitaloceanspaces.com/check.svg'/>"
+                data += "<img width='13px' src='https://marvelous-tech.nyc3.digitaloceanspaces.com/check.svg'/>"
                 data += "</span>"
             else:
                 data += "<span>"
-                data += "<img width='13px' src='https://marvelous-tech.nyc3.cdn.digitaloceanspaces.com/delete.svg'/>"
+                data += "<img width='13px' src='https://marvelous-tech.nyc3.digitaloceanspaces.com/delete.svg'/>"
                 data += "</span>"
 
         data = mark_safe(data)
