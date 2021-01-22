@@ -301,9 +301,9 @@ JWT_AUTH = {
 
     'JWT_SECRET_KEY': SECRET_KEY,
     'JWT_GET_USER_SECRET_KEY': None,
-    'JWT_PUBLIC_KEY': None if DEBUG else public_pem,
-    'JWT_PRIVATE_KEY': None if DEBUG else private_pem,
-    'JWT_ALGORITHM': 'HS256' if DEBUG else 'ES512',
+    'JWT_PUBLIC_KEY': None,
+    'JWT_PRIVATE_KEY': None,
+    'JWT_ALGORITHM': 'HS256',
     'JWT_VERIFY': True,
     'JWT_VERIFY_EXPIRATION': True,
     'JWT_LEEWAY': 0,

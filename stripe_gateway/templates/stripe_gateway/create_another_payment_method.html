@@ -361,7 +361,6 @@
                         form.classList.remove('loading');
                         $('#payment-form :input').prop('disabled', false);
                         $('#payment-form :button').prop('disabled', false);
-                        console.log(response.clone().json());
                         location.href = '{% url 'payments:All Payment Methods' %}'
                         return response.json();
                     })
@@ -374,7 +373,6 @@
                             // The card had an error when trying to attach it to a customer.
                             throw result;
                         }
-                        console.log(result);
                         return result;
                     })
                     .catch((error) => {
