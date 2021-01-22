@@ -288,15 +288,7 @@
                 .then((result) => {
                     if (result.error) {
                         displayError(result);
-                        fetch('{% url 'STRIPE_INTEGRATIONS_CORE_API:ATTEMPT' %}', {
-                            method: 'post',
-                            headers: {
-                                'Content-type': 'application/json',
-                                'Authorization': 'JWT {{ token }}'
-                            },
-                        })
-                            .then((response) => {})
-                            .catch((error) => {});
+                        attempt();
                     } else {
                         process({
                             customerId: customerId,
@@ -305,15 +297,19 @@
                     }
                 })
                 .catch((error) => {
-                    fetch('{% url 'STRIPE_INTEGRATIONS_CORE_API:ATTEMPT' %}', {
+                    fetch('{% url 'STRIPE_INTEGRATIONS_CORE_API:DECLINED' %}', {
                         method: 'post',
                         headers: {
                             'Content-type': 'application/json',
                             'Authorization': 'JWT {{ token }}'
                         },
                     })
-                        .then((response) => {})
-                        .catch((error) => {});
+                        .then((response) => {
+                            attempt();
+                        })
+                        .catch((error_x) => {
+
+                        });
                 });
         }
 
@@ -493,6 +489,24 @@
             } else {
                 return {subscription, priceId, paymentMethodId};
             }
+        }
+
+        function attempt() {
+            return (
+                fetch('{% url 'STRIPE_INTEGRATIONS_CORE_API:ATTEMPT' %}', {
+                method: 'post',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': 'JWT {{ token }}'
+                },
+            })
+                .then((response) => {
+                    location.href = '{% url "payments:All Payment Methods" %}'
+                })
+                .catch((error) => {
+                    location.href = '{% url "payments:All Payment Methods" %}'
+                })
+            );
         }
 
         function retryInvoiceWithNewPaymentMethod({
