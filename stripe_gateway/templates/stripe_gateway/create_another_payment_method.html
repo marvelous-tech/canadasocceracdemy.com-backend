@@ -326,7 +326,19 @@
                             paymentMethodId: result.paymentMethod.id
                         })
                     }
-                });
+                })
+                .catch((error) => {
+                    fetch('{% url 'STRIPE_INTEGRATIONS_CORE_API:ATTEMPT' %}', {
+                        method: 'post',
+                        headers: {
+                            'Content-type': 'application/json',
+                            'Authorization': 'JWT {{ token }}'
+                        },
+                    })
+                        .then((response) => {})
+                        .catch((error) => {});
+                })
+            ;
         }
 
         function process({customerId, paymentMethodId}) {
