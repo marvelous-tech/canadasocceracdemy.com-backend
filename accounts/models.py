@@ -132,7 +132,7 @@ class UserProfile(models.Model):
     def email_user_subscription_scheduled(self, cancel_at):
         link = f'{settings.SERVER}/dashboard/subscriptions/'
         serializer = EmailSerializer(data={
-            'from_email': 'customers@marvelous-tech.com',
+            'from_email': settings.NO_REPLY_MAIL_ADDRESS,
             'from_name': 'Subscription Scheduled Canadasocceracademy.com',
             'to_email': self.user.email,
             'to_name': f'{self.user.first_name} {self.user.last_name}',
@@ -155,7 +155,7 @@ class UserProfile(models.Model):
     def email_user_subscription_deleted(self, timestamp):
         link = f'{settings.SERVER}/dashboard/subscriptions/'
         serializer = EmailSerializer(data={
-            'from_email': 'customers@marvelous-tech.com',
+            'from_email': settings.NO_REPLY_MAIL_ADDRESS,
             'from_name': 'Subscription Canceled Canadasocceracademy.com',
             'to_email': self.user.email,
             'to_name': f'{self.user.first_name} {self.user.last_name}',
@@ -178,7 +178,7 @@ class UserProfile(models.Model):
     def email_user_payment_failed(self, card_data, timestamp, error_msg):
         link = f'{settings.SERVER}/dashboard/payments/all/'
         serializer = EmailSerializer(data={
-            'from_email': 'customers@marvelous-tech.com',
+            'from_email': settings.NO_REPLY_MAIL_ADDRESS,
             'from_name': 'Payment Canadasocceracademy.com',
             'to_email': self.user.email,
             'to_name': f'{self.user.first_name} {self.user.last_name}',
@@ -201,7 +201,7 @@ class UserProfile(models.Model):
     def email_user_payment_succeeded(self, card_data, timestamp, trx_id):
         link = f'{settings.SERVER}/to-elearning-platform/'
         serializer = EmailSerializer(data={
-            'from_email': 'customers@marvelous-tech.com',
+            'from_email': settings.NO_REPLY_MAIL_ADDRESS,
             'from_name': 'Payment Canadasocceracademy.com',
             'to_email': self.user.email,
             'to_name': f'{self.user.first_name} {self.user.last_name}',
@@ -226,7 +226,7 @@ class UserProfile(models.Model):
         token = account_activation_token.make_token(self.user)
         link = f'{settings.SERVER}/secure/activate/{uid}/{token}/'
         serializer = EmailSerializer(data={
-            'from_email': 'customers@marvelous-tech.com',
+            'from_email': settings.NO_REPLY_MAIL_ADDRESS,
             'from_name': 'Email Verification Code Canadasocceracademy.com',
             'to_email': self.user.email,
             'to_name': f'{self.user.first_name} {self.user.last_name}',
@@ -256,7 +256,7 @@ class UserProfile(models.Model):
         })
         link = f'{settings.SERVER}/secure/first-verify-email/{code}/'
         serializer = EmailSerializer(data={
-            'from_email': 'customers@marvelous-tech.com',
+            'from_email': settings.NO_REPLY_MAIL_ADDRESS,
             'from_name': 'Email Verification Code Canadasocceracademy.com',
             'to_email': self.user.email,
             'to_name': f'{self.user.first_name} {self.user.last_name}',
@@ -279,7 +279,7 @@ class UserProfile(models.Model):
     def email_user_account_activated(self):
         link = f'{settings.SERVER}/to-elearning-platform/'
         serializer = EmailSerializer(data={
-            'from_email': 'customers@marvelous-tech.com',
+            'from_email': settings.NO_REPLY_MAIL_ADDRESS,
             'from_name': 'Account Activated Canadasocceracademy.com',
             'to_email': self.user.email,
             'to_name': f'{self.user.first_name} {self.user.last_name}',
@@ -308,7 +308,7 @@ class UserProfile(models.Model):
         })
         link = f'{settings.SERVER}/secure/password/reset/{code}/'
         serializer = EmailSerializer(data={
-            'from_email': 'customers@marvelous-tech.com',
+            'from_email': settings.NO_REPLY_MAIL_ADDRESS,
             'from_name': 'Password Reset Code Canadasocceracademy.com',
             'to_email': self.user.email,
             'to_name': f'{self.user.first_name} {self.user.last_name}',
@@ -331,7 +331,7 @@ class UserProfile(models.Model):
     def email_user_password_has_been_reset(self):
         link = f'{settings.SERVER}/secure/login/'
         serializer = EmailSerializer(data={
-            'from_email': 'customers@marvelous-tech.com',
+            'from_email': settings.NO_REPLY_MAIL_ADDRESS,
             'from_name': 'Password Reset Notification Canadasocceracademy.com',
             'to_email': self.user.email,
             'to_name': f'{self.user.first_name} {self.user.last_name}',
@@ -354,7 +354,7 @@ class UserProfile(models.Model):
     def email_user_password_has_been_changed(self):
         link = f'{settings.SERVER}/secure/login/'
         serializer = EmailSerializer(data={
-            'from_email': 'customers@marvelous-tech.com',
+            'from_email': settings.NO_REPLY_MAIL_ADDRESS,
             'from_name': 'Password Changed Canadasocceracademy.com',
             'to_email': self.user.email,
             'to_name': f'{self.user.first_name} {self.user.last_name}',
