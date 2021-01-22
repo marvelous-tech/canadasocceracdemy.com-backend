@@ -66,7 +66,7 @@ class Customer(models.Model):
     last_payment_has_error = models.BooleanField(default=False)
     last_payment_error_comment = models.TextField(null=True, blank=True)
 
-    object = CustomerManager()
+    objects = CustomerManager()
 
     def __str__(self):
         return str(self.uuid)
