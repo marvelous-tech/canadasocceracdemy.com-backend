@@ -143,8 +143,8 @@ class UserProfile(models.Model):
                 'name': f'{self.user.first_name} {self.user.last_name}',
                 'email': self.user.email,
                 'company': 'Canadasocceracademy.com',
-                'company_phone': '+880 1632 77-6159',
-                'company_support_email': 'support@marvelous-tech.com',
+                'company_phone': settings.SUPPORT_PHONE_NUMBER,
+                'company_support_email': settings.SUPPORT_MAIL_ADDRESS,
                 'msg': f'Your subscription for {self.package.name} was scheduled to cancel at {cancel_at.ctime()} for',
                 'button_text': 'GO TO YOUR ACCOUNT'
             })
@@ -166,8 +166,8 @@ class UserProfile(models.Model):
                 'name': f'{self.user.first_name} {self.user.last_name}',
                 'email': self.user.email,
                 'company': 'Canadasocceracademy.com',
-                'company_phone': '+880 1632 77-6159',
-                'company_support_email': 'support@marvelous-tech.com',
+                'company_phone': settings.SUPPORT_PHONE_NUMBER,
+                'company_support_email': settings.SUPPORT_MAIL_ADDRESS,
                 'msg': f'Your subscription for {self.package.name} was canceled at {timestamp.ctime()} for',
                 'button_text': 'GO TO YOUR ACCOUNT'
             })
@@ -189,8 +189,8 @@ class UserProfile(models.Model):
                 'name': f'{self.user.first_name} {self.user.last_name}',
                 'email': self.user.email,
                 'company': 'Canadasocceracademy.com',
-                'company_phone': '+880 1632 77-6159',
-                'company_support_email': 'support@marvelous-tech.com',
+                'company_phone': settings.SUPPORT_PHONE_NUMBER,
+                'company_support_email': settings.SUPPORT_MAIL_ADDRESS,
                 'msg': f'{error_msg} Your payment with {card_data} was failed at UTC {timestamp.ctime()} for',
                 'button_text': 'GO TO YOUR BILLING'
             })
@@ -212,8 +212,8 @@ class UserProfile(models.Model):
                 'name': f'{self.user.first_name} {self.user.last_name}',
                 'email': self.user.email,
                 'company': 'Canadasocceracademy.com',
-                'company_phone': '+880 1632 77-6159',
-                'company_support_email': 'support@marvelous-tech.com',
+                'company_phone': settings.SUPPORT_PHONE_NUMBER,
+                'company_support_email': settings.SUPPORT_MAIL_ADDRESS,
                 'msg': f'Your payment with {card_data} was successfully done at UTC {timestamp.ctime()} for',
                 'button_text': 'GO TO YOUR ACCOUNT'
             })
@@ -237,8 +237,8 @@ class UserProfile(models.Model):
                 'name': f'{self.user.first_name} {self.user.last_name}',
                 'email': self.user.email,
                 'company': 'Canadasocceracademy.com',
-                'company_phone': '+880 1632 77-6159',
-                'company_support_email': 'support@marvelous-tech.com',
+                'company_phone': settings.SUPPORT_PHONE_NUMBER,
+                'company_support_email': settings.SUPPORT_MAIL_ADDRESS,
                 'msg': 'Please click on the button to complete the verification process for',
                 'button_text': 'VERIFY YOUR EMAIL ADDRESS'
             })
@@ -267,8 +267,8 @@ class UserProfile(models.Model):
                 'name': f'{self.user.first_name} {self.user.last_name}',
                 'email': self.user.email,
                 'company': 'Canadasocceracademy.com',
-                'company_phone': '+880 1632 77-6159',
-                'company_support_email': 'support@marvelous-tech.com',
+                'company_phone': settings.SUPPORT_PHONE_NUMBER,
+                'company_support_email': settings.SUPPORT_MAIL_ADDRESS,
                 'msg': 'Please click on the button to complete the verification process for',
                 'button_text': 'VERIFY YOUR EMAIL ADDRESS'
             })
@@ -290,8 +290,8 @@ class UserProfile(models.Model):
                 'name': f'{self.user.first_name} {self.user.last_name}',
                 'email': self.user.email,
                 'company': 'Canadasocceracademy.com',
-                'company_phone': '+880 1632 77-6159',
-                'company_support_email': 'support@marvelous-tech.com',
+                'company_phone': settings.SUPPORT_PHONE_NUMBER,
+                'company_support_email': settings.SUPPORT_MAIL_ADDRESS,
                 'msg': 'Your account has been activated. Now add payment method for',
                 'button_text': 'GO TO YOUR ACCOUNT'
             })
@@ -319,8 +319,8 @@ class UserProfile(models.Model):
                 'name': f'{self.user.first_name} {self.user.last_name}',
                 'email': self.user.email,
                 'company': 'Canadasocceracademy.com',
-                'company_phone': '+880 1632 77-6159',
-                'company_support_email': 'support@marvelous-tech.com',
+                'company_phone': settings.SUPPORT_PHONE_NUMBER,
+                'company_support_email': settings.SUPPORT_MAIL_ADDRESS,
                 'msg': 'Please click on the button to complete the password reset process for',
                 'button_text': 'RESET YOUR PASSWORD'
             })
@@ -342,8 +342,8 @@ class UserProfile(models.Model):
                 'name': f'{self.user.first_name} {self.user.last_name}',
                 'email': self.user.email,
                 'company': 'Canadasocceracademy.com',
-                'company_phone': '+880 1632 77-6159',
-                'company_support_email': 'support@marvelous-tech.com',
+                'company_phone': settings.SUPPORT_PHONE_NUMBER,
+                'company_support_email': settings.SUPPORT_MAIL_ADDRESS,
                 'msg': 'Your password has been reset for',
                 'button_text': 'GO TO YOUR ACCOUNT'
             })
@@ -365,8 +365,8 @@ class UserProfile(models.Model):
                 'name': f'{self.user.first_name} {self.user.last_name}',
                 'email': self.user.email,
                 'company': 'Canadasocceracademy.com',
-                'company_phone': '+880 1632 77-6159',
-                'company_support_email': 'support@marvelous-tech.com',
+                'company_phone': settings.SUPPORT_PHONE_NUMBER,
+                'company_support_email': settings.SUPPORT_MAIL_ADDRESS,
                 'msg': 'Your password was changed for',
                 'button_text': 'GO TO YOUR ACCOUNT'
             })

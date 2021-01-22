@@ -337,3 +337,5 @@ DJSTRIPE_USE_NATIVE_JSONFIELD = True
 FRONTEND_VERSION = 'BE-V1.1.35'
 
 NO_REPLY_MAIL_ADDRESS = os.environ.get('NO_REPLY_MAIL_ADDRESS', 'no-reply@canadasocceracademy.com')
+SUPPORT_MAIL_ADDRESS = os.environ.get('SUPPORT_MAIL_ADDRESS', 'support@canadasocceracademy.com')
+SUPPORT_PHONE_NUMBER = os.environ.get('SUPPORT_PHONE_NUMBER', '+1 416 201 2425')
