@@ -29,6 +29,7 @@ class PaymentMethodTokenModelAdmin(admin.ModelAdmin):
 
 class PaymentMethodTokenStackedInline(admin.StackedInline):
     model = Customer.payment_method_token.through
+    extra = 0
 
 
 @admin.register(Customer)
