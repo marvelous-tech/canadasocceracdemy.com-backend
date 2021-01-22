@@ -24,6 +24,7 @@ class PaymentMethodTokenModelAdmin(admin.ModelAdmin):
         'created',
         'updated'
     ]
+    search_fields = ['stripe_payment_method_id', 'data', 'is_verified']
 
 
 @admin.register(Customer)
@@ -39,6 +40,7 @@ class CustomerModelAdmin(admin.ModelAdmin):
     ]
     search_fields = ['stripe_customer_id', 'uuid']
     readonly_fields = ['payment_method_token', 'user']
+    list_filter = ['is_attempt', ]
 
     def get_queryset(self, request):
         qs: QuerySet = super(CustomerModelAdmin, self).get_queryset(request)

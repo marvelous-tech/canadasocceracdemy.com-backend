@@ -25,6 +25,8 @@ class UserProfileModelAdmin(admin.ModelAdmin):
         'email_verified',
         'type'
     ]
+    search_fields = ['user__email', 'user__first_name', 'user__last_name']
+    list_filter = ['email_verified', 'type', 'is_expired', 'is_active']
 
 
 @admin.register(MockPackages)
