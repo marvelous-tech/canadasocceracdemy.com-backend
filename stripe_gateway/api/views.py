@@ -65,7 +65,7 @@ def attempt_adding_payment_method(request):
     return Response({'status': True}, status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def card_declined(request):
     messages.add_message(request=request, level=messages.ERROR, message="Card declined")
     return Response({'status': False}, status=status.HTTP_200_OK)
