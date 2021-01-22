@@ -27,6 +27,10 @@ class PaymentMethodTokenModelAdmin(admin.ModelAdmin):
     search_fields = ['stripe_payment_method_id', 'data', 'is_verified']
 
 
+class PaymentMethodTokenStackedInline(admin.StackedInline):
+    model = PaymentMethodToken
+
+
 @admin.register(Customer)
 class CustomerModelAdmin(admin.ModelAdmin):
     list_display = [
@@ -41,6 +45,7 @@ class CustomerModelAdmin(admin.ModelAdmin):
     search_fields = ['stripe_customer_id', 'uuid']
     readonly_fields = ['payment_method_token', 'user']
     list_filter = ['is_attempt', ]
+    inlines = [PaymentMethodTokenStackedInline, ]
 
     def get_queryset(self, request):
         qs: QuerySet = super(CustomerModelAdmin, self).get_queryset(request)
