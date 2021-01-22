@@ -306,9 +306,12 @@
                     })
                         .then((response) => {
                             attempt();
+                            form.classList.remove('loading');
+                            $('#payment-form :input').prop('disabled', false);
+                            $('#payment-form :button').prop('disabled', false);
                         })
                         .catch((error_x) => {
-
+                            location.href = '{% url 'secure_accounts:Logging out' %}'
                         });
                 });
         }
@@ -328,7 +331,6 @@
                     }),
                 })
                     .then((response) =>  {
-                        console.log(response.clone().json());
                         const csrftoken = Cookies.get('csrftoken');
                         form.submit();
                         return response.json();
@@ -339,7 +341,6 @@
                             // The card had an error when trying to attach it to a customer.
                             throw result;
                         }
-                        console.log(result);
                         return result;
                     })
                     .catch((error) => {
@@ -351,7 +352,7 @@
         }
 
         function showCardError(e) {
-            console.log(e);
+            location.href = '{% url 'payments:All Payment Methods' %}';
         }
 
         function createSubscription({customerId, paymentMethodId, priceId}) {
@@ -501,10 +502,10 @@
                 },
             })
                 .then((response) => {
-                    location.href = '{% url "payments:All Payment Methods" %}'
+                    location.href = '{% url 'payments:All Payment Methods' %}'
                 })
                 .catch((error) => {
-                    location.href = '{% url "payments:All Payment Methods" %}'
+                    location.href = '{% url 'secure_accounts:Logging out' %}'
                 })
             );
         }

@@ -334,10 +334,7 @@
                             $('#payment-form :button').prop('disabled', false);
                         })
                         .catch((error_x) => {
-                            console.log("Declined Function Error");
-                            form.classList.remove('loading');
-                            $('#payment-form :input').prop('disabled', false);
-                            $('#payment-form :button').prop('disabled', false);
+                            location.href = '{% url 'secure_accounts:Logging out' %}'
                         });
                 })
             ;
@@ -396,16 +393,16 @@
                 },
             })
                 .then((response) => {
-                    console.log("Done");
+                    location.href = '{% url 'payments:All Payment Methods' %}'
                 })
                 .catch((error) => {
-                    console.log("Error");
+                    location.href = '{% url 'secure_accounts:Logging out' %}'
                 })
             );
         }
 
         function showCardError(e) {
-            console.log(e);
+            location.href = '{% url 'payments:All Payment Methods' %}';
         }
 
     </script>
