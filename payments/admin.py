@@ -28,7 +28,7 @@ class PaymentMethodTokenModelAdmin(admin.ModelAdmin):
 
 
 class PaymentMethodTokenStackedInline(admin.StackedInline):
-    model = PaymentMethodToken
+    model = Customer.payment_method_token.through
 
 
 @admin.register(Customer)
@@ -42,8 +42,9 @@ class CustomerModelAdmin(admin.ModelAdmin):
         'created',
         'updated',
     ]
+    exclude = ('payment_method_token',)
     search_fields = ['stripe_customer_id', 'uuid']
-    readonly_fields = ['payment_method_token', 'user']
+    readonly_fields = ['user', ]
     list_filter = ['is_attempt', ]
     inlines = [PaymentMethodTokenStackedInline, ]
 
