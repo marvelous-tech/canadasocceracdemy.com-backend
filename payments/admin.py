@@ -48,11 +48,9 @@ class CustomerModelAdmin(admin.ModelAdmin):
         'created',
         'updated',
     ]
-    exclude = ('payment_method_token',)
     search_fields = ['stripe_customer_id', 'uuid']
-    readonly_fields = ['user', ]
+    readonly_fields = ['user', 'payment_method_token']
     list_filter = ['is_attempt', ]
-    inlines = [PaymentMethodTokenStackedInline, ]
 
     def get_queryset(self, request):
         qs: QuerySet = super(CustomerModelAdmin, self).get_queryset(request)
