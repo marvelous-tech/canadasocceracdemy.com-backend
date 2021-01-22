@@ -38,6 +38,14 @@ class PaymentMethodToken(models.Model):
         return str(self.uuid)
 
 
+class CustomerManager(models.Manager):
+    def all(self):
+        return self.prefetch_related('payment_method_token')
+
+    def filter(self, *args, **kwargs):
+        return self.prefetch_related('payment_method_token').filter(*args, **kwargs)
+
+
 class Customer(models.Model):
     uuid = models.UUIDField(default=uuid4, verbose_name='Customer ID')
     user = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='customer')
@@ -57,6 +65,8 @@ class Customer(models.Model):
 
     last_payment_has_error = models.BooleanField(default=False)
     last_payment_error_comment = models.TextField(null=True, blank=True)
+
+    object = CustomerManager()
 
     def __str__(self):
         return str(self.uuid)

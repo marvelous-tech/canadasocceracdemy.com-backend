@@ -28,7 +28,6 @@ class CustomerModelAdmin(admin.ModelAdmin):
     list_display = [
         'user',
         'uuid',
-        'payment_method_token',
         'is_deleted',
         'created',
         'updated',
