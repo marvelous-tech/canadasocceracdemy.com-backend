@@ -41,6 +41,7 @@ class PaymentMethodToken(models.Model):
 class Customer(models.Model):
     uuid = models.UUIDField(default=uuid4, verbose_name='Customer ID')
     user = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='customer')
+    is_attempt = models.BooleanField(null=True, blank=True)
     payment_method_token = models.ManyToManyField(PaymentMethodToken, related_name='customers', blank=True)
     is_deleted = models.BooleanField(default=False)
     was_created_successfully = models.BooleanField(default=False)
@@ -193,7 +194,8 @@ def update_user_profile(sender, instance: UserProfile, created, **kwargs):
                 user_id=instance.id,
                 uuid=instance.uuid,
                 was_created_successfully=True,
-                stripe_customer_id=customer.id
+                stripe_customer_id=customer.id,
+                is_attempt=False
             )
         except Exception as e:
             pass

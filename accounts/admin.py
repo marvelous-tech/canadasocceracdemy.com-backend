@@ -20,6 +20,9 @@ class UserProfileModelAdmin(admin.ModelAdmin):
         'user',
         'phone',
         'package',
+        'is_active',
+        'is_expired',
+        'email_verified',
         'type'
     ]
 
