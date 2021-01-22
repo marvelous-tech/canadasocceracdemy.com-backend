@@ -36,7 +36,7 @@ class CustomerModelAdmin(admin.ModelAdmin):
         'updated',
     ]
     search_fields = ['stripe_customer_id', 'uuid']
-    readonly_fields = ['payment_method_token', ]
+    readonly_fields = ['payment_method_token', 'user']
 
     def get_queryset(self, request):
         qs: QuerySet = super(CustomerModelAdmin, self).get_queryset(request)
