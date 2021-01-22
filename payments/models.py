@@ -71,10 +71,6 @@ class Customer(models.Model):
     def __str__(self):
         return str(self.uuid)
 
-    @property
-    def get_payment_methods(self):
-        return "\n".join([f"{p.data} stripe={p.stripe_payment_method_id}" for p in self.payment_method_token.all()])
-
 
 class Subscription(models.Model):
     uuid = models.UUIDField(default=uuid4)

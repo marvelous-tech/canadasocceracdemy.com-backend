@@ -36,6 +36,10 @@ class CustomerModelAdmin(admin.ModelAdmin):
     search_fields = ['stripe_customer_id', 'uuid']
     readonly_fields = ['payment_method_token', ]
 
+    @staticmethod
+    def get_payment_methods(obj):
+        return "\n".join([f"{p.data} stripe={p.stripe_payment_method_id}" for p in obj.payment_method_token.all()])
+
 
 @admin.register(Subscription)
 class SubscriptionModelAdmin(admin.ModelAdmin):
