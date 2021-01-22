@@ -331,7 +331,7 @@
                             attempt();
                         })
                         .catch((error_x) => {
-
+                            console.log("Declined Function Error");
                         });
                 })
             ;
@@ -392,10 +392,10 @@
                 },
             })
                 .then((response) => {
-                    location.href = '{% url "payments:All Payment Methods" %}'
+                    console.log("Done");
                 })
                 .catch((error) => {
-
+                    console.log("Error");
                 })
             );
         }
