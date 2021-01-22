@@ -30,6 +30,11 @@ class PaymentMethodTokenModelAdmin(admin.ModelAdmin):
 class PaymentMethodTokenStackedInline(admin.StackedInline):
     model = Customer.payment_method_token.through
     extra = 0
+    readonly_fields = [
+        'payment_method_token', 'stripe_payment_method_id',
+        'uuid', 'type', 'image_url', 'data', 'is_verified',
+        'is_default', 'is_deleted'
+    ]
 
 
 @admin.register(Customer)
