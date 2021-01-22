@@ -48,7 +48,7 @@ class CustomerModelAdmin(admin.ModelAdmin):
     def get_payment_methods(obj):
         data = "\n"
 
-        for p in obj.obj.payment_method_token.all():
+        for p in obj.payment_method_token.all():
             data += "<p>"
             data += f"{p.data} stripe={p.stripe_payment_method_id} "
             if p.is_verified:
