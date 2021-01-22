@@ -58,9 +58,25 @@ def migrate_to_another_subscription(request):
 
 
 @api_view(['POST'])
+def attempt_adding_payment_method(request):
+    customer = request.user.user_profile.customer
+    customer.is_attempt = True
+    customer.save()
+    return Response({'status': True}, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
 def create_another_payment_method(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY
     data = request.data
+
+    try:
+        customer = Customer.objects.get(stripe_customer_id=data['customerId'])
+    except (Customer.DoesNotExist, Customer.MultipleObjectsReturned) as e:
+        customer = request.user.user_profile.customer
+
+    customer.is_attempt = True
+    customer.save()
 
     try:
         # Attach the payment method to the customer
@@ -77,10 +93,6 @@ def create_another_payment_method(request):
             },
         )
 
-        try:
-            customer = Customer.objects.get(stripe_customer_id=data['customerId'])
-        except (Customer.DoesNotExist, Customer.MultipleObjectsReturned) as e:
-            customer = request.user.user_profile.customer
 
         if payment_method.type == 'card':
             if customer.payment_method_token.filter(payment_method_token__contains=payment_method.card.fingerprint, is_deleted=False).count() < 1:

@@ -2,6 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from django.db.models import QuerySet
+from django.utils.safestring import mark_safe
 
 from payments.models import PaymentMethodToken, \
     Customer, \
@@ -31,6 +32,7 @@ class CustomerModelAdmin(admin.ModelAdmin):
         'user',
         'uuid',
         'get_payment_methods',
+        'is_attempt',
         'is_deleted',
         'created',
         'updated',
@@ -44,7 +46,22 @@ class CustomerModelAdmin(admin.ModelAdmin):
 
     @staticmethod
     def get_payment_methods(obj):
-        return "\n".join([f"{p.data} stripe={p.stripe_payment_method_id}" for p in obj.payment_method_token.all()])
+        data = "\n"
+
+        for p in obj.obj.payment_method_token.all():
+            data += "<p>"
+            data += f"{p.data} stripe={p.stripe_payment_method_id} "
+            if p.is_verified:
+                data += "<span>"
+                data += "<img width='13px' src='https://marvelous-tech.nyc3.cdn.digitaloceanspaces.com/check.svg'/>"
+                data += "</span>"
+            else:
+                data += "<span>"
+                data += "<img width='13px' src='https://marvelous-tech.nyc3.cdn.digitaloceanspaces.com/delete.svg'/>"
+                data += "</span>"
+
+        data = mark_safe(data)
+        return data
 
 
 @admin.register(Subscription)

@@ -114,7 +114,7 @@ def add_first_payment_method_with_registration_token(request, registration_token
             request.user.user_profile.inactivate_the_user()
             logout(request)
             return HttpResponseRedirect(reverse('secure_accounts:Login to your account'))
-
+        customer.is_attempt = True
         if customer.customer_subscription_id is None:
             subscription = stripe.Subscription.create(
                 customer=customer.stripe_customer_id,
@@ -142,6 +142,7 @@ def add_first_payment_method_with_registration_token(request, registration_token
             messages.add_message(request, level=messages.ERROR,
                                  message="Failed enrolled to package " + str(package.name))
             return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
+        customer.save()
         messages.add_message(request, level=messages.INFO,
                              message="You already our user")
         return HttpResponseRedirect(reverse('secure_accounts:cancel_subscriptions'))
