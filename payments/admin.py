@@ -26,11 +26,12 @@ class PaymentMethodTokenModelAdmin(admin.ModelAdmin):
 @admin.register(Customer)
 class CustomerModelAdmin(admin.ModelAdmin):
     list_display = [
-        'uuid',
         'user',
+        'uuid',
+        'payment_method_token',
         'is_deleted',
         'created',
-        'updated'
+        'updated',
     ]
     search_fields = ['stripe_customer_id', ]
 
