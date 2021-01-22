@@ -1,6 +1,8 @@
 from django.contrib import admin
 
 # Register your models here.
+from django.db.models import QuerySet
+
 from payments.models import PaymentMethodToken, \
     Customer, \
     Subscription, \
@@ -37,8 +39,8 @@ class CustomerModelAdmin(admin.ModelAdmin):
     readonly_fields = ['payment_method_token', ]
 
     def get_queryset(self, request):
-        qs = super(CustomerModelAdmin, self).get_queryset(request)
-        return qs.prefetch_related('payment_method_token')
+        qs: QuerySet = super(CustomerModelAdmin, self).get_queryset(request)
+        return qs.select_related('user__user').prefetch_related('payment_method_token')
 
     @staticmethod
     def get_payment_methods(obj):
