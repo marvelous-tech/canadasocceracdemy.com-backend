@@ -35,7 +35,7 @@ class PaymentMethodToken(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return str(self.uuid)
+        return self.data + " stripe_pid: " + self.stripe_payment_method_id + "\n"
 
 
 class CustomerManager(models.Manager):
@@ -50,7 +50,7 @@ class Customer(models.Model):
     uuid = models.UUIDField(default=uuid4, verbose_name='Customer ID')
     user = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='customer')
     is_attempt = models.BooleanField(null=True, blank=True)
-    payment_method_token = models.ManyToManyField(PaymentMethodToken, related_name='customers', blank=True)
+    payment_method_token = models.ManyToManyField(PaymentMethodToken, related_name='customers', blank=True, verbose_name='Cards')
     is_deleted = models.BooleanField(default=False)
     was_created_successfully = models.BooleanField(default=False)
     customer_subscription_id = models.CharField(max_length=255, blank=True, null=True)
