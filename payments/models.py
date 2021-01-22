@@ -35,7 +35,7 @@ class PaymentMethodToken(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return self.data + " stripe_pid: " + self.stripe_payment_method_id + "\n"
+        return str(self.data) + " stripe_pid: " + str(self.stripe_payment_method_id) + "\n"
 
 
 class CustomerManager(models.Manager):
