@@ -41,6 +41,52 @@ HOSTS = os.environ.get('ALLOWED_HOSTS')
 
 ALLOWED_HOSTS = HOSTS.split(',') if HOSTS else []
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'error_file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(os.path.join(BASE_DIR, 'logs'), 'app.log'),
+            'formatter': 'verbose'
+        },
+        'app_file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(os.path.join(BASE_DIR, 'logs'), 'app.log'),
+            'formatter': 'verbose'
+        },
+        'sql_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(os.path.join(BASE_DIR, 'logs'), 'sql.log'),
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'qinspect': {
+            'handlers': ['sql_file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['error_file', 'app_file'],
+            'propagate': True,
+        },
+    },
+}
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -62,6 +108,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'qinspect.middleware.QueryInspectMiddleware',
 ]
 
 if DEBUG:
@@ -339,3 +386,5 @@ FRONTEND_VERSION = 'BE-V1.1.35'
 NO_REPLY_MAIL_ADDRESS = os.environ.get('NO_REPLY_MAIL_ADDRESS', 'no-reply@canadasocceracademy.com')
 SUPPORT_MAIL_ADDRESS = os.environ.get('SUPPORT_MAIL_ADDRESS', 'support@canadasocceracademy.com')
 SUPPORT_PHONE_NUMBER = os.environ.get('SUPPORT_PHONE_NUMBER', '+1 416 201 2425')
+
+QUERY_INSPECT_ENABLED = True

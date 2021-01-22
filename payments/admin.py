@@ -28,11 +28,13 @@ class CustomerModelAdmin(admin.ModelAdmin):
     list_display = [
         'user',
         'uuid',
+        'get_payment_methods',
         'is_deleted',
         'created',
         'updated',
     ]
-    search_fields = ['stripe_customer_id', ]
+    search_fields = ['stripe_customer_id', 'uuid']
+    readonly_fields = ['payment_method_token', ]
 
 
 @admin.register(Subscription)
