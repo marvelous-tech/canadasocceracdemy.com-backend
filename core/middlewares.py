@@ -22,7 +22,7 @@ class TimezoneMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        tzname = 'Canada/Central'
+        tzname = 'Canada/Eastern'
         if tzname:
             if request.user.is_staff:
                 timezone.activate(pytz.timezone(tzname))
