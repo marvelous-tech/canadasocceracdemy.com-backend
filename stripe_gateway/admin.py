@@ -16,6 +16,8 @@ class WebhookModelAdmin(admin.ModelAdmin):
     list_display = [
         'event_type',
         'event_id',
+        'object_id',
+        'customer_id',
         'created',
         'updated'
     ]

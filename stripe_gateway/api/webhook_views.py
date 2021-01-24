@@ -19,7 +19,7 @@ def construct_data(card):
     funding = card["funding"]
     last_4 = card["last4"]
 
-    data = f'{brand} {funding} card ********{last_4}, EXP: {exp}'
+    data = f'{brand} {funding} card xxxx-{last_4}, EXP: {exp}'
 
     return data
 
@@ -54,6 +54,8 @@ def webhook_capture(request):
     try:
         Webhook.objects.create(
             event_id=request_data['id'],
+            object_id=data_object['id'],
+            customer_id=data_object['customer'],
             event_type=event_type,
             body=json.dumps(request_data, sort_keys=True, indent=2)
         )
@@ -98,6 +100,7 @@ def webhook_capture(request):
             customer.user.save()
             customer.cancel_scheduled = False
             customer.save()
+            customer.user.email_user_subscription_success()
 
     if event_type == 'customer.subscription.updated':
         subscription_price_id = data_object['items']['data'][0]['price']['id']
@@ -178,6 +181,9 @@ def webhook_capture(request):
         except (Customer.MultipleObjectsReturned, Customer.DoesNotExist) as e:
             customer = None
         if customer is not None:
+            card = construct_data(data_object['payment_method_details']['card'])
+            timestamp = timezone.datetime.fromtimestamp(data_object['created'], tz=pytz.UTC)
+            customer.user.email_user_card_declined(card, timestamp, msg)
             customer.was_created_successfully = True
             customer.last_payment_has_error = True
             customer.last_payment_error_comment = msg

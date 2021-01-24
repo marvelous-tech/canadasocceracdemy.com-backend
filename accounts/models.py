@@ -135,9 +135,9 @@ class UserProfile(models.Model):
             'from_email': settings.NO_REPLY_MAIL_ADDRESS,
             'from_name': 'Subscription Scheduled Canadasocceracademy.com',
             'to_email': self.user.email,
-            'to_name': f'{self.user.first_name} {self.user.last_name}',
-            'subject': f'Subscription Scheduled to Cancel at UTC {cancel_at.ctime()}',
-            'text_body': f'Your subscription for {self.package.name} was scheduled to cancel at {cancel_at.ctime()} for {self.user.email}',
+            'to_name': f'{self.user.first_name} {self.user.last_name} [{self.package.name}] [UTC {cancel_at.ctime()}]',
+            'subject': f'Subscription Package {self.package.name} Scheduled to Cancel at UTC {cancel_at.ctime()}',
+            'text_body': f'Your subscription for {self.package.name} was scheduled to cancel at UTC {cancel_at.ctime()} for {self.user.email}',
             'html_body': render_to_string('email_client/account_notification_template.html', {
                 'link': link,
                 'name': f'{self.user.first_name} {self.user.last_name}',
@@ -159,8 +159,8 @@ class UserProfile(models.Model):
             'from_name': 'Subscription Canceled Canadasocceracademy.com',
             'to_email': self.user.email,
             'to_name': f'{self.user.first_name} {self.user.last_name}',
-            'subject': f'Subscription Canceled',
-            'text_body': f'Your subscription for {self.package.name} was canceled at {timestamp.ctime()} for {self.user.email}',
+            'subject': f'Subscription Canceled [{self.package.name}] [UTC {timestamp.ctime()}]',
+            'text_body': f'Your subscription for {self.package.name} was canceled at UTC {timestamp.ctime()} for {self.user.email}',
             'html_body': render_to_string('email_client/account_notification_template.html', {
                 'link': link,
                 'name': f'{self.user.first_name} {self.user.last_name}',
@@ -198,6 +198,52 @@ class UserProfile(models.Model):
         print("Attempt to Sending email")
         email(serializer, self.user_id)
 
+    def email_user_card_declined(self, card_data, timestamp, error_msg):
+        link = f'{settings.SERVER}/dashboard/payments/all/'
+        serializer = EmailSerializer(data={
+            'from_email': settings.NO_REPLY_MAIL_ADDRESS,
+            'from_name': 'Payment Canadasocceracademy.com',
+            'to_email': self.user.email,
+            'to_name': f'{self.user.first_name} {self.user.last_name}',
+            'subject': f'Card Declined [{card_data}] [UTC {timestamp.ctime()}]',
+            'text_body': f'{error_msg} Your {card_data} was DECLINED at UTC {timestamp.ctime()} for {self.user.email}',
+            'html_body': render_to_string('email_client/account_notification_template.html', {
+                'link': link,
+                'name': f'{self.user.first_name} {self.user.last_name}',
+                'email': self.user.email,
+                'company': 'Canadasocceracademy.com',
+                'company_phone': settings.SUPPORT_PHONE_NUMBER,
+                'company_support_email': settings.SUPPORT_MAIL_ADDRESS,
+                'msg': f'{error_msg} Your {card_data} was DECLINED at UTC {timestamp.ctime()} for',
+                'button_text': 'GO TO YOUR BILLING'
+            })
+        })
+        print("Attempt to Sending email")
+        email(serializer, self.user_id)
+
+    def email_user_subscription_success(self):
+        link = f'{settings.SERVER}/to-elearning-platform/'
+        serializer = EmailSerializer(data={
+            'from_email': settings.NO_REPLY_MAIL_ADDRESS,
+            'from_name': 'Subscription Canadasocceracademy.com',
+            'to_email': self.user.email,
+            'to_name': f'{self.user.first_name} {self.user.last_name}',
+            'subject': f'Subscription Package {str(self.package.name)} Valid till [UTC {self.customer.clear_till.ctime()}]',
+            'text_body': f'Subscribing to package {str(self.package.name)} was successful and will renew at UTC {self.customer.clear_till.ctime()} for {self.user.email}',
+            'html_body': render_to_string('email_client/account_notification_template.html', {
+                'link': link,
+                'name': f'{self.user.first_name} {self.user.last_name}',
+                'email': self.user.email,
+                'company': 'Canadasocceracademy.com',
+                'company_phone': settings.SUPPORT_PHONE_NUMBER,
+                'company_support_email': settings.SUPPORT_MAIL_ADDRESS,
+                'msg': f'Subscribing to package {str(self.package.name)} was successful and will renew at UTC {self.customer.clear_till.ctime()} for',
+                'button_text': 'GO TO YOUR ACCOUNT'
+            })
+        })
+        print("Attempt to Sending email")
+        email(serializer, self.user_id)
+
     def email_user_payment_succeeded(self, card_data, timestamp, trx_id):
         link = f'{settings.SERVER}/to-elearning-platform/'
         serializer = EmailSerializer(data={
@@ -205,7 +251,7 @@ class UserProfile(models.Model):
             'from_name': 'Payment Canadasocceracademy.com',
             'to_email': self.user.email,
             'to_name': f'{self.user.first_name} {self.user.last_name}',
-            'subject': f'Payment Succeeded for TRX_ID: #{trx_id}',
+            'subject': f'Payment Succeeded for {str(self.package.name)} TRX_ID: #{trx_id} [{card_data}] [UTC {timestamp.ctime()}]',
             'text_body': f'Your payment with {card_data} was successfully done at UTC {timestamp.ctime()} for {self.user.email}',
             'html_body': render_to_string('email_client/account_notification_template.html', {
                 'link': link,

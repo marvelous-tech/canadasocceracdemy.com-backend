@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 from django.utils.timezone import now
+from tinymce.models import HTMLField
 
 from mt_utils import create_hash
 
@@ -23,7 +24,7 @@ class Email(models.Model):
 
     subject = models.TextField()
     text_body = models.TextField()
-    html_body = models.TextField()
+    html_body = HTMLField()
 
     message_uuid = models.UUIDField(auto_created=True, editable=False, null=True, blank=True)
     message_id = models.PositiveBigIntegerField(auto_created=True, editable=False, null=True, blank=True)

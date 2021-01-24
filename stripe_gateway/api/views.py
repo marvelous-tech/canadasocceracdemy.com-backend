@@ -21,7 +21,7 @@ def construct_data(card):
     funding = card.funding
     last_4 = card.last4
 
-    data = f'{brand} {funding} ********{last_4}, EXP: {exp}'
+    data = f'{brand} {funding} xxxx-{last_4}, EXP: {exp}'
 
     return data
 
