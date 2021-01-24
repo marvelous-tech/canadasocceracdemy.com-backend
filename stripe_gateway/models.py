@@ -8,6 +8,7 @@ class Webhook(models.Model):
     object_id = models.CharField(max_length=255, default="N/A")
     customer_id = models.CharField(max_length=255, default="N/A")
     event_type = models.CharField(max_length=255)
+    is_succeed = models.BooleanField(default=False, verbose_name='Status')
     body = models.TextField()
 
     created = models.DateTimeField(auto_now_add=True)
