@@ -52,11 +52,13 @@ def webhook_capture(request):
     data_object = data['object']
 
     try:
+        status = False if 'fail' in event_type else True
         Webhook.objects.create(
             event_id=request_data['id'],
             object_id=data_object['id'],
             customer_id=data_object['customer'],
             event_type=event_type,
+            is_succeed=status,
             body=json.dumps(request_data, sort_keys=True, indent=2)
         )
     except Exception as e:
