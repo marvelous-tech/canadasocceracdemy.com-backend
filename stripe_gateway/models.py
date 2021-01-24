@@ -5,6 +5,8 @@ from django.db import models
 
 class Webhook(models.Model):
     event_id = models.CharField(max_length=255)
+    object_id = models.CharField(max_length=255, default="N/A")
+    customer_id = models.CharField(max_length=255, default="N/A")
     event_type = models.CharField(max_length=255)
     body = models.TextField()
 
