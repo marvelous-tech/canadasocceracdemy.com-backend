@@ -74,7 +74,7 @@ def get_default_contexts():
     logos = SiteLogo.objects.filter(for_content='navbar_logo')
     app_feature_image = SiteLogo.objects.filter(for_content='app_feature_image')
     emails = Email.objects.all()
-    numbers = ContactNumber.objects.all()
+    numbers = ContactNumber.objects.all().order_by('name')
     addresses = Address.objects.all()
     socials = SocialLink.objects.all()
 
