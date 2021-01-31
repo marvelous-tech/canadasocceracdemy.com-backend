@@ -1,19 +1,21 @@
 <div class="col-md-3">
-    <div class="side-bar-widget first-widget">
-        <h2 class="widget-title text-capitalize"><span>Find A Course </span>&amp; Sign up Today.</h2>
-        <div class="course-img" id="SiteLogo_app_feature_image">
-            <img src="{{ app_feature_image.image.url }}" alt="">
-        </div>
-        <div class="course-desc" id="SiteData_app_feature_image_text">
-            <p>{{ app_feature_image_text.data | safe | escape }}</p>
-        </div>
-        <div class="genius-btn gradient-bg text-center text-uppercase ul-li-block bold-font">
-            <a target="_blank" href="{% url 'to_registration_platform' %}">VIEW ONLINE PROGRAMS <i class="fas fa-caret-right"></i></a>
+    <div class="side-bar-widget">
+        <h2 class="widget-title text-capitalize"><span>Featured</span> Program.</h2>
+        <div class="featured-course">
+            <div class="best-course-pic-text relative-position pt-0">
+                <div class="best-course-pic relative-position">
+                    <a target="_blank" href="{% url 'to_registration_platform' %}"><img id="SiteLogo_feature_course_logo" src="{{ feature_course_logo.image.url }}" alt=""></a>
+                    <div class="trend-badge-2 text-center text-uppercase">
+                        <i class="fas fa-bolt"></i>
+                        <span>Popular</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="side-bar-widget">
-        <h2 class="widget-title text-capitalize"><span>Related </span>News.</h2>
+        <h2 class="widget-title text-capitalize"><span>Recent </span>News.</h2>
         <div class="latest-news-posts">
 
             {% for recent_post in recent_posts %}
@@ -37,21 +39,6 @@
 
             <div class="view-all-btn bold-font">
                 <a href="{% url 'blog' %}">View All News <i class="fas fa-chevron-circle-right"></i></a>
-            </div>
-        </div>
-    </div>
-
-    <div class="side-bar-widget">
-        <h2 class="widget-title text-capitalize"><span>Featured</span> Program.</h2>
-        <div class="featured-course">
-            <div class="best-course-pic-text relative-position">
-                <div class="best-course-pic relative-position">
-                    <a target="_blank" href="{% url 'to_registration_platform' %}"><img id="SiteLogo_feature_course_logo" src="{{ feature_course_logo.image.url }}" alt=""></a>
-                    <div class="trend-badge-2 text-center text-uppercase">
-                        <i class="fas fa-bolt"></i>
-                        <span>Popular</span>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
