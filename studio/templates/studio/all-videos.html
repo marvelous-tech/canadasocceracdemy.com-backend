@@ -10,6 +10,7 @@ Videos
                 <table class="table table-bordered table-hover">
                     <thead class="table-primary">
                         <tr>
+                            <th>Thumbnail</th>
                             <th>Title</th>
                             <th>Category</th>
                             <th>Package</th>
@@ -19,6 +20,16 @@ Videos
                     <tbody>
                         {% for video in videos %}
                           <tr class="small">
+                            <td>
+                                <div class="img-responsive">
+                                    {% if video.thumbnail %}
+                                    <img class="img-fluid" style="object-fit: cover"
+                                            src="{{ video.thumbnail.url }}" alt="{{ video.name }}'s Thumbnail">
+                                    {% else %}
+                                        <p>No thumbnail</p>
+                                    {% endif %}
+                                </div>
+                            </td>
                             <td>{{ video.name }}</td>
                             <td>{{ video.category.name }}</td>
                             <td>{{ video.package.name }}</td>
