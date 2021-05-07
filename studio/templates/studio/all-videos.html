@@ -24,7 +24,8 @@ Videos
                                 <td>
                                     <div class="img-responsive">
                                         {% if video.video %}
-                                            <video width="400" controls>
+                                            <video width="400" controls controlsList="nodownload"
+                                                   poster="{{ video.thumbnail.url }}">
                                               <source src="{{ video.video.url }}" type="video/mp4">
                                               Your browser does not support HTML video.
                                             </video>
