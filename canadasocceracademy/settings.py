@@ -243,7 +243,8 @@ INSTALLED_APPS += [
     'payments',
     'email_client',
     'studio',
-    'stripe_gateway'
+    'stripe_gateway',
+    'campaign',
 ]
 
 
