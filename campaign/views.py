@@ -9,4 +9,4 @@ def spain_id_camp(request):
     context = {
         'fees': fees
     }
-    return render(request, 'campaign/spain_id_camp/spain.html')
+    return render(request, 'campaign/spain_id_camp/spain.html', context=context)
