@@ -1,0 +1,309 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+    <link rel="stylesheet" href="/assets/app/campaign/spain/style.css"/>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"
+            integrity="sha512-w3u9q/DeneCSwUDjhiMNibTRh/1i/gScBVp2imNVAMCt6cUHIw6xzhzcPFIaL3Q1EbI2l+nu17q2aLJJLo4ZYg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+
+<div class="load">
+    <div class="loader">
+        <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+
+<main>
+    <div id="app"></div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/navigo/7.1.3/navigo.min.js"
+        integrity="sha512-T5Jaw8KOeloIRJz6TfFWDNqeTwMnLTXf2amscWwmNmIPmrAjPdl47fupdu7TrX3eSVuS1NElEfw0h2+0SsNxaQ=="
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    let router = new Navigo(null, true, '#!');
+    let app = document.getElementById('app');
+
+    let resObj = null;
+    let payment_res = null;
+
+    router.on({
+        "/": function () {
+            app.innerHTML = `
+        {% include 'campaign/spain_id_camp/form.html' %}
+     `
+            $(document).ready(function () {
+                $('.datepicker').datepicker();
+            });
+
+            $(document).ready(function () {
+                $('select').formSelect();
+            });
+
+            const dataForm = document.getElementById('dataForm');
+
+            dataForm.addEventListener('submit', e => {
+                e.preventDefault();
+
+                let date = new Date(dataForm.dob.value);
+                date = date.getFullYear() + '-' + zeroPad(date.getMonth(), 2) + '-' + zeroPad(date.getDate(), 2);
+
+                let data = {
+                    name: dataForm.name.value,
+                    gender: dataForm.gender.value,
+                    date_of_birth: date,
+                    parent_names: dataForm.parent_names.value,
+                    address: dataForm.address.value,
+                    phone: dataForm.phone.value,
+                    parent_email: dataForm.parents_email.value,
+                    player_email: dataForm.player_email.value,
+                    health_card_number: dataForm.healt_card_num.value,
+                    medications: dataForm.medications.value,
+                    allergies: dataForm.allergies.value,
+                    injuries: dataForm.injuries.value,
+                    emergency_contact_number: dataForm.emerg_contact.value,
+                    package_guid: dataForm.reg_fees.value
+                }
+                if (dataForm.reg_fees.value === "-1") {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'You missed to select registration fees!',
+                    })
+                } else {
+                    Swal.fire({
+                        title: 'Do you want to submit this?',
+                        showDenyButton: true,
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes',
+                        showDenyButton: true,
+                        denyButtonText: `Not yet!`,
+                    }).then((result) => {
+                        $('.load').show();
+                        (async () => {
+                            let rawResponse = null;
+                            let content = null;
+                            try {
+                                rawResponse = await fetch('/api/v1/campaign/create_subscriber', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(data)
+                                });
+                                content = await rawResponse.json();
+                                $('.load').hide();
+
+                                if (!rawResponse.ok) {
+                                    if ("error_code" in content) {
+                                        //  console.log(content["error_code"])
+                                        throw Error(content["error_code"])
+                                    } else {
+                                        throw Error(rawResponse.status);
+                                    }
+
+                                }
+                            } catch (err) {
+                                console.log(err)
+                                router.navigate('/error/' + err.toString())
+                                return;
+                            }
+
+                            // if(rawResponse){
+                            //   content = await rawResponse.json();
+                            // }
+                            if (content) {
+                                console.log(content)
+                                resObj = content;
+                                router.navigate('/payment');
+                            } else {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Oops...',
+                                    text: 'Something wrong! Re-enter Data!',
+                                })
+                            }
+                        })();
+                        if (result.isConfirmed) {
+                        } else if (result.isDenied) {
+                            Swal.fire('Not submitted!', '', 'info')
+                        }
+                    })
+                }
+                console.log(data);
+            })
+
+
+        },
+
+        "/payment": function () {
+            if (resObj === null) {
+                router.navigate('/');
+            } else {
+
+                app.innerHTML = `
+            {% include 'campaign/spain_id_camp/payment.html' %}
+        `
+
+//Stripe
+                let {publishable_key, client_secret, price} = resObj;
+
+                const stripe = Stripe(publishable_key);
+
+                let elements;
+                let paymentElement = null;
+
+                initialize();
+
+                document
+                    .querySelector("#payment-form")
+                    .addEventListener("submit", handleSubmit);
+
+                async function initialize() {
+                    const appearance = {
+                        theme: 'stripe',
+                    };
+
+                    elements = stripe.elements();
+
+                    $('#price').text('$' + price)
+
+                    paymentElement = elements.create("card");
+                    paymentElement.mount("#payment-element");
+                }
+
+                async function handleSubmit(e) {
+                    e.preventDefault();
+                    setLoading(true);
+
+                    const {error, paymentIntent} = await stripe.confirmCardPayment(client_secret, {
+                        payment_method: {
+                            card: paymentElement,
+                        }
+                    });
+
+                    if (error) {
+                        router.navigate('/error/payment_error');
+                        if (error.type === "card_error" || error.type === "validation_error") {
+                            showMessage(error.message);
+                        } else {
+                            showMessage("An unexpected error occured.");
+                        }
+                    } else {
+                        console.log(paymentIntent);
+                        let rawResponse = null;
+                        let content = null;
+                        (async () => {
+                            try {
+                                rawResponse = await fetch('/api/v1/campaign/post_payment_intent', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({intent: paymentIntent})
+                                });
+                                content = await rawResponse.json();
+                                if (!rawResponse.ok) {
+
+                                    if ("error_code" in content) {
+                                        throw Error(content["error_code"])
+                                    } else {
+                                        throw Error(rawResponse.status);
+                                    }
+
+                                }
+                            } catch (err) {
+                                router.navigate('/error/' + err.toString());
+                                return;
+                            }
+
+                            //  content = await rawResponse.json();
+                            if (content) {
+                                payment_res = content;
+                                router.navigate('/success');
+                            }
+                        })();
+                    }
+                    setLoading(false);
+                }
+
+                function showMessage(messageText) {
+                    const messageContainer = document.querySelector("#payment-message");
+
+                    messageContainer.classList.remove("hidden");
+                    messageContainer.textContent = messageText;
+
+                    setTimeout(function () {
+                        messageContainer.classList.add("hidden");
+                        messageText.textContent = "";
+                    }, 4000);
+                }
+
+                function setLoading(isLoading) {
+                    if (isLoading) {
+                        document.querySelector("#submit").disabled = true;
+                        document.querySelector("#spinner").classList.remove("hidden");
+                        document.querySelector("#button-text").classList.add("hidden");
+                    } else {
+                        document.querySelector("#submit").disabled = false;
+                        document.querySelector("#spinner").classList.add("hidden");
+                        document.querySelector("#button-text").classList.remove("hidden");
+                    }
+                }
+
+            }
+        },
+        "/error/:id": function (params) {
+            console.log(params.id);
+            app.innerHTML = `
+            {% include 'campaign/spain_id_camp/error.html' %}
+        `
+        },
+        "success": function () {
+            if (payment_res === null) {
+                router.navigate('/');
+            } else {
+                console.log(payment_res);
+                app.innerHTML = `
+            {% include 'campaign/spain_id_camp/success.html' %}
+        `
+                $('.reciept').hide();
+                const sheet = document.querySelector('.reciept')
+                $('#download').click(function () {
+                    $('.reciept').show();
+                    html2pdf(sheet, {
+                        filename: payment_res.subscriber.name + '_' + payment_res.subscriber.guid + '.pdf',
+                        image: {type: 'jpeg', quality: 0.98},
+                        html2canvas: {scale: 2},
+                        jsPDF: {unit: 'pt', format: 'a4', orientation: 'portrait'}
+
+                    })
+                    $('.reciept').hide();
+                })
+            }
+
+        }
+    }).resolve();
+
+    const zeroPad = (num, places) => String(num).padStart(places, '0')
+
+
+    //transaction_guid
+</script>
+</body>
+</html>

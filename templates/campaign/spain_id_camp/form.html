@@ -1,0 +1,110 @@
+<div class="form">
+    <form id="dataForm">
+        <div class="text3x bold">ROBERTS CANADA SOCCER ACADEMY</div>
+        <div class="sub2xtext">2022 Spain Id Camp Registration Form</div>
+
+        <div class="input-field">
+            <input type="text" name="name" id="name" required/>
+            <label for="name">Name</label>
+        </div>
+
+        <div>
+            Gender:
+            <label>
+                <input value="MALE" name="gender" type="radio" checked required/>
+                <span>Male</span>
+            </label>
+
+            <label>
+                <input value="FEMALE" name="gender" type="radio" required/>
+                <span>Female</span>
+            </label>
+        </div>
+
+        <input type="text" name="dob" placeholder="Date of birth" class="datepicker" required>
+
+        <div class="input-field">
+            <input value="dshsjdh" type="text" name="parent_names" id="parents_name" required/>
+            <label for="parents_name">Parents' Name</label>
+        </div>
+
+        <div class="input-field">
+            <input type="text" name="address" id="address" required/>
+            <label for="address">Address(include city ans postal code)</label>
+        </div>
+
+        <div class="input-field">
+            <input type="number" name="phone" id="phone" required/>
+            <label for="phone">Phone</label>
+        </div>
+
+        <div class="input-field">
+            <input type="email" name="parents_email" id="parents_email" required/>
+            <label for="parents_email">Parents's Email</label>
+        </div>
+
+        <div class="input-field">
+            <input type="email" name="player_email" id="player_email" required/>
+            <label for="player_email">Player Email</label>
+        </div>
+
+        <div class="input-field">
+            <input value="1234" type="number" name="healt_card_num" id="healt_card_num" required/>
+            <label for="healt_card_num">Health Card Number</label>
+        </div>
+
+        <div class="input-field">
+            <input value="dshsjdh" type="text" name="medications" id="medications" required/>
+            <label for="medications">Medications</label>
+        </div>
+
+        <div class="input-field">
+            <input value="dshsjdh" type="text" name="allergies" id="allergies" required/>
+            <label for="allergies">Allergies</label>
+        </div>
+
+        <div class="input-field">
+            <input value="dshsjdh" type="text" name="injuries" id="injuries" required required/>
+            <label for="injuries">Injuries</label>
+        </div>
+
+        <div class="input-field">
+            <input value="13235" type="number" name="emerg_contact" id="emerg_contact" required/>
+            <label for="emerg_contact">Emergency Contact</label>
+        </div>
+
+        <div class="input-field">
+            <select name="reg_fees" required>
+                <option value="-1" dispi_3L4hT6JFEKrz679r1Cq0kFfU_secret_iADet4WZcnqwJZWQtzi0wd4xabled selected>
+                    Registration Fees:
+                </option>
+                {% for fee in fees %}
+                     <option value="{{ fee.guid }}">{{ fee.name }}</option>
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+        <h6 class="red-text">10% discount for early bird registrations before June 30, 2022.</h6>
+
+        <small><b>I hereby release and forever discharge Roberts Canada Soccer Academy inc. its owners, authorized
+            agents, employees and representatives from
+            any liability and all causes of action, claims, damages, loss, or injuries of every nature and kind,
+            howsoever arising, which I or the participant ever
+            had, now has (have), or may hereafter have as a result of participation in this program. I authorize the
+            provision of emergency medical services to
+            the participant if deemed necessary by a qualified medical practitioner. I authorize Roberts Canada Soccer
+            Academy Inc. to use photos or video
+            excerpts of the participants, which may be used for advertising and/or instructional purposes. I certify
+            that I am authorized to sign this release
+            without the consent of any other person, as I am either the player registering and am 18 years of age or
+            older, OR I am the parent/legal guardian of
+            the player whom I am registering.</b></small>
+
+        <center>
+            <button class="btn green">Sumbit</button>
+        </center>
+
+    </form>
+</div>
