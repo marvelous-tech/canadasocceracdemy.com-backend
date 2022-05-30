@@ -15,10 +15,10 @@
                                 </div>
                             </div>
                             <div class="blog-title-content headline mt25">
-                                <h3><a href="{% url 'Camp Details' slug=camp.slug %}">{{ camp.name | safe | escape }}</a></h3>
+                                <h3><a href="{{ camp.cta }}">{{ camp.name | safe | escape }}</a></h3>
 
                                 <div class="view-all-btn bold-font">
-                                    <a href="{% url 'Camp Details' slug=camp.slug %}">Read More <i class="fas fa-chevron-circle-right"></i></a>
+                                    <a href="{{ camp.cta }}">Read More <i class="fas fa-chevron-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>

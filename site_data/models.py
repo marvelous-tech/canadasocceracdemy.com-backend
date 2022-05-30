@@ -398,6 +398,8 @@ class Camp(models.Model):
     timestamp = models.DateTimeField(null=True)
     slug = models.SlugField(max_length=255, null=True, blank=True)
 
+    cta = models.URLField(null=True, blank=True)
+
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
