@@ -11,6 +11,7 @@ from django.utils.timezone import now
 
 from accounts.models import UserProfile, CoursePackage
 from choices import SUBSCRIPTION_STATUS_CHOICES, SubscriptionStatusName
+from core.models import BaseModel
 from payments import gateway
 
 
@@ -180,6 +181,20 @@ class Transaction(models.Model):
 
     def __str__(self):
         return str(self.uuid)
+
+
+class OneTimeTransaction(BaseModel):
+    payment_intent_id = models.CharField(max_length=255)
+    charge_id = models.CharField(max_length=255, null=True, blank=True)
+
+    confirmed = models.BooleanField(default=False)
+    amount = models.PositiveIntegerField()
+
+    payment_intent_json_object_before = models.TextField()
+    payment_intent_json_object_after = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.payment_intent_id
 
 
 @receiver(post_save, sender=UserProfile)

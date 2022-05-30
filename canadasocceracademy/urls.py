@@ -34,6 +34,7 @@ from site_data.views import Home as SiteHome, About as SiteAbout, Contact as Sit
     BlogProgramList as SiteBlogProgramList, post_program_detail as site_post_program_detail, \
     GalleryVideoView as SiteGalleryVideo
 from upload_chunk_video.views import ChunkedUploadDemo, MyChunkedUploadCompleteView, MyChunkedUploadView
+from api.app import api
 
 
 @login_required
@@ -49,7 +50,6 @@ def to_registration_platform(request):
     if request.user.is_authenticated:
         logout(request)
     return redirect(settings.REGISTRATION_PLATFORM)
-
 
 urlpatterns = [
     path('sldfkjsdfgjsdflkgj/', admin.site.urls),
@@ -84,6 +84,7 @@ urlpatterns = [
             path('courses/', include('e_learning.api.urls_v1', namespace='e_learning')),
             path('user/', include('accounts.api.urls_v1', namespace='accounts')),
             path('payment/', include('payments.api.urls_v1', namespace='payments_api')),
+            path('', api.urls)
         ])),
         path('v2/', include([
             path('payment/', include('stripe_gateway.api.urls', namespace='STRIPE_INTEGRATIONS_CORE_API'))
@@ -117,3 +118,4 @@ urlpatterns = [
     path('api/chunked_upload/', MyChunkedUploadView.as_view(), name='api_chunked_upload'),
     path('<str:page>/', SiteBlankPage.as_view(), name='documents')
 ]
+
