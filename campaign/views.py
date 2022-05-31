@@ -5,7 +5,7 @@ from campaign.models import CampaignPackage
 
 
 def spain_id_camp(request):
-    fees = CampaignPackage.objects.filter(campaign_id=1)
+    fees = CampaignPackage.objects.filter(campaign_id=1).order_by('id')
     context = {
         'fees': fees
     }
