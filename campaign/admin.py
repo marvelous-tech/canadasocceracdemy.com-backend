@@ -12,9 +12,15 @@ class CampaignAdmin(admin.ModelAdmin):
 @admin.register(CampaignPackage)
 class CampaignPackageAdmin(admin.ModelAdmin):
     list_display = [
+        'campaign',
         'name',
-        'guid',
-        'price'
+        'price',
+        'starts',
+        'ends',
+        'discount_percentage_off',
+        'discount_amount_off',
+        'discount_starts',
+        'discount_expires',
     ]
 
 
