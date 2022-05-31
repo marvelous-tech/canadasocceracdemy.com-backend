@@ -8,7 +8,8 @@ from payments.models import PaymentMethodToken, \
     Customer, \
     Subscription, \
     SubscriptionStatus, \
-    Transaction
+    Transaction, \
+    OneTimeTransaction
 
 
 @admin.register(PaymentMethodToken)
@@ -114,4 +115,16 @@ class TransactionModelAdmin(admin.ModelAdmin):
         'is_deleted',
         'created',
         'updated'
+    ]
+
+
+@admin.register(OneTimeTransaction)
+class OneTimeTransactionModelAdmin(admin.ModelAdmin):
+    list_display = [
+        'guid',
+        'charge_id',
+        'amount',
+        'confirmed',
+        'created',
+        'updated',
     ]
