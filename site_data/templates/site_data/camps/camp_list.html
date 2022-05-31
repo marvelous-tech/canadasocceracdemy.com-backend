@@ -8,7 +8,10 @@
                         <div class="mb45">
                             <div class="blog-img-date relative-position">
                                 <div class="blog-thumnile">
-                                    <img class="img-responsive img-fluid img-thumbnail" src="{{ camp.flyer_image.url }}" alt="">
+                                    <a href="{{ camp.cta }}" target="_blank">
+                                        <img class="img-responsive img-fluid img-thumbnail"
+                                             src="{{ camp.flyer_image.url }}" alt="">
+                                    </a>
                                 </div>
                                 <div class="course-price text-center gradient-bg">
                                     <span>{{ camp.timestamp }}</span>
@@ -18,7 +21,8 @@
                                 <h3><a href="{{ camp.cta }}" target="_blank">{{ camp.name | safe | escape }}</a></h3>
 
                                 <div class="view-all-btn bold-font">
-                                    <a href="{{ camp.cta }}" target="_blank">Read More <i class="fas fa-chevron-circle-right"></i></a>
+                                    <a href="{{ camp.cta }}" target="_blank">Read More <i
+                                            class="fas fa-chevron-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -37,7 +41,8 @@
             <li class="pg-text"><a href="?page=1">FIRST</a></li>
             <li class="pg-text"><a href="?page={{ page_obj.previous_page_number }}">PREV</a></li>
         {% endif %}
-        <li class="active"><a href="?page={{ page_obj.number }}">PAGE - {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+        <li class="active"><a href="?page={{ page_obj.number }}">PAGE - {{ page_obj.number }}
+            of {{ page_obj.paginator.num_pages }}</a></li>
         {% if page_obj.has_next %}
             <li class="pg-text"><a href="?page={{ page_obj.next_page_number }}">NEXT</a></li>
             <li class="pg-text"><a href="?page={{ page_obj.paginator.num_pages }}">LAST</a></li>
