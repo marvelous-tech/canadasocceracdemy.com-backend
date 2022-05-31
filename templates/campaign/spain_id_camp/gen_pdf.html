@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"
+            integrity="sha512-w3u9q/DeneCSwUDjhiMNibTRh/1i/gScBVp2imNVAMCt6cUHIw6xzhzcPFIaL3Q1EbI2l+nu17q2aLJJLo4ZYg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+{% include 'campaign/spain_id_camp/email.html' %}
+<script>
+    const sheet = document.querySelector('.pdf');
+    html2pdf(sheet, {
+        margin: 30,
+        filename: '{{ subscriber.campaign_package.name }}-{{ subscriber.name }}-{{ subscriber.guid }}.pdf',
+        image: {type: 'jpeg', quality: 1},
+        html2canvas: {scale: 3},
+        jsPDF: {unit: 'pt', format: 'a4', orientation: 'portrait'}
+    });
+</script>
+</body>
+</html>

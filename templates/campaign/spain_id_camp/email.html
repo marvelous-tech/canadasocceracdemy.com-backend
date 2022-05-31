@@ -1,0 +1,123 @@
+<style>
+    td {
+        padding-bottom: 3px;
+        padding-top: 3px;
+    }
+</style>
+<div style="font-family: 'Times New Roman', Sans-serif,serif" class="pdf">
+    <div style="text-align: center; margin-bottom: 30px">
+        <h1 style="margin: 0">ROBERTS CANADA SOCCER ACADEMY</h1>
+        <h3 style="margin: 0; color: #777777">2022 Spain ID Camp Registration</h3>
+    </div>
+    <table style="width: 100%">
+        <tr>
+            <td colspan="3" style="border-bottom: 1px solid #999999">
+                <b style="font-size: 18px">Subscriber Info</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 300px; padding-top: 10px">Name</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.name }}</td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.gender }}</td>
+        </tr>
+        <tr>
+            <td>Date of birth</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.date_of_birth }}</td>
+        </tr>
+        <tr>
+            <td>Parents' Name</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.parent_names }}</td>
+        </tr>
+        <tr>
+            <td>Address (include city and postal code)</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.address }}</td>
+        </tr>
+        <tr>
+            <td>Phone</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.phone }}</td>
+        </tr>
+        <tr>
+            <td>Parent's Email</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.parent_email }}</td>
+        </tr>
+        <tr>
+            <td>Player Email</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.player_email }}</td>
+        </tr>
+        <tr>
+            <td>Health Card Number</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.health_card_number }}</td>
+        </tr>
+        <tr>
+            <td>Medications</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.medications }}</td>
+        </tr>
+        <tr>
+            <td>Allergies</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.allergies }}</td>
+        </tr>
+        <tr>
+            <td>Injuries</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.injuries }}</td>
+        </tr>
+        <tr>
+            <td>Emergency Contact</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.emergency_contact_number }}</td>
+        </tr>
+    </table>
+    <table style="margin-top: 30px; width: 100%">
+        <tr>
+            <td colspan="3" style="border-bottom: 1px solid #999999">
+                <b style="font-size: 18px">Registration & Payment</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 300px; padding-top: 10px">Registration</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.campaign_package.campaign.name }} | {{ subscriber.campaign_package.name }}</td>
+        </tr>
+        <tr>
+            <td>Payment Transaction</td>
+            <td style="border-bottom: 1px solid #999999">${{ subscriber.stripe_transaction.get_amount | stringformat:".2f" }} | {{ subscriber.stripe_transaction.charge_id }}</td>
+        </tr>
+        <tr>
+            <td>Timestamp</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.stripe_transaction.created | date }} {{ subscriber.stripe_transaction.created | time }}</td>
+        </tr>
+        <tr>
+            <td>Subscriber</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.guid | upper }}</td>
+        </tr>
+        <tr>
+            <td>Package</td>
+            <td style="border-bottom: 1px solid #999999">{{ subscriber.campaign_package.guid | upper }}</td>
+        </tr>
+    </table>
+    <p style="margin-top: 50px; text-align: justify; font-size: 14px">
+        I hereby release and forever discharge Roberts Canada Soccer Academy inc. its owners, authorized agents,
+        employees
+        and representatives from any liability and all causes of action, claims, damages, loss, or injuries of every
+        nature
+        and kind, howsoever arising, which I or the participant ever had, now has (have), or may hereafter have as a
+        result
+        of participation in this program. I authorize the provision of emergency medical services to the participant if
+        deemed necessary by a qualified medical practitioner. I authorize Roberts Canada Soccer Academy Inc. to use
+        photos
+        or video excerpts of the participants, which may be used for advertising and/or instructional purposes. I
+        certify
+        that I am authorized to sign this release without the consent of any other person, as I am either the player
+        registering and am 18 years of age or older, OR I am the parent/legal guardian of the player whom I am
+        registering.
+    </p>
+    <p>
+        <i>
+            <b>
+            All participant must be dressed in T-shirts, shorts, outdoor soccer cleats (shoes), shin pads & socks.
+            <br>
+            NO REFUNDS
+        </b>
+        </i>
+    </p>
+</div>
