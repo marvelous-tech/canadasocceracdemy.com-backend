@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from campaign.models import CampaignPackage
+from campaign.models import CampaignPackage, CampaignSubscriber
 
 
 def spain_id_camp(request):
@@ -10,3 +10,10 @@ def spain_id_camp(request):
         'fees': fees
     }
     return render(request, 'campaign/spain_id_camp/spain.html', context=context)
+
+
+def get_pdf(request, guid: str):
+    context = {
+        'subscriber': CampaignSubscriber.objects.get(guid=guid)
+    }
+    return render(request, 'campaign/spain_id_camp/gen_pdf.html', context=context)

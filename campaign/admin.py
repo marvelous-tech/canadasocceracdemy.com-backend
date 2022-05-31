@@ -26,4 +26,7 @@ class CampaignPackageAdmin(admin.ModelAdmin):
 
 @admin.register(CampaignSubscriber)
 class CampaignSubscriberAdmin(admin.ModelAdmin):
-    pass
+    list_display = [
+        'name',
+        'guid'
+    ]

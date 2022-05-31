@@ -282,19 +282,20 @@
                 app.innerHTML = `
             {% include 'campaign/spain_id_camp/success.html' %}
         `
-                $('.reciept').hide();
-                const sheet = document.querySelector('.reciept')
-                $('#download').click(function () {
-                    $('.reciept').show();
-                    html2pdf(sheet, {
-                        filename: payment_res.subscriber.name + '_' + payment_res.subscriber.guid + '.pdf',
-                        image: {type: 'jpeg', quality: 0.98},
-                        html2canvas: {scale: 2},
-                        jsPDF: {unit: 'pt', format: 'a4', orientation: 'portrait'}
-
+                $('.pdf').hide();
+                setTimeout(function () {
+                    const sheet = document.querySelector('.pdf')
+                    $('#download').click(function () {
+                        $('.pdf').show();
+                        html2pdf(sheet, {
+                            filename: payment_res.subscriber.name + '_' + payment_res.subscriber.guid + '.pdf',
+                            image: {type: 'jpeg', quality: 1},
+                            html2canvas: {scale: 3},
+                            jsPDF: {unit: 'pt', format: 'a4', orientation: 'portrait'}
+                        })
+                        $('.pdf').hide();
                     })
-                    $('.reciept').hide();
-                })
+                }, 1000);
             }
 
         }

@@ -21,7 +21,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import path, include, re_path, reverse
 
-from campaign.views import spain_id_camp
+from campaign.views import spain_id_camp, get_pdf
 from e_learning.views import home_e_learning
 from payments.views import list_all_payment_methods
 from accounts.views import login_user, home_registration
@@ -119,7 +119,8 @@ urlpatterns = [
     path('api/chunked_upload/', MyChunkedUploadView.as_view(), name='api_chunked_upload'),
     path('<str:page>/', SiteBlankPage.as_view(), name='documents'),
     path('campaign/', include([
-        path('spain-id-camp/', spain_id_camp)
+        path('spain-id-camp/', spain_id_camp),
+        path('get_pdf/<str:guid>/', get_pdf, name="get_pdf"),
     ]))
 ]
 

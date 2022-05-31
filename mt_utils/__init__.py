@@ -107,6 +107,28 @@ def unique_slug_generator(instance, new_slug=None):
     return slug
 
 
+def email_raw(from_email, from_name, to, subject, text, html):
+    requests.post(
+        'https://api.mailjet.com/v3.1/send',
+        auth=(os.environ.get('EMAIL_USER'), os.environ.get('EMAIL_PASS')),
+        data=json.dumps({
+            "Messages": [
+                {
+                    "From": {
+                        "Email": from_email,
+                        "Name": from_name
+                    },
+                    "To": to,
+                    "Subject": subject,
+                    "TextPart": text,
+                    "HTMLPart": html
+                }
+            ]
+        }),
+        headers={'Content-Type': 'application/json'}
+    )
+
+
 def email(serializer, user_id):
     print(f"Serializer valid is ===> {serializer.is_valid()}")
     if serializer.is_valid():

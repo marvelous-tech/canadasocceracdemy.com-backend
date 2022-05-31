@@ -196,6 +196,10 @@ class OneTimeTransaction(BaseModel):
     def __str__(self):
         return self.payment_intent_id
 
+    @property
+    def get_amount(self):
+        return self.amount / 100
+
 
 @receiver(post_save, sender=UserProfile)
 def update_user_profile(sender, instance: UserProfile, created, **kwargs):

@@ -431,8 +431,8 @@ function setLoading(isLoading) {
         html2pdf(sheet, {
           filename: payment_res.subscriber.name+'_'+payment_res.subscriber.guid+'.pdf',
           image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2 },
-          jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
+          html2canvas: { scale: 1 },
+          jsPDF: { unit: 'px', format: 'a4', orientation: 'portrait' }
           
       })
       $('.reciept').hide();

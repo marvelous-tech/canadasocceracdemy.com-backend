@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.template.loader import render_to_string
 from ninja.router import Router
 
 from campaign.api.schemas import \
@@ -11,6 +12,7 @@ from campaign.api.helpers import \
     get_transaction, \
     update_transaction, \
     get_subscriber
+from mt_utils import email_raw
 
 router = Router()
 
@@ -49,6 +51,25 @@ def post_payment_intent(request, data: PaymentIntentPostInSchema):
     subscriber = get_subscriber(intent.get('metadata')['subscriber_guid'])
     subscriber.stripe_transaction_id = transaction.id
     subscriber.save()
+
+    email_raw(
+        from_email=settings.NO_REPLY_MAIL_ADDRESS,
+        from_name='Canada Soccer Academy',
+        to=[
+            {
+                "Email": "eroberts1055@gmail.com",
+                "Name": "Eddie Roberts"
+            },
+            {
+                "Email": subscriber.player_email,
+                "Name": subscriber.name
+            }
+        ],
+        subject='Canada Soccer Academy 2022 Spain ID Campaign Registration Receipt',
+        text=f'{subscriber.campaign_package.name} Registration was successful',
+        html=render_to_string('campaign/spain_id_camp/email.html', {'subscriber': subscriber})
+    )
+
     return PaymentIntentPostOutSchema(
         subscriber=subscriber,
         package_guid=subscriber.campaign_package.guid,

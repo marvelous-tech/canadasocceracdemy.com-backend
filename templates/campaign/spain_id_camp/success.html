@@ -9,103 +9,13 @@
         <div class="sub2xtext green-text">We will sent you an email with further confirmation details!</div>
         <br/>
         <center>
-            <button id="download" class="btn">Download Reciept</button>
+            <a href="/campaign/get_pdf/${payment_res.subscriber.guid}/" class="btn" >Download Receipt</a>
         </center>
 
     </div>
 
-    <div class="reciept">
-        <div class="text3xx bold">ROBERTS CANADA SOCCER ACADEMY</div>
-        <div class="sub2xtext">2022 Spain Id Camp Registration</div>
-        <br/>
-
-        <div class="field">
-            <div class="field_key">Name:</div>
-            <div class="field_value"> ${payment_res.subscriber.name}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Gender:</div>
-            <div class="field_value"> ${payment_res.subscriber.gender}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Date of birth:</div>
-            <div class="field_value"> ${payment_res.subscriber.date_of_birth}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Parents' Name:</div>
-            <div class="field_value"> ${payment_res.subscriber.parent_names}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Address:</div>
-            <div class="field_value"> ${payment_res.subscriber.address}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Phone:</div>
-            <div class="field_value"> ${payment_res.subscriber.phone}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Parent's Email:</div>
-            <div class="field_value"> ${payment_res.subscriber.parent_email}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Player Email:</div>
-            <div class="field_value"> ${payment_res.subscriber.player_email}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Health Card Number:</div>
-            <div class="field_value"> ${payment_res.subscriber.health_card_number}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Medications:</div>
-            <div class="field_value"> ${payment_res.subscriber.medications}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Allergies:</div>
-            <div class="field_value"> ${payment_res.subscriber.allergies}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Injuries:</div>
-            <div class="field_value"> ${payment_res.subscriber.injuries}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Emergency Contact:</div>
-            <div class="field_value"> ${payment_res.subscriber.emergency_contact_number}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Campaign Name:</div>
-            <div class="field_value"> ${payment_res.package_name}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Registration Fee:</div>
-            <div class="field_value">$${payment_res.price}</div>
-        </div>
-        <hr>
-        <div class="field">
-            <div class="field_key">Payment Transaction Id:</div>
-            <div class="field_value">${payment_res.charge_id}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Subscriber Id:</div>
-            <div class="field_value">${payment_res.subscriber.guid}</div>
-        </div>
-        <div class="field">
-            <div class="field_key">Package Id:</div>
-            <div class="field_value">${payment_res.package_guid}</div>
-        </div>
-        <div class="nb">I hereby release and forever discharge Roberts Canada Soccer Academy inc. its owners, authorized
-            agents, employees and representatives from
-            any liability and all causes of action, claims, damages, loss, or injuries of every nature and kind,
-            howsoever arising, which I or the participant ever
-            had, now has (have), or may hereafter have as a result of participation in this program. I authorize the
-            provision of emergency medical services to
-            the participant if deemed necessary by a qualified medical practitioner. I authorize Roberts Canada Soccer
-            Academy Inc. to use photos or video
-            excerpts of the participants, which may be used for advertising and/or instructional purposes. I certify
-            that I am authorized to sign this release
-            without the consent of any other person, as I am either the player registering and am 18 years of age or
-            older, OR I am the parent/legal guardian of
-            the player whom I am registering.
-        </div>
+    <div class="pdf">
+        {% include 'campaign/spain_id_camp/pdf.html' %}
     </div>
 
 </div>
