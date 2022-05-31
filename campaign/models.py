@@ -2,7 +2,6 @@ import uuid
 
 from django.db import models
 
-
 # Create your models here.
 from django.utils import timezone
 
@@ -70,7 +69,8 @@ class CampaignSubscriber(BaseModel):
     injuries = models.TextField(null=True, blank=True)
     emergency_contact_number = models.CharField(max_length=255)
 
-    stripe_charge_id = models.CharField(max_length=255, null=True, blank=True)
+    stripe_transaction = models.OneToOneField('payments.OneTimeTransaction', on_delete=models.SET_NULL, null=True,
+                                              blank=True)
 
     def __str__(self):
         return self.name

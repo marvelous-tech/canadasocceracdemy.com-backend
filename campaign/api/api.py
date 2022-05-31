@@ -47,6 +47,8 @@ def post_payment_intent(request, data: PaymentIntentPostInSchema):
         }, status=400)
     intent = update_transaction(transaction, data.intent)
     subscriber = get_subscriber(intent.get('metadata')['subscriber_guid'])
+    subscriber.stripe_transaction_id = transaction.id
+    subscriber.save()
     return PaymentIntentPostOutSchema(
         subscriber=subscriber,
         package_guid=subscriber.campaign_package.guid,
