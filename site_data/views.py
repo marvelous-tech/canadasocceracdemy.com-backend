@@ -98,6 +98,7 @@ class Home(TemplateView):
 
     def get_context_data(self, **kwargs):
         banner_logos = SiteLogo.objects.filter(for_content='banner_image')
+        camp = Camp.objects.filter(is_deleted=False).first()
         context = {
             'banner_logos': banner_logos,
             'banner_images': BannerImage.objects.all(),
@@ -106,6 +107,7 @@ class Home(TemplateView):
             'home_about_us_header': SiteData.objects.filter(name='home_about_us_header').first(),
             'home_about_us_sub_header': SiteData.objects.filter(name='home_about_us_sub_header').first(),
             'home_about_us_content_body': SiteData.objects.filter(name='home_about_us_content_body').first(),
+            'feature_camp': camp,
             **get_default_contexts(),
             **get_recent_posts(),
             **get_recent_upcoming(),

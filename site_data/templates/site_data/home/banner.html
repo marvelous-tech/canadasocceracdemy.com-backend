@@ -1,13 +1,16 @@
 <div id="slider-item" class="slider-item-details">
     {% for banner_image in banner_images %}
-        <div id="BannerImage" style="background: url('{{ banner_image.image.url }}') no-repeat center;background-size: cover" class="slider-area relative-position banner">
+        <div id="BannerImage"
+             style="background: url('{{ banner_image.image.url }}') no-repeat center;background-size: cover"
+             class="slider-area relative-position banner">
             <div class="slider-text">
                 <div class="section-title mb20 headline text-center m-auto">
                     <div class="container">
                         <div class="row SiteLogo_banner_image">
                             {% for logo in banner_logos %}
                                 <div class="col-md-6 d-flex justify-content-around">
-                                    <img id="SiteLogo_banner_image" class="SiteLogo_banner_image" src="{{ logo.image.url }}" style="{{ logo.style }}"
+                                    <img id="SiteLogo_banner_image" class="SiteLogo_banner_image"
+                                         src="{{ logo.image.url }}" style="{{ logo.style }}"
                                          alt="Logo">
                                 </div>
                             {% endfor %}
@@ -20,15 +23,27 @@
                                 <div class="ml-4 genius-btn gradient-bg btn-lg text-center text-uppercase ul-li-block bold-font">
 
                                     {% if request.user.is_authenticated %}
-                                        <a target="_blank" href="{% url 'to_e_learning_platform' %}">Online Programs <i class="fas fa-caret-right"></i></a>
+                                        <a target="_blank" href="{% url 'to_e_learning_platform' %}">Online Programs <i
+                                                class="fas fa-caret-right"></i></a>
                                     {% else %}
-                                        <a target="_blank" href="{% url 'to_registration_platform' %}">Online Programs <i class="fas fa-caret-right"></i></a>
+                                        <a target="_blank" href="{% url 'to_registration_platform' %}">Online Programs
+                                            <i class="fas fa-caret-right"></i></a>
                                     {% endif %}
 
 
                                 </div>
                             </div>
                         </div>
+                        {% if feature_camp %}
+                            <div class="row justify-content-center">
+                                <div id="banner_links_col" class="col-md-5 d-flex justify-content-center">
+                                    <div class="genius-btn btn-lg btn-block  gradient-bg text-center text-uppercase ul-li-block bold-font">
+                                        <a href="{{ feature_camp.cta }}">{{ feature_camp.name }} <i
+                                                class="fas fa-caret-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
