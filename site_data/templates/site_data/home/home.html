@@ -126,17 +126,21 @@
 {% block styles %}
     <style>
         .banner {
-            height: 100vh;
+            min-height: 100vh;
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
+        }
+        .banner-h {
+            min-height: 800px !important;
+        }
+        .owl-dots {
+            display: none !important;
         }
     </style>
 {% endblock %}
 {% block scripts %}
     <script>
-        if (detectMob() === false) {
-	        document.getElementById("banner_links_col").classList.add("my-3");
-        }
+
     </script>
 {% endblock %}
