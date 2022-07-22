@@ -46,7 +46,10 @@
         {% include 'campaign/spain_id_camp/form.html' %}
      `
             $(document).ready(function () {
-                $('.datepicker').datepicker();
+                const currYear = (new Date()).getFullYear();
+                $('.datepicker').datepicker({
+                    yearRange: [1928, currYear]
+                });
             });
 
             $(document).ready(function () {
