@@ -205,6 +205,7 @@ INSTALLED_APPS += [
     'crispy_forms',
     'chunked_upload',
     # "djstripe",
+    'registration'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

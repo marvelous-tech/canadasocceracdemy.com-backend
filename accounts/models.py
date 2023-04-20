@@ -20,7 +20,7 @@ from mt_utils import get_profile_image_path, unique_slug_generator, email, get_p
 
 
 # Create your models here.
-from payments import gateway
+# from payments import gateway
 
 
 class Member(models.Model):

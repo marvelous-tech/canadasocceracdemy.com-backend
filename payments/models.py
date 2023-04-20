@@ -12,7 +12,7 @@ from django.utils.timezone import now
 from accounts.models import UserProfile, CoursePackage
 from choices import SUBSCRIPTION_STATUS_CHOICES, SubscriptionStatusName
 from core.models import BaseModel
-from payments import gateway
+# from payments import gateway
 
 
 class PaymentMethodToken(models.Model):

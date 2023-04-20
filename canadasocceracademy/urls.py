@@ -27,6 +27,7 @@ from payments.views import list_all_payment_methods
 from accounts.views import login_user, home_registration
 from django.contrib.auth import logout
 
+from registration.views import reg_soccer_tryouts_2023
 from site_data.views import Home as SiteHome, About as SiteAbout, Contact as SiteContact, \
     TeacherList as SiteTeacherList, BlogList as SiteBlogList, Camps as SiteCampsList, \
     post_detail as site_blog_details, camp_details as site_camp_details, \
@@ -67,7 +68,7 @@ urlpatterns = [
         path('package/<uuid:mock_package_uuid>/<uuid:package_uuid>/', home_e_learning, name="Package E-Learning"),
         path('category/<str:category_name>/<slug:category_slug>/<slug:video_number>/', home_e_learning, name="Video E-Learning"),
     ])),
-    path('registration/', home_registration, name="Home Registration"),
+    path('registration/', reg_soccer_tryouts_2023, name="soccer_tryouts_2023_registration"),
     path('registration/terms-and-condition/', home_registration, name="Home Registration Terms"),
     path('registration/refund-policy/', home_registration, name="Home Registration Refund"),
     path('registration/privacy-policy/', home_registration, name="Home Registration Policy"),
@@ -123,4 +124,3 @@ urlpatterns = [
         path('get_pdf/<str:guid>/', get_pdf, name="get_pdf"),
     ]))
 ]
-

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Registration
+{% endblock %}
+{% block content %}
+    <!-- Start of slider section
+    ============================================= -->
+    <section id="slide" class="slider-section">
+        {% include "site_data/home/banner.html" %}
+    </section>
+    <!-- End of slider section
+		============================================= -->
+
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <img src="{% static 'app/registration/2023 Outdoor Soccer Try-outs form.jpeg' %}" alt="">
+                </div>
+                <div class="col-6">
+                    <p>Kindly access and complete the registration form provided below. Once done, please email the
+                        filled form to eroberts@canadasocceracademy.com. Thank you.</p>
+                    <a href="{% static 'app/registration/2023 Outdoor Soccer Try-outs form.pdf' %}"
+                       class="link-primary" style="font-weight: bold">Download Registration Form</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .banner {
+            min-height: 100vh;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+        .banner-h {
+            min-height: 800px !important;
+        }
+        .owl-dots {
+            display: none !important;
+        }
+    </style>
+{% endblock %}
